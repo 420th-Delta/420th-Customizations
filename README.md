@@ -10,7 +10,7 @@ An Arma 3 mod for the 420th Delta community.
 
 ## Features
 
-- Increased capacity of various vanilla clothing (see [Capacity Changes](#capacity-changes))
+- Increased capacity of various clothing (see [Capacity Changes](#capacity-changes))
 - Allowed loading vanilla magazines into modded weapons (CUP, NIArms, RHS, SOG, GM)
 - Allowed loading modded pylons onto vanilla aircraft (CUP, RHS)
 - Allowed attaching RHS grips on NIArms weaponry
@@ -36,6 +36,12 @@ An Arma 3 mod for the 420th Delta community.
 | Paramedic Outfit        |       30 | 500 | 16.67x |
 | Sports Backpack         |      240 | 320 |  1.33x |
 | Tracksuit               |       40 | 160 |     4x |
+
+### CUP Weapons
+
+| Item                    | Original | New | Ratio  |
+| ----------------------- | --------:| ---:| ------:|
+| First Aid Backpack      |      280 | 320 |  1.14x |
 
 ## Installation
 
