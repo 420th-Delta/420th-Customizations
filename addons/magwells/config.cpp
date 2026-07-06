@@ -110,11 +110,6 @@ class CfgMagazineWells {
             MAGAZINES_556x45
         };
     };
-    class 556x45_Velko {
-        fdelta_magwells_magazines[] = {
-            MAGAZINES_556x45
-        };
-    };
     class CBA_556x45_M21 {
         fdelta_magwells_magazines[] = {
             MAGAZINES_556x45
@@ -218,12 +213,6 @@ class CfgMagazineWells {
         };
     };
     class CBA_762x51_FAL {
-        fdelta_magwells_magazines[] = {
-            "10Rnd_Mk14_762x51_Mag",
-            "20Rnd_762x51_Mag",
-        };
-    };
-    class SLR_762x51 {
         fdelta_magwells_magazines[] = {
             "10Rnd_Mk14_762x51_Mag",
             "20Rnd_762x51_Mag",
@@ -334,12 +323,6 @@ class CfgMagazineWells {
         };
     };
     class CBA_9x39_VSS {
-        fdelta_magwells_magazines[] = {
-            "10Rnd_50BW_Mag_F",
-            "10Rnd_127x54_Mag",
-        };
-    };
-    class ASH12_127x55_RF {
         fdelta_magwells_magazines[] = {
             "10Rnd_50BW_Mag_F",
             "10Rnd_127x54_Mag",
