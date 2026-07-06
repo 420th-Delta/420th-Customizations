@@ -38,11 +38,11 @@ An Arma 3 mod for the 420th Delta community.
 | Sports Backpack         |      240 | 320 |  1.33x |
 | Tracksuit               |       40 | 160 |     4x |
 
-~~### CUP Weapons ~~
+### CUP Weapons (this mod are not supported on server)
 
-~~| Item                    | Original | New | Ratio  |~~
-~~| ----------------------- | --------:| ---:| ------:|~~
-~~| First Aid Backpack      |      280 | 320 |  1.14x |~~
+| Item                    | Original | New | Ratio  |
+| ----------------------- | --------:| ---:| ------:|
+| First Aid Backpack      |      280 | 320 |  1.14x |
 
 ## Installation
 
