@@ -34,6 +34,17 @@ class CfgVehicles {
     class B_FieldPack_Base : Bag_Base {
         maximumLoad = 320; // 200
     };
+    class B_Kitbag_Base : Bag_Base {
+        maximumLoad = 320; // 280
+    };
+    class B_Kitbag_Black_420 : Bag_Base {
+        displayName = "Kitbag (Black)";
+        hiddenSelectionsTextures[] = {"\a3\weapons_f\ammoboxes\bags\data\backpack_fast_blk_co.paa"};
+    };
+    class B_Kitbag_Digi_420 : Bag_Base {
+        displayName = "Kitbag (Digi)";
+        hiddenSelectionsTextures[] = {"\a3\weapons_f\ammoboxes\bags\data\backpack_fast_digi_co.paa"};
+    };        
 };
 
 class CfgWeapons {
