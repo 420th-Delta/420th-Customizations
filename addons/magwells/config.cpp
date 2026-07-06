@@ -70,6 +70,16 @@ class CfgPatches {
     "3Rnd_UGL_FlareCIR_F",
 
 class CfgMagazineWells {
+    class STANAG_556x45 {
+        fdelta_magwells_magazines_1[] = {
+            "150Rnd_556x45_Drum_Green_Mag_F", 
+            "150Rnd_556x45_Drum_Green_Mag_Tracer_F", 
+            "150Rnd_556x45_Drum_Sand_Mag_F", 
+            "150Rnd_556x45_Drum_Sand_Mag_Tracer_F", 
+            "150Rnd_556x45_Drum_Mag_F", 
+            "150Rnd_556x45_Drum_Mag_Tracer_F",
+        };
+    };
     class CBA_556x45_STANAG {
         fdelta_magwells_magazines[] = {
             MAGAZINES_556x45
