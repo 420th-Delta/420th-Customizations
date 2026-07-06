@@ -52,7 +52,7 @@ class CfgMagazineWells {
     //add this since JCA guns cannot use these magazines
     class STANAG_556x45
     {
-         fdelta_magwells_magazine[] = {
+         fdelta_magwells_magazine_1[] = {
             "75Rnd_556x45_Stanag_lxWS", \
             "75Rnd_556x45_Stanag_green_lxWS", \
             "75Rnd_556x45_Stanag_red_lxWS", \

@@ -49,6 +49,11 @@ class CfgMagazineWells {
             "20Rnd_762x51_Mag",
         };
     };
+    class JCA_HK437_300BLK {
+        fdelta_magwells_magazines[] = {
+            MAGAZINES_556x45
+        };
+    };
     class JCA_MP5_9x19 {
         fdelta_magwells_magazines[] = {
             "30Rnd_9x21_Mag",
