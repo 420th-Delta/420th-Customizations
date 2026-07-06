@@ -11,10 +11,10 @@ An Arma 3 mod for the 420th Delta community.
 ## Features
 
 - Increased capacity of various clothing (see [Capacity Changes](#capacity-changes))
-- Allowed loading vanilla magazines into modded weapons (CUP, NIArms, RHS, SOG, GM)
+- Allowed loading vanilla magazines into modded weapons (JCA, SOG, GM)
 - Allowed loading modded pylons onto vanilla aircraft (CUP, RHS)
-- Allowed attaching RHS grips on NIArms weaponry
-- Allowed aimed usage of NVGs with modded optics (RHSUSAF)
+- ~~Allowed attaching RHS grips on NIArms weaponry~~
+- ~~Allowed aimed usage of NVGs with modded optics (RHSUSAF)~~
 
 ## Capacity Changes
 
@@ -29,6 +29,7 @@ An Arma 3 mod for the 420th Delta community.
 | Farmer Outfit           |       20 |  80 |     4x |
 | Field Pack              |      200 | 320 |   1.6x |
 | Formal Suit             |       20 |  80 |     4x |
+| Kitbag                  |      280 | 320 |  1.14x |
 | Leg Strap Bag (Back)    |       80 | 320 |     4x |
 | Leg Strap Bag (Vest)    |       80 | 300 |  3.75x |
 | Messenger Bag           |      140 | 320 |  2.29x |
@@ -37,11 +38,11 @@ An Arma 3 mod for the 420th Delta community.
 | Sports Backpack         |      240 | 320 |  1.33x |
 | Tracksuit               |       40 | 160 |     4x |
 
-### CUP Weapons
+~~### CUP Weapons ~~
 
-| Item                    | Original | New | Ratio  |
-| ----------------------- | --------:| ---:| ------:|
-| First Aid Backpack      |      280 | 320 |  1.14x |
+~~| Item                    | Original | New | Ratio  |~~
+~~| ----------------------- | --------:| ---:| ------:|~~
+~~| First Aid Backpack      |      280 | 320 |  1.14x |~~
 
 ## Installation
 
