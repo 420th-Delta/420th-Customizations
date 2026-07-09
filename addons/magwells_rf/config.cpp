@@ -44,13 +44,13 @@ class CfgPatches {
 // class PointerSlot;
 class CfgMagazineWells {
     class ASH12_127x55_RF {
-        fdelta_magwells_magazines[] = {
+        fdelta_magwells_rf_magazines[] = {
             "10Rnd_50BW_Mag_F",
             "10Rnd_127x54_Mag",
         };
     };
     class Pistol_9x19_RF {
-        fdelta_magwells_magazines[] = {
+        fdelta_magwells_rf_magazines[] = {
             "16Rnd_9x21_Mag",
             "16Rnd_9x21_red_Mag",
             "16Rnd_9x21_green_Mag",
@@ -62,7 +62,7 @@ class CfgMagazineWells {
         };
     };
     class Pistol_DEagle_RF {
-        fdelta_magwells_magazines[] = {
+        fdelta_magwells_rf_magazines[] = {
             "11Rnd_45ACP_Mag",
         };
     };

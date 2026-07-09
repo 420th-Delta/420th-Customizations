@@ -44,7 +44,7 @@ class CfgPatches {
 // class PointerSlot;
 class CfgMagazineWells {
     class EF_Diplomat_9x19 {
-        fdelta_magwells_magazines[] = {
+        fdelta_magwells_ef_magazines[] = {
             "16Rnd_9x21_Mag",
             "16Rnd_9x21_red_Mag",
             "16Rnd_9x21_green_Mag",

@@ -52,7 +52,7 @@ class CfgMagazineWells {
     //add this since JCA guns cannot use these magazines
     class STANAG_556x45
     {
-         fdelta_magwells_magazine_1[] = {
+         fdelta_magwells_ws_magazines[] = {
             "75Rnd_556x45_Stanag_lxWS",
             "75Rnd_556x45_Stanag_green_lxWS",
             "75Rnd_556x45_Stanag_red_lxWS",
@@ -62,12 +62,12 @@ class CfgMagazineWells {
          };
     };
     class 556x45_Velko {
-        fdelta_magwells_magazines[] = {
+        fdelta_magwells_ws_magazines[] = {
             MAGAZINES_556x45
         };
     };
     class SLR_762x51 {
-        fdelta_magwells_magazines[] = {
+        fdelta_magwells_ws_magazines[] = {
             "10Rnd_Mk14_762x51_Mag",
             "20Rnd_762x51_Mag",
         };
