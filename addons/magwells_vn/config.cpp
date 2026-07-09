@@ -7,6 +7,7 @@ class CfgPatches {
         requiredVersion = 2.20;
         requiredAddons[] = {
             "cba_jam",
+            "fdelta_magwells",
             "fdelta_main",
             "weapons_f_vietnam_c",
             "weapons_f_vietnam_03_c",

@@ -6,6 +6,7 @@ class CfgPatches {
 
         requiredVersion = 2.20;
         requiredAddons[] = {
+            "fdelta_magwells",
             "fdelta_main",
             "hlcweapons_core",
             "hlcweapons_SCAR",

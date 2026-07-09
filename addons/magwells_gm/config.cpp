@@ -1,3 +1,5 @@
+#include "\z\fdelta\addons\magwells\magazines.hpp"
+
 class CfgPatches {
     class fdelta_magwells_gm {
         name = "420th Customizations - Global Mobilization Weapons Compatibility";
@@ -6,6 +8,7 @@ class CfgPatches {
 
         requiredVersion = 2.20;
         requiredAddons[] = {
+            "fdelta_magwells",
             "fdelta_main",
             "gm_weapons_rifles_g11",
             "gm_weapons_rifles_hk33",
@@ -19,26 +22,6 @@ class CfgPatches {
         units[] = {};
     };
 };
-
-#define MAGAZINES_556x45 \
-    "30Rnd_556x45_Stanag", \
-    "30Rnd_556x45_Stanag_green", \
-    "30Rnd_556x45_Stanag_red", \
-    "30Rnd_556x45_Stanag_Tracer_Red", \
-    "30Rnd_556x45_Stanag_Tracer_Green", \
-    "30Rnd_556x45_Stanag_Tracer_Yellow", \
-    "30Rnd_556x45_Stanag_Sand", \
-    "30Rnd_556x45_Stanag_Sand_green", \
-    "30Rnd_556x45_Stanag_Sand_red", \
-    "30Rnd_556x45_Stanag_Sand_Tracer_Red", \
-    "30Rnd_556x45_Stanag_Sand_Tracer_Green", \
-    "30Rnd_556x45_Stanag_Sand_Tracer_Yellow", \
-    "150Rnd_556x45_Drum_Green_Mag_F", \
-    "150Rnd_556x45_Drum_Green_Mag_Tracer_F", \
-    "150Rnd_556x45_Drum_Sand_Mag_F", \
-    "150Rnd_556x45_Drum_Sand_Mag_Tracer_F", \
-    "150Rnd_556x45_Drum_Mag_F", \
-    "150Rnd_556x45_Drum_Mag_Tracer_F",
 
 class CfgMagazineWells {
     class gm_magazineWell_473x33mm_g11 {
