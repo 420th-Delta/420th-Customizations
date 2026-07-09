@@ -7,6 +7,7 @@ class CfgPatches {
         requiredVersion = 2.20;
         requiredAddons[] = {
             "cba_jam",
+            "fdelta_main",
             "RF_Weapons_Rifles_ASH12",
         };
         skipWhenMissingDependencies = 1;

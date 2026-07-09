@@ -6,6 +6,7 @@ class CfgPatches {
 
         requiredVersion = 2.20;
         requiredAddons[] = {
+            "fdelta_main",
             "gm_weapons_rifles_g11",
             "gm_weapons_rifles_hk33",
             "gm_weapons_rifles_sg550",

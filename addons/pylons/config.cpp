@@ -28,6 +28,7 @@ class CfgPatches {
             "A3_Air_F_Jets_Plane_Fighter_04",
             "A3_Air_F_Jets_UAV_05",
             "A3_Air_F_Orange",
+            "fdelta_main",
         };
         skipWhenMissingDependencies = 0;
 

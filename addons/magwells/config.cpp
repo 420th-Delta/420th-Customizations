@@ -7,6 +7,7 @@ class CfgPatches {
         requiredVersion = 2.20;
         requiredAddons[] = {
             "cba_jam",
+            "fdelta_main",
         };
         skipWhenMissingDependencies = 1;
         skipWhenAnyAddonPresent[] = {"vmagcompatibility"};

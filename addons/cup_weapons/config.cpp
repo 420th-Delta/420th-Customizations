@@ -7,6 +7,7 @@ class CfgPatches {
         requiredVersion = 2.20;
         requiredAddons[] = {
             "CUP_Weapons_Backpacks",
+            "fdelta_main",
         };
         skipWhenMissingDependencies = 1;
 

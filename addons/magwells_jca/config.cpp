@@ -7,6 +7,7 @@ class CfgPatches {
         requiredVersion = 2.20;
         requiredAddons[] = {
             "cba_jam",
+            "fdelta_main",
             "Sounds_F_JCA_IA",
         };
         skipWhenMissingDependencies = 1;

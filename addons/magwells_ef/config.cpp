@@ -8,6 +8,7 @@ class CfgPatches {
         requiredAddons[] = {
             "cba_jam",
             "EF_Weapons",
+            "fdelta_main",
         };
         skipWhenMissingDependencies = 1;
 

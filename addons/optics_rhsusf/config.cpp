@@ -6,6 +6,7 @@ class CfgPatches {
 
         requiredVersion = 2.20;
         requiredAddons[] = {
+            "fdelta_main",
             "rhsusf_c_weapons",
         };
         skipWhenMissingDependencies = 1;
