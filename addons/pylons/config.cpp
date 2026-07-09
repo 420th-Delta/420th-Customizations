@@ -410,7 +410,7 @@ class CfgVehicles {
             };
         };
     };
-    class Heli_Attack_02_base_F : Helicopter_Base_H {
+    class Heli_Attack_02_base_F : Helicopter_Base_F {
         class Components;
     };
     class Heli_Attack_02_dynamicLoadout_base_F : Heli_Attack_02_base_F {
