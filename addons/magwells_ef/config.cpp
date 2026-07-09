@@ -58,20 +58,20 @@ class CfgMagazineWells {
             "30Rnd_9x21_Mag_SMG_02_Tracer_Yellow",
             "30Rnd_9x21_Mag_SMG_02_Tracer_Green",
         };
-    };     
+    };
 };
 class CfgWeapons {
-	class InventoryItem_Base_F {};
-	class InventoryOpticsItem_Base_F: InventoryItem_Base_F {};
-	class Default {};
-	class ItemCore: Default {};
-	class ef_optic_mbs: ItemCore {
-		class ItemInfo: InventoryOpticsItem_Base_F {
-			class OpticsModes {
-				class MBSScope {
+    class InventoryItem_Base_F {};
+    class InventoryOpticsItem_Base_F: InventoryItem_Base_F {};
+    class Default {};
+    class ItemCore: Default {};
+    class ef_optic_mbs: ItemCore {
+        class ItemInfo: InventoryOpticsItem_Base_F {
+            class OpticsModes {
+                class MBSScope {
                     visionMode[] = {};
                 };
-			};
-		};
-	}; 
+            };
+        };
+    };
 };
