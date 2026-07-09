@@ -115,25 +115,25 @@ class CfgWeapons {
         class vn_ugl;
         class vn_m203_muzzle : vn_ugl {
             magazineWell[] = {
-                "CBA_40mm_M203"
+                "CBA_40mm_M203",
             };
         };
         class vn_m79_muzzle : vn_ugl {
             magazineWell[] = {
-                "CBA_40mm_M203"
+                "CBA_40mm_M203",
             };
         };
     };
     class vn_smg : vn_rifle {
             magazineWell[] = {
-                "CBA_9x19_ScorpionEvo3"
+                "CBA_9x19_ScorpionEvo3",
             };
     };
     class vn_pps52 : vn_smg {
     };
     class vn_mc10 : vn_pps52 {
             magazineWell[] = {
-                "CBA_9x19_ScorpionEvo3"
+                "CBA_9x19_ScorpionEvo3",
             };
     };
     class vn_m63a : vn_rifle {
@@ -157,7 +157,7 @@ class CfgWeapons {
             "150Rnd_556x45_Drum_Sand_Mag_F",
             "150Rnd_556x45_Drum_Sand_Mag_Tracer_F",
             "150Rnd_556x45_Drum_Mag_F",
-            "150Rnd_556x45_Drum_Mag_Tracer_F"
+            "150Rnd_556x45_Drum_Mag_Tracer_F",
         };
     };
     class vn_m63a_lmg : vn_rifle {
@@ -210,7 +210,7 @@ class CfgWeapons {
     class vn_rpd : vn_lmg {
         magazineWell[] = {
             "CBA_762x54R_LINKS",
-            "CBA_762x51_LINKS"
+            "CBA_762x51_LINKS",
 
         };
     };

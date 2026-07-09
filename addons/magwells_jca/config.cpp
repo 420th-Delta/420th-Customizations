@@ -71,7 +71,7 @@ class CfgMagazineWells {
             "30Rnd_45ACP_Mag_SMG_01",
             "30Rnd_45ACP_Mag_SMG_01_tracer_green",
             "30Rnd_45ACP_Mag_SMG_01_Tracer_Red",
-            "30Rnd_45ACP_Mag_SMG_01_Tracer_Yellow"
+            "30Rnd_45ACP_Mag_SMG_01_Tracer_Yellow",
         };
     };
     class JCA_AWM_338LM {

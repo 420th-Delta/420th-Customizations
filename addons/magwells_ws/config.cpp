@@ -58,7 +58,7 @@ class CfgMagazineWells {
             "75Rnd_556x45_Stanag_red_lxWS",
             "75Rnd_556x45_Stanag_camo_lxWS",
             "75Rnd_556x45_Stanag_green_camo_lxWS",
-            "75Rnd_556x45_Stanag_red_camo_lxWS"
+            "75Rnd_556x45_Stanag_red_camo_lxWS",
          };
     };
     class 556x45_Velko {
