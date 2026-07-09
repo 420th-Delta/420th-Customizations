@@ -65,6 +65,5 @@ class CfgMagazineWells {
         fdelta_magwells_magazines[] = {
             "11Rnd_45ACP_Mag",
         };
-    };        
+    };
 };
-

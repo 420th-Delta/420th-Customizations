@@ -46,7 +46,7 @@ class CfgVehicles {
         displayName = "Kitbag (Digi)";
         hiddenSelectionsTextures[] = {"\a3\weapons_f\ammoboxes\bags\data\backpack_fast_digi_co.paa"};
         scope = 2;
-    };        
+    };
 };
 
 class CfgWeapons {

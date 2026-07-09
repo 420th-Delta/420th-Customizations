@@ -71,6 +71,5 @@ class CfgMagazineWells {
             "10Rnd_Mk14_762x51_Mag",
             "20Rnd_762x51_Mag",
         };
-    };    
+    };
 };
-
