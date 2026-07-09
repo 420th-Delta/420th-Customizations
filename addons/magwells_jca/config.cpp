@@ -1,7 +1,7 @@
 #include "\z\fdelta\addons\magwells\magazines.hpp"
 
 class CfgPatches {
-    class fdelta_magwells_ef {
+    class fdelta_magwells_jca {
         name = "420th Customizations - Expeditionary Forces Compatibility";
         author = "ol1034, thegamecracks";
         url = "https://github.com/thegamecracks/420th-Customizations";
