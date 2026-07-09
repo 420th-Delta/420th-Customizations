@@ -52,7 +52,7 @@ class CfgPatches {
     "UGL_FlareGreen_Illumination_F", \
     "UGL_FlareRed_Illumination_F", \
     "UGL_FlareWhite_Illumination_F", \
-    "UGL_FlareYellow_Illumination_F", \
+    "UGL_FlareYellow_Illumination_F",
 
 #define MAGAZINES_3GL \
     "3Rnd_HE_Grenade_shell", \
