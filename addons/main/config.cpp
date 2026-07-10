@@ -40,11 +40,13 @@ class CfgVehicles {
     class B_Kitbag_Black_420 : B_Kitbag_Base {
         displayName = "Kitbag (Black)";
         hiddenSelectionsTextures[] = {"\a3\weapons_f\ammoboxes\bags\data\backpack_fast_blk_co.paa"};
+        picture = "\z\fdelta\addons\main\data\ui\icon_B_Kitbag_Black_420_ca.paa";
         scope = 2;
     };
     class B_Kitbag_Digi_420 : B_Kitbag_Base {
         displayName = "Kitbag (Digi)";
         hiddenSelectionsTextures[] = {"\a3\weapons_f\ammoboxes\bags\data\backpack_fast_digi_co.paa"};
+        picture = "\z\fdelta\addons\main\data\ui\icon_B_Kitbag_Digi_420_ca.paa";
         scope = 2;
     };
 };
