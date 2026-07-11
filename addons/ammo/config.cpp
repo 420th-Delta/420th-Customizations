@@ -8,7 +8,7 @@ class CfgPatches {
         requiredAddons[] = {
             "A3_Weapons_F_Jets",
         };
-        skipWhenMissingDependencies = 0;
+        skipWhenMissingDependencies = 1;
 
         units[] = {};
         weapons[] = {};
