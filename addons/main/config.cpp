@@ -12,7 +12,10 @@ class CfgPatches {
         };
         skipWhenMissingDependencies = 0;
 
-        units[] = {};
+        units[] = {
+            "B_Kitbag_Black_420",
+            "B_Kitbag_Digi_420",
+        };
     };
 };
 
