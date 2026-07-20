@@ -60,11 +60,7 @@ class CfgMagazineWells {
     };
 };
 class CfgWeapons {
-	class Default {};
-    class PistolCore : Default {};
-	class Pistol : PistolCore {};
-	class Pistol_Base_F : Pistol {};
-	class gm_pistol_base : Pistol_Base_F {};
+	class gm_pistol_base;
 	class gm_p2a1_base : gm_pistol_base {
         magazineWell[] += {"UGL_40x36"};
     };
