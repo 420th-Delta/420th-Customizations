@@ -72,6 +72,13 @@
   };
   ```
 
+- Colons in class inheritance should have a leading and trailing space:
+
+  ```cpp
+  // Good:
+  class Child : Parent {};
+  ```
+
 ## SQF Best Practices
 
 - Declaring functions in [`CfgFunctions`] should always be preferred over
