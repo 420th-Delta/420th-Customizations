@@ -30,8 +30,7 @@ class CfgPatches {
 class CfgMagazineWells {
     class JCA_SR_762x51 {
         fdelta_magwells_jca_magazines[] = {
-            "10Rnd_Mk14_762x51_Mag",
-            "20Rnd_762x51_Mag",
+            MAGAZINES_762x51
         };
     };
     class JCA_HK437_300BLK {
@@ -41,10 +40,9 @@ class CfgMagazineWells {
     };
     class JCA_SCAR_762x51 {
         fdelta_magwells_jca_magazines[] = {
-            "10Rnd_Mk14_762x51_Mag",
-            "20Rnd_762x51_Mag",
+            MAGAZINES_762x51
         };
-    };    
+    };
     class JCA_MP5_9x19 {
         fdelta_magwells_jca_magazines[] = {
             "30Rnd_9x21_Mag",

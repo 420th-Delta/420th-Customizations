@@ -18,6 +18,10 @@
     "150Rnd_556x45_Drum_Mag_F", \
     "150Rnd_556x45_Drum_Mag_Tracer_F",
 
+#define MAGAZINES_762x51 \
+    "10Rnd_Mk14_762x51_Mag", \
+    "20Rnd_762x51_Mag",
+
 #define MAGAZINES_GL \
     "1Rnd_HE_Grenade_shell", \
     "1Rnd_Smoke_Grenade_shell", \

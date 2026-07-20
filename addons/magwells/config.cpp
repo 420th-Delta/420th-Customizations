@@ -149,56 +149,47 @@ class CfgMagazineWells {
     };
     class CBA_762x51_SIGAMT {
         fdelta_magwells_magazines[] = {
-            "10Rnd_Mk14_762x51_Mag",
-            "20Rnd_762x51_Mag",
+            MAGAZINES_762x51
         };
     };
     class CBA_762x51_SCAR {
         fdelta_magwells_magazines[] = {
-            "10Rnd_Mk14_762x51_Mag",
-            "20Rnd_762x51_Mag",
+            MAGAZINES_762x51
         };
     };
     class CBA_762x51_SCAR_EGLM {
         fdelta_magwells_magazines[] = {
-            "10Rnd_Mk14_762x51_Mag",
-            "20Rnd_762x51_Mag",
+            MAGAZINES_762x51
         };
     };
     class CBA_762x51_G3 {
         fdelta_magwells_magazines[] = {
-            "10Rnd_Mk14_762x51_Mag",
-            "20Rnd_762x51_Mag",
+            MAGAZINES_762x51
         };
     };
     class CBA_762x51_FAL {
         fdelta_magwells_magazines[] = {
-            "10Rnd_Mk14_762x51_Mag",
-            "20Rnd_762x51_Mag",
+            MAGAZINES_762x51
         };
     };
     class CBA_762x51_HK417 {
         fdelta_magwells_magazines[] = {
-            "10Rnd_Mk14_762x51_Mag",
-            "20Rnd_762x51_Mag",
+            MAGAZINES_762x51
         };
     };
     class CBA_762x51_AR10 {
         fdelta_magwells_magazines[] = {
-            "10Rnd_Mk14_762x51_Mag",
-            "20Rnd_762x51_Mag",
+            MAGAZINES_762x51
         };
     };
     class CBA_3006_Spring {
         fdelta_magwells_magazines[] = {
-            "10Rnd_Mk14_762x51_Mag",
-            "20Rnd_762x51_Mag",
+            MAGAZINES_762x51
         };
     };
     class CBA_75x55_STGW57 {
         fdelta_magwells_magazines[] = {
-            "10Rnd_Mk14_762x51_Mag",
-            "20Rnd_762x51_Mag",
+            MAGAZINES_762x51
         };
     };
     class CBA_300WM_AI {

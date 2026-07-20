@@ -53,8 +53,7 @@ class CfgMagazineWells {
     };
     class SLR_762x51 {
         fdelta_magwells_ws_magazines[] = {
-            "10Rnd_Mk14_762x51_Mag",
-            "20Rnd_762x51_Mag",
+            MAGAZINES_762x51
         };
     };
 };
