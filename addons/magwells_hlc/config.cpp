@@ -1,3 +1,5 @@
+#include "\z\fdelta\addons\magwells\magazines.hpp"
+
 class CfgPatches {
     class fdelta_magwells_hlc {
         name = "420th Customizations - NIArms Weapons Compatibility";

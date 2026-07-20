@@ -1,3 +1,5 @@
+#include "\z\fdelta\addons\magwells\magazines.hpp"
+
 class CfgPatches {
     class fdelta_magwells_vn {
         name = "420th Customizations - SOG Weapons Compatibility";
