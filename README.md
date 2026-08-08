@@ -26,6 +26,7 @@ An Arma 3 mod for the 420th Delta community.
 | Casual Clothes (AoW)    |       20 |  80 |     4x |
 | Combat Fatigues (LDF)   |       40 | 120 |     3x |
 | CBRN Suit               |       30 | 120 |     4x |
+| CTRG Stealth Uniform    |       40 | 120 |     3x |
 | Everyday Backpack       |      240 | 320 |  1.33x |
 | Farmer Outfit           |       20 |  80 |     4x |
 | Field Pack              |      200 | 320 |   1.6x |
