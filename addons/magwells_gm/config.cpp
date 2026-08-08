@@ -60,11 +60,11 @@ class CfgMagazineWells {
     };
 };
 class CfgWeapons {
-	class gm_pistol_base;
-	class gm_p2a1_base : gm_pistol_base {
+    class gm_pistol_base;
+    class gm_p2a1_base : gm_pistol_base {
         magazineWell[] += {"UGL_40x36"};
     };
-	class gm_lp1_base : gm_pistol_base {
+    class gm_lp1_base : gm_pistol_base {
         magazineWell[] += {"UGL_40x36"};
     };
 };
