@@ -28,80 +28,6 @@ class CfgPatches {
 // class MuzzleSlot;
 // class PointerSlot;
 class CfgMagazineWells {
-    class JCA_SR_762x51 {
-        fdelta_magwells_jca_magazines[] = {
-            MAGAZINES_762x51
-        };
-    };
-    class JCA_HK437_300BLK {
-        fdelta_magwells_jca_magazines[] = {
-            MAGAZINES_556x45
-        };
-    };
-    class JCA_SCAR_762x51 {
-        fdelta_magwells_jca_magazines[] = {
-            MAGAZINES_762x51
-        };
-    };
-    class JCA_MP5_9x19 {
-        fdelta_magwells_jca_magazines[] = {
-            "30Rnd_9x21_Mag",
-            "30Rnd_9x21_Red_Mag",
-            "30Rnd_9x21_Yellow_Mag",
-            "30Rnd_9x21_Green_Mag",
-            "30Rnd_9x21_Mag_SMG_02",
-            "30Rnd_9x21_Mag_SMG_02_Tracer_Red",
-            "30Rnd_9x21_Mag_SMG_02_Tracer_Yellow",
-            "30Rnd_9x21_Mag_SMG_02_Tracer_Green",
-        };
-    };
-    class JCA_UMP_45ACP {
-        fdelta_magwells_jca_magazines[] = {
-            "30Rnd_45ACP_Mag_SMG_01",
-            "30Rnd_45ACP_Mag_SMG_01_tracer_green",
-            "30Rnd_45ACP_Mag_SMG_01_Tracer_Red",
-            "30Rnd_45ACP_Mag_SMG_01_Tracer_Yellow",
-        };
-    };
-    class JCA_AWM_338LM {
-        fdelta_magwells_jca_magazines[] = {
-            "10Rnd_338_Mag",
-        };
-    };
-    class JCA_M107_127x99 {
-        fdelta_magwells_jca_magazines[] = {
-            "5Rnd_127x108_Mag",
-            "5Rnd_127x108_APDS_Mag",
-        };
-    };
-    class JCA_G17_9x19 {
-        fdelta_magwells_jca_magazines[] = {
-            "16Rnd_9x21_Mag",
-            "16Rnd_9x21_red_Mag",
-            "16Rnd_9x21_green_Mag",
-            "16Rnd_9x21_yellow_Mag",
-            "30Rnd_9x21_Mag",
-            "30Rnd_9x21_Red_Mag",
-            "30Rnd_9x21_Yellow_Mag",
-            "30Rnd_9x21_Green_Mag",
-        };
-    };
-    class JCA_M9A1_9x19 {
-        fdelta_magwells_jca_magazines[] = {
-            "16Rnd_9x21_Mag",
-            "16Rnd_9x21_red_Mag",
-            "16Rnd_9x21_green_Mag",
-            "16Rnd_9x21_yellow_Mag",
-        };
-    };
-    class JCA_P226_9x19 {
-        fdelta_magwells_jca_magazines[] = {
-            "16Rnd_9x21_Mag",
-            "16Rnd_9x21_red_Mag",
-            "16Rnd_9x21_green_Mag",
-            "16Rnd_9x21_yellow_Mag",
-        };
-    };
     class JCA_P320_9x19 {
         fdelta_magwells_jca_magazines[] = {
             "16Rnd_9x21_Mag",
@@ -110,15 +36,65 @@ class CfgMagazineWells {
             "16Rnd_9x21_yellow_Mag",
         };
     };
-    class JCA_Mk23_45ACP {
-        fdelta_magwells_jca_magazines[] = {
-            "11Rnd_45ACP_Mag",
-        };
+};
+class CfgWeapons {
+    class Pistol_Base_F;
+    class Launcher_Base_F;
+    class Rifle_Base_F;
+    class Rifle_Short_Base_F: Rifle_Base_F {};
+    class Rifle_Long_Base_F: Rifle_Base_F {};
+    class JCA_smg_MP5_base_F: Rifle_Short_Base_F {
+        magazineWell[] += {"CBA_9x19_MP5"};
     };
-    class JCA_MK153 {
-        fdelta_magwells_jca_magazines[] = {
-            "RPG32_F",
-            "RPG32_HE_F",
-        };
+    class JCA_smg_UMP_base_F: Rifle_Short_Base_F {
+        magazineWell[] += {"CBA_45ACP_UMP"};
+    };    
+    class JCA_arifle_HK433_base_F: Rifle_Base_F {
+        magazineWell[] += {"CBA_556x45_STANAG","CBA_556x45_STANAG_L","CBA_556x45_STANAG_XL","CBA_556x45_STANAG_2D","CBA_556x45_STANAG_2D_XL"};
+    };
+    class JCA_arifle_HK437_base_F: Rifle_Base_F {
+        magazineWell[] += {"CBA_300BLK_STANAG"};
+    };    
+    class JCA_arifle_M16A4_base_F: Rifle_Base_F {
+        magazineWell[] += {"CBA_556x45_STANAG","CBA_556x45_STANAG_L","CBA_556x45_STANAG_XL","CBA_556x45_STANAG_2D","CBA_556x45_STANAG_2D_XL"};
+    };    
+    class JCA_arifle_M4A1_base_F: Rifle_Base_F {
+        magazineWell[] += {"CBA_556x45_STANAG","CBA_556x45_STANAG_L","CBA_556x45_STANAG_XL","CBA_556x45_STANAG_2D","CBA_556x45_STANAG_2D_XL"};
+    };
+    class JCA_arifle_M4A4_base_F: Rifle_Base_F {
+        magazineWell[] += {"CBA_556x45_STANAG","CBA_556x45_STANAG_L","CBA_556x45_STANAG_XL","CBA_556x45_STANAG_2D","CBA_556x45_STANAG_2D_XL"};
+    };
+    class JCA_arifle_SCAR_L_base_F: Rifle_Base_F {
+        magazineWell[] += {"CBA_556x45_STANAG","CBA_556x45_STANAG_L","CBA_556x45_STANAG_XL","CBA_556x45_STANAG_2D","CBA_556x45_STANAG_2D_XL"};
+    };
+    class JCA_arifle_SCAR_H_base_F: Rifle_Base_F {
+        magazineWell[] += {"CBA_762x51_SCAR"}; 
+    };
+    class JCA_arifle_SR10_base_F: Rifle_Base_F {
+        magazineWell[] += {"CBA_762x51_AR10"}; 
+    };    
+    class JCA_arifle_SR25_base_F: Rifle_Base_F {
+        magazineWell[] += {"CBA_762x51_AR10"}; 
+    };        
+    class JCA_srifle_AWM_base_F: Rifle_Long_Base_F {
+        magazineWell[] += {"CBA_338LM_AI"}; 
+    };    
+    class JCA_srifle_M107_base_F: Rifle_Long_Base_F {
+        magazineWell[] += {"CBA_50BMG_M107"}; 
+    };
+    class JCA_hgun_G17_base_F: Pistol_Base_F {
+        magazineWell[] += {"CBA_9x19_Glock_Full"}; 
+    };
+    class JCA_hgun_M9A1_base_F: Pistol_Base_F {
+        magazineWell[] += {"CBA_9x19_M9"}; 
+    };
+    class JCA_hgun_Mk23_base_F: Pistol_Base_F {
+        magazineWell[] += {"CBA_45ACP_USP"}; 
+    };
+    class JCA_hgun_P226_base_F: Pistol_Base_F {
+        magazineWell[] += {"CBA_9x19_P226"}; 
+    };
+    class JCA_launch_Mk153_base_F: Launcher_Base_F {
+        magazineWell[] += {"CBA_SMAW"}; 
     };
 };

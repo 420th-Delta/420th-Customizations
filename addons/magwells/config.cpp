@@ -79,6 +79,11 @@ class CfgMagazineWells {
             MAGAZINES_556x45
         };
     };
+    class CBA_300BLK_STANAG {
+        fdelta_magwells_magazines[] = {
+            MAGAZINES_556x45
+        };
+    };
     class CBA_762x39_AK {
         BI_akmags[] = {
             "30Rnd_762x39_AK12_Mag_F",
@@ -198,12 +203,46 @@ class CfgMagazineWells {
             "7Rnd_408_Mag",
         };
     };
+    class CBA_338LM_AI {
+        fdelta_magwells_magazines[] = {
+            "10Rnd_338_Mag",
+            "7Rnd_408_Mag",
+        };
+    };    
     class CBA_300WM_AICS {
         fdelta_magwells_magazines[] = {
             "10Rnd_338_Mag",
             "7Rnd_408_Mag",
         };
     };
+    class CBA_9x19_Glock_Full {
+        fdelta_magwells_magazines[] = {
+            "16Rnd_9x21_Mag",
+            "16Rnd_9x21_red_Mag",
+            "16Rnd_9x21_green_Mag",
+            "16Rnd_9x21_yellow_Mag",
+            "30Rnd_9x21_Mag",
+            "30Rnd_9x21_Red_Mag",
+            "30Rnd_9x21_Yellow_Mag",
+            "30Rnd_9x21_Green_Mag",
+        };
+    };    
+    class CBA_9x19_M9 {
+        fdelta_magwells_magazines[] = {
+            "16Rnd_9x21_Mag",
+            "16Rnd_9x21_red_Mag",
+            "16Rnd_9x21_green_Mag",
+            "16Rnd_9x21_yellow_Mag",
+        };
+    };    
+    class CBA_9x19_P226 {
+        fdelta_magwells_magazines[] = {
+            "16Rnd_9x21_Mag",
+            "16Rnd_9x21_red_Mag",
+            "16Rnd_9x21_green_Mag",
+            "16Rnd_9x21_yellow_Mag",
+        };
+    };       
     class CBA_9x19_Vityaz {
         fdelta_magwells_magazines[] = {
             "30Rnd_9x21_Mag_SMG_02",
@@ -240,6 +279,11 @@ class CfgMagazineWells {
             "30Rnd_9x21_Green_Mag",
         };
     };
+    class CBA_45ACP_USP {
+        fdelta_magwells_magazines[] = {
+            "11Rnd_45ACP_Mag",
+        };
+    };    
     class CBA_45ACP_Grease {
         fdelta_magwells_magazines[] = {
             "30Rnd_45ACP_Mag_SMG_01",
@@ -256,6 +300,14 @@ class CfgMagazineWells {
             "30Rnd_45ACP_Mag_SMG_01_Tracer_Yellow",
         };
     };
+     class CBA_45ACP_UMP {
+        fdelta_magwells_magazines[] = {
+            "30Rnd_45ACP_Mag_SMG_01",
+            "30Rnd_45ACP_Mag_SMG_01_tracer_green",
+            "30Rnd_45ACP_Mag_SMG_01_Tracer_Red",
+            "30Rnd_45ACP_Mag_SMG_01_Tracer_Yellow",
+        };
+    };   
     class CBA_46x30_MP7 {
         fdelta_magwells_magazines[] = {
             "30Rnd_45ACP_Mag_SMG_01",
@@ -312,5 +364,11 @@ class CfgMagazineWells {
             MAGAZINES_GL
             MAGAZINES_3GL
         };
+    };
+    class CBA_SMAW {
+        fdelta_magwells_magazines[] = {
+            "RPG32_F",
+            "RPG32_HE_F",
+        };        
     };
 };
