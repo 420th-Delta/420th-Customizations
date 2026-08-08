@@ -74,7 +74,7 @@ class CfgWeapons {
         class ItemInfo : UniformItem {
             containerClass = "Supply120"; // "Supply40"
         };
-    };    
+    };
     class U_B_CTRG_Soldier_2_F : Uniform_Base {
         class ItemInfo : UniformItem {
             containerClass = "Supply120"; // "Supply40"
@@ -89,7 +89,7 @@ class CfgWeapons {
         class ItemInfo : UniformItem {
             containerClass = "Supply120"; // "Supply40"
         };
-    };    
+    };
     class U_B_CTRG_Soldier_2_Arid_F : Uniform_Base {
         class ItemInfo : UniformItem {
             containerClass = "Supply120"; // "Supply40"
@@ -99,7 +99,7 @@ class CfgWeapons {
         class ItemInfo : UniformItem {
             containerClass = "Supply120"; // "Supply40"
         };
-    };                      
+    };
     class U_B_CBRN_Suit_01_MTP_F : Uniform_Base {
         class ItemInfo : UniformItem {
             containerClass = "Supply120"; // "Supply30"

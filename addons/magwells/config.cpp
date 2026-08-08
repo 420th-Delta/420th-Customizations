@@ -208,7 +208,7 @@ class CfgMagazineWells {
             "10Rnd_338_Mag",
             "7Rnd_408_Mag",
         };
-    };    
+    };
     class CBA_300WM_AICS {
         fdelta_magwells_magazines[] = {
             "10Rnd_338_Mag",
@@ -226,7 +226,7 @@ class CfgMagazineWells {
             "30Rnd_9x21_Yellow_Mag",
             "30Rnd_9x21_Green_Mag",
         };
-    };    
+    };
     class CBA_9x19_M9 {
         fdelta_magwells_magazines[] = {
             "16Rnd_9x21_Mag",
@@ -234,7 +234,7 @@ class CfgMagazineWells {
             "16Rnd_9x21_green_Mag",
             "16Rnd_9x21_yellow_Mag",
         };
-    };    
+    };
     class CBA_9x19_P226 {
         fdelta_magwells_magazines[] = {
             "16Rnd_9x21_Mag",
@@ -242,7 +242,7 @@ class CfgMagazineWells {
             "16Rnd_9x21_green_Mag",
             "16Rnd_9x21_yellow_Mag",
         };
-    };       
+    };
     class CBA_9x19_Vityaz {
         fdelta_magwells_magazines[] = {
             "30Rnd_9x21_Mag_SMG_02",
@@ -283,7 +283,7 @@ class CfgMagazineWells {
         fdelta_magwells_magazines[] = {
             "11Rnd_45ACP_Mag",
         };
-    };    
+    };
     class CBA_45ACP_Grease {
         fdelta_magwells_magazines[] = {
             "30Rnd_45ACP_Mag_SMG_01",
@@ -307,7 +307,7 @@ class CfgMagazineWells {
             "30Rnd_45ACP_Mag_SMG_01_Tracer_Red",
             "30Rnd_45ACP_Mag_SMG_01_Tracer_Yellow",
         };
-    };   
+    };
     class CBA_46x30_MP7 {
         fdelta_magwells_magazines[] = {
             "30Rnd_45ACP_Mag_SMG_01",
@@ -369,12 +369,12 @@ class CfgMagazineWells {
         fdelta_magwells_magazines[] = {
             "RPG32_F",
             "RPG32_HE_F",
-        };        
+        };
     };
 };
 class CfgWeapons {
     class Rifle_Base_F;
     class arifle_AK12_base_F: Rifle_Base_F {
         magazineWell[] += {"CBA_545x39_AK","CBA_545x39_RPK"};
-    };    
+    };
 };
