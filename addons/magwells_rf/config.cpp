@@ -11,6 +11,7 @@ class CfgPatches {
             "cba_jam",
             "fdelta_magwells",
             "fdelta_main",
+            "RF_Characters_Backpack",
             "RF_Weapons_Rifles_ASH12",
         };
         skipWhenMissingDependencies = 1;
@@ -50,5 +51,13 @@ class CfgMagazineWells {
         fdelta_magwells_rf_magazines[] = {
             "11Rnd_45ACP_Mag",
         };
+    };
+};
+
+// FIXME: separate this into another RF addon?
+class CfgVehicles {
+    class Bag_Base;
+    class B_DuffleBag_Base : Bag_Base {
+        maximumLoad = 480; // 320
     };
 };

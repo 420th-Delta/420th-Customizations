@@ -46,6 +46,12 @@ An Arma 3 mod for the 420th Delta community.
 | ----------------------- | --------:| ---:| ------:|
 | First Aid Backpack      |      280 | 320 |  1.14x |
 
+### Reaction Forces
+
+| Item                    | Original | New | Ratio  |
+| ----------------------- | --------:| ---:| ------:|
+| Duffel Bag              |      320 | 480 |   1.5x |
+
 ## Installation
 
 To build the mod from source, install [HEMTT] and run the following command:
