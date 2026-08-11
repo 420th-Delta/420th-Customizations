@@ -144,6 +144,18 @@ class CfgVehicles {
                             "B_ASRRAM_EJECTOR",
                             "DAR",
                             "DAGRM",
+                            "B_SHIEKER",
+                            "20MM_TWIN_CANNON",
+                            "CANNON_PODS_RF",
+                            "B_SIDEARM",
+                            "TITAN_NLOS_2RND",
+                            "vn_b_rocket_pylon_uh1c_01",                            
+                            "CUP_NATO_HELO_UH60",
+                            "CUP_NATO_HELO_LARGE",                            
+                            "RHS_HP_LONGBOW_RACK",
+                            "RHS_HP_FFAR_ARMY",
+                            "RHS_HP_AIM9_HELI_ARMY",
+                            "RHS_HP_ATAS_AH64",                            
                         };
                     };
                     class pylon2 : pylon1 {
@@ -156,6 +168,18 @@ class CfgVehicles {
                             "DAGR",
                             "DAGRM",
                             "B_GAU19_HELI_L",
+                            "B_SHIEKER",
+                            "20MM_TWIN_CANNON",
+                            "CANNON_PODS_RF",
+                            "B_SIDEARM",
+                            "TITAN_NLOS_2RND",
+                            "vn_b_rocket_pylon_uh1c_01",                            
+                            "CUP_NATO_HELO_UH60",
+                            "CUP_NATO_HELO_LARGE",                            
+                            "RHS_HP_LONGBOW_RACK",
+                            "RHS_HP_FFAR_ARMY",
+                            "RHS_HP_AIM9_HELI_ARMY",
+                            "RHS_HP_ATAS_AH64",                            
                         };
                     };
                     class pylon3 : pylon2 {
@@ -168,6 +192,18 @@ class CfgVehicles {
                             "DAGR",
                             "DAGRM",
                             "B_GAU19_HELI_R",
+                            "B_SHIEKER",
+                            "20MM_TWIN_CANNON",
+                            "CANNON_PODS_RF",
+                            "B_SIDEARM",
+                            "TITAN_NLOS_2RND",
+                            "vn_b_rocket_pylon_uh1c_01",                            
+                            "CUP_NATO_HELO_UH60",
+                            "CUP_NATO_HELO_LARGE",                            
+                            "RHS_HP_LONGBOW_RACK",
+                            "RHS_HP_FFAR_ARMY",
+                            "RHS_HP_AIM9_HELI_ARMY",
+                            "RHS_HP_ATAS_AH64",                            
                         };
                     };
                     class pylon4 : pylon1 {
