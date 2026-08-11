@@ -633,6 +633,7 @@ class CfgVehicles {
                             "B_BOMB_PYLON",
                             "B_SDB_QUAD_RAIL",
                             "B_GBU12_DUAL_RAIL",
+                            "B_FUELTANK_HELI",
                             "vn_b_rocket_pylon_f4_in",
                             "vn_b_rocket_pylon_f4_out",
                             "RHS_HP_FFAR_USAF",
@@ -657,6 +658,7 @@ class CfgVehicles {
                             "B_BOMB_PYLON",
                             "B_SDB_QUAD_RAIL",
                             "B_GBU12_DUAL_RAIL",
+                            "B_FUELTANK_HELI",
                             "vn_b_rocket_pylon_f4_in",
                             "vn_b_rocket_pylon_f4_out",                            
                             "RHS_HP_BOMB_500",
@@ -733,6 +735,7 @@ class CfgVehicles {
                             "B_BOMB_PYLON",
                             "B_SDB_QUAD_RAIL",
                             "B_GBU12_DUAL_RAIL",
+                            "B_FUELTANK_HELI",
                             "vn_b_rocket_pylon_f4_in",
                             "vn_b_rocket_pylon_f4_out",
                             "RHS_HP_FFAR_USAF",
@@ -757,6 +760,7 @@ class CfgVehicles {
                             "B_BOMB_PYLON",
                             "B_SDB_QUAD_RAIL",
                             "B_GBU12_DUAL_RAIL",
+                            "B_FUELTANK_HELI",
                             "vn_b_rocket_pylon_f4_in",
                             "vn_b_rocket_pylon_f4_out",                            
                             "RHS_HP_BOMB_500",
@@ -833,6 +837,7 @@ class CfgVehicles {
                             "O_KH25",
                             "O_KH58",
                             "UNI_SCALPEL",
+                            "B_FUELTANK_HELI",
                             "vn_o_missile_pylon",
                             "RHS_HP_UB16",
                             "RHS_HP_UB32",
@@ -856,6 +861,7 @@ class CfgVehicles {
                             "O_KH25",
                             "O_KH58",
                             "UNI_SCALPEL",
+                            "B_FUELTANK_HELI",
                             "vn_o_missile_pylon",
                             "RHS_HP_UB16",
                             "RHS_HP_UB32",
@@ -938,6 +944,7 @@ class CfgVehicles {
                             "O_KH25",
                             "O_KH58",
                             "UNI_SCALPEL",
+                            "B_FUELTANK_HELI",
                             "vn_o_missile_pylon",
                             "RHS_HP_UB16",
                             "RHS_HP_UB32",
@@ -961,6 +968,7 @@ class CfgVehicles {
                             "O_KH25",
                             "O_KH58",
                             "UNI_SCALPEL",
+                            "B_FUELTANK_HELI",
                             "vn_o_missile_pylon",
                             "RHS_HP_UB16",
                             "RHS_HP_UB32",
@@ -1002,6 +1010,9 @@ class CfgVehicles {
                             "B_BOMB_PYLON",
                             "B_GBU12",
                             "B_GBU12_DUAL_RAIL",
+                            "B_HARM_RAIL",
+                            "B_SDB_QUAD_RAIL",                            
+                            "B_FUELTANK_HELI",
                             "vn_b_rocket_pylon_f4_in",
                             "vn_b_rocket_pylon_f4_out",
                             "RHS_HP_AIM9_2x",
@@ -1035,6 +1046,7 @@ class CfgVehicles {
                             "B_GBU12_DUAL_RAIL",
                             "B_HARM_RAIL",
                             "B_SDB_QUAD_RAIL",
+                            "B_FUELTANK_HELI",
                             "vn_b_rocket_pylon_f4_in",
                             "vn_b_rocket_pylon_f4_out",
                             "RHS_HP_AIM9_2x",
@@ -1220,6 +1232,7 @@ class CfgVehicles {
                             "O_KAB250_BOMB",
                             "O_BOMB_PYLON",
                             "O_MISSILE_PYLON",
+                            "B_FUELTANK_HELI",
                             "vn_o_missile_pylon",
                             "RHS_HP_R27",
                             "RHS_HP_R77M",
@@ -1253,6 +1266,7 @@ class CfgVehicles {
                             "O_BOMB_PYLON",
                             "O_KH58",
                             "O_MISSILE_PYLON",
+                            "B_FUELTANK_HELI",
                             "vn_o_missile_pylon",
                             "RHS_HP_R27",
                             "RHS_HP_R77M",
@@ -1363,6 +1377,7 @@ class CfgVehicles {
                                 "I_AGM65_RAIL",
                                 "I_AGM65_DUAL_RAIL",
                                 "I_HARM_RAIL",
+                                "B_FUELTANK_HELI",
                                 "vn_b_rocket_pylon_f4_cl",
                                 "vn_b_rocket_pylon_f4_out",
                                 "RHS_HP_Hydra_USAF",
@@ -1390,6 +1405,7 @@ class CfgVehicles {
                                 "I_AGM65_RAIL",
                                 "I_AGM65_DUAL_RAIL",
                                 "I_HARM_RAIL",
+                                "B_FUELTANK_HELI",
                                 "vn_b_rocket_pylon_f4_cl",
                                 "vn_b_rocket_pylon_f4_out",
                                 "RHS_HP_Hydra_USAF",
@@ -1455,6 +1471,7 @@ class CfgVehicles {
                                 "I_AGM65_RAIL",
                                 "I_AGM65_DUAL_RAIL",
                                 "I_HARM_RAIL",
+                                "B_FUELTANK_HELI",
                                 "vn_b_rocket_pylon_f4_cl",
                                 "vn_b_rocket_pylon_f4_out",
                                 "RHS_HP_Hydra_USAF",
@@ -1482,6 +1499,7 @@ class CfgVehicles {
                                 "I_AGM65_RAIL",
                                 "I_AGM65_DUAL_RAIL",
                                 "I_HARM_RAIL",
+                                "B_FUELTANK_HELI",
                                 "vn_b_rocket_pylon_f4_cl",
                                 "vn_b_rocket_pylon_f4_out", 
                                 "RHS_HP_Hydra_USAF",
@@ -1496,11 +1514,12 @@ class CfgVehicles {
                             };
                     };
                     class pylons4 : pylons4 {
+                        maxweight = 1200;
                         hardpoints[] = {
                             "B_A143_BUZZARD_CENTER_PYLON",
+                            "vn_b_rocket_pylon_f4_cl",
                             "CUP_GSh23",
                             "RHS_HP_UPK23",
-                            "vn_b_rocket_pylon_f4_cl",
                         };
                     };
                     class pylons5 : pylons5 {
@@ -1586,6 +1605,7 @@ class CfgVehicles {
                             "B_BOMB_PYLON",
                             "B_MISSILE_PYLON",
                             "B_ZEPHYR",
+                            "B_FUELTANK_HELI",
                             "vn_b_rocket_pylon_f4_cl",
                             "vn_b_rocket_pylon_f4_out",
                             "RHS_HP_AIM9_2x",
@@ -1632,6 +1652,7 @@ class CfgVehicles {
                             "DAR",
                             "DAGRM",
                             "UNI_SCALPEL",
+                            "B_FUELTANK_HELI",
                             "vn_o_missile_pylon",
                             "RHS_HP_R60",
                             "RHS_HP_R73",
@@ -1652,36 +1673,7 @@ class CfgVehicles {
                         };
                     };
                     class PylonRight2 : PylonRight1 {
-                        hardpoints[] = {
-                            "O_MISSILE_PYLON",
-                            "O_BOMB_PYLON",
-                            "UNI_SCALPEL",
-                            "O_R73",
-                            "O_R77",
-                            "O_KAB250_BOMB",
-                            "O_KH25",
-                            "O_KH58",
-                            "DAR",
-                            "DAGRM",
-                            "UNI_SCALPEL",
-                            "vn_o_missile_pylon",
-                            "RHS_HP_R60",
-                            "RHS_HP_R73",
-                            "RHS_HP_R77",
-                            "RHS_HP_R77M",
-                            "RHS_HP_UB16",
-                            "RHS_HP_UB32",
-                            "RHS_HP_B8M1",
-                            "RHS_HP_B13L1",
-                            "RHS_HP_APU68M3_S24",
-                            "RHS_HP_O25L",
-                            "RHS_HP_KH25",
-                            "RHS_HP_KH29",
-                            "RHS_HP_Kh38",
-                            "RHS_HP_FAB250",
-                            "RHS_HP_KAB250",
-                            "RHS_HP_FAB500",
-                        };
+
                     };
                     class PylonLeft1 : PylonRight1 {
 
@@ -1710,6 +1702,7 @@ class CfgVehicles {
                             "DAR",
                             "DAGRM",
                             "UNI_SCALPEL",
+                            "B_FUELTANK_HELI",                            
                             "vn_o_missile_pylon",
                             "RHS_HP_R60",
                             "RHS_HP_R73",
@@ -1730,36 +1723,7 @@ class CfgVehicles {
                         };
                     };
                     class PylonLeft2 : PylonLeft1 {
-                        hardpoints[] = {
-                            "O_MISSILE_PYLON",
-                            "O_BOMB_PYLON",
-                            "UNI_SCALPEL",
-                            "O_R73",
-                            "O_R77",
-                            "O_KAB250_BOMB",
-                            "O_KH25",
-                            "O_KH58",
-                            "DAR",
-                            "DAGRM",
-                            "UNI_SCALPEL",
-                            "vn_o_missile_pylon",
-                            "RHS_HP_R60",
-                            "RHS_HP_R73",
-                            "RHS_HP_R77",
-                            "RHS_HP_R77M",
-                            "RHS_HP_UB16",
-                            "RHS_HP_UB32",
-                            "RHS_HP_B8M1",
-                            "RHS_HP_B13L1",
-                            "RHS_HP_APU68M3_S24",
-                            "RHS_HP_O25L",
-                            "RHS_HP_KH25",
-                            "RHS_HP_KH29",
-                            "RHS_HP_Kh38",
-                            "RHS_HP_FAB250",
-                            "RHS_HP_KAB250",
-                            "RHS_HP_FAB500",
-                        };
+
                     };
                     class PylonRight1 : PylonLeft1 {
 
