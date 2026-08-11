@@ -58,7 +58,7 @@ class CfgVehicles {
                         hardpoints[] = {
                             "B_BOMB_PYLON",
                             "B_FUELTANK_HELI",
-                            "SCALPEL_1RND_EJECTOR",
+                            "UNI_SCALPEL",
                             "B_ASRRAM_EJECTOR",
                             "DAR",
                             "DAGRM",
@@ -81,12 +81,13 @@ class CfgVehicles {
                         hardpoints[] = {
                             "B_BOMB_PYLON",
                             "B_FUELTANK_HELI",
-                            "SCALPEL_1RND_EJECTOR",
+                            "UNI_SCALPEL",
                             "B_ASRRAM_EJECTOR",
                             "DAR",
                             "DAGRM",
                             "B_SHIEKER",
                             "20MM_TWIN_CANNON",
+                            "B_GAU19_HELI_L",
                             "CANNON_PODS_RF",
                             "TITAN_NLOS_2RND",
                             "B_SIDEARM",
@@ -104,12 +105,13 @@ class CfgVehicles {
                         hardpoints[] = {
                             "B_BOMB_PYLON",
                             "B_FUELTANK_HELI",
-                            "SCALPEL_1RND_EJECTOR",
+                            "UNI_SCALPEL",
                             "B_ASRRAM_EJECTOR",
                             "DAR",
                             "DAGRM",
                             "B_SHIEKER",
                             "20MM_TWIN_CANNON",
+                            "B_GAU19_HELI_R",
                             "CANNON_PODS_RF",
                             "TITAN_NLOS_2RND",
                             "B_SIDEARM",
@@ -129,6 +131,50 @@ class CfgVehicles {
                 };
             };
         };
+    };
+    class Heli_Transport_01_DAP_base_F : Heli_Transport_01_pylons_base_F {
+         class Components : Components {
+            class TransportPylonsComponent {
+                class pylons {
+                    class pylon1 {
+                        hardpoints[] = {
+                            "B_BOMB_PYLON",
+                            "B_FUELTANK_HELI",
+                            "UNI_SCALPEL",
+                            "B_ASRRAM_EJECTOR",
+                            "DAR",
+                            "DAGRM",
+                        };
+                    };
+                    class pylon2 : pylon1 {
+                        hardpoints[] = {
+                            "B_BOMB_PYLON",
+                            "B_FUELTANK_HELI",
+                            "UNI_SCALPEL",
+                            "B_ASRRAM_EJECTOR",
+                            "DAR",
+                            "DAGR",
+                            "DAGRM",
+                            "B_GAU19_HELI_L",
+                        };
+                    };
+                    class pylon3 : pylon2 {
+                        hardpoints[] = {
+                            "B_BOMB_PYLON",
+                            "B_FUELTANK_HELI",
+                            "UNI_SCALPEL",
+                            "B_ASRRAM_EJECTOR",
+                            "DAR",
+                            "DAGR",
+                            "DAGRM",
+                            "B_GAU19_HELI_R",
+                        };
+                    };
+                    class pylon4 : pylon1 {
+                    };                                                            
+                };
+            };
+         };
     };
     class Heli_Light_01_base_F;
     class Heli_Light_01_armed_base_F : Heli_Light_01_base_F {
@@ -304,6 +350,7 @@ class CfgVehicles {
                             "B_ASRAAM",
                             "DAR",
                             "DAGR",
+                            "DAGRM",
                             "B_SHIEKER",
                             "TITAN_NLOS_1RND",
                             "B_AIM9",
@@ -324,6 +371,7 @@ class CfgVehicles {
                             "B_ASRAAM",
                             "DAR",
                             "DAGR",
+                            "DAGRM",
                             "B_SHIEKER",
                             "B_AIM9",
                             "TITAN_NLOS_1RND",
@@ -337,6 +385,7 @@ class CfgVehicles {
                             "B_ASRAAM",
                             "DAR",
                             "DAGR",
+                            "DAGRM",
                             "TITAN_NLOS_1RND",
                             "B_AIM9",
                             "vn_b_rocket_pylon_uh1c_01",
@@ -356,6 +405,7 @@ class CfgVehicles {
                             "B_ASRAAM",
                             "DAR",
                             "DAGR",
+                            "DAGRM",
                             "B_SHIEKER",
                             "TITAN_NLOS_1RND",
                             "B_AIM9",
@@ -377,10 +427,11 @@ class CfgVehicles {
                             "B_ASRRAM_EJECTOR",
                             "DAR",
                             "DAGR",
+                            "DAGRM",
                             "B_SHIEKER",
+                            "B_AIM9", 
                             "WEAPON_PODS_RF",
-                            "TITAN_NLOS_2RND",
-                            "B_SIDEARM",                               
+                            "TITAN_NLOS_2RND",                              
                             "CUP_NATO_HELO_LARGE",
                             "RHS_HP_LONGBOW_RACK",
                             "RHS_HP_FFAR_ARMY",
@@ -390,22 +441,7 @@ class CfgVehicles {
                         };
                     };
                     class PylonExternalRight : PylonExternalLeft {
-                        hardpoints[] = {
-                            "UNI_SCALPEL",
-                            "B_ASRRAM_EJECTOR",
-                            "DAR",
-                            "DAGR",
-                            "B_SHIEKER",
-                            "WEAPON_PODS_RF",
-                            "TITAN_NLOS_2RND",
-                            "B_SIDEARM",                            
-                            "vn_b_rocket_pylon_uh1c_01",                            
-                            "CUP_NATO_HELO_LARGE",
-                            "RHS_HP_LONGBOW_RACK",
-                            "RHS_HP_FFAR_ARMY",
-                            "RHS_HP_AIM9_HELI_ARMY",
-                            "RHS_HP_ATAS_AH64",
-                        };
+
                     };
                 };
             };
@@ -424,7 +460,7 @@ class CfgVehicles {
                             "O_BOMB_PYLON_HELI",
                             "UNI_SCALPEL",
                             "20MM_TWIN_CANNON",
-                            "vn_o_missile_pylon_mi2_01",
+                            "vn_o_missile_pylon",
                             "CUP_EAST_HELO_LARGE",
                             "RHS_HP_KH25_APU68_MIG29",
                             "RHS_HP_KH29_AKU58_MIG29",
@@ -450,97 +486,13 @@ class CfgVehicles {
                         };
                     };
                     class PylonLeft2 : PylonLeft1 {
-                        hardpoints[] = {
-                            "O_MISSILE_PYLON",
-                            "O_BOMB_PYLON_HELI",
-                            "UNI_SCALPEL",
-                            "20MM_TWIN_CANNON",
-                            "vn_o_missile_pylon_mi2_01",
-                            "CUP_EAST_HELO_LARGE",
-                            "RHS_HP_KH25_APU68_MIG29",
-                            "RHS_HP_KH29_AKU58_MIG29",
-                            "RHS_HP_FAB100_BD3_UMK2A",
-                            "RHS_HP_FAB100_MBD3_U4T",
-                            "RHS_HP_FAB250_BD3_UMK2A",
-                            "RHS_HP_FAB500_BD3_UMK2A",
-                            "RHS_HP_KAB500_BD3_UMK2A",
-                            "RHS_HP_KMGU2_BD3_UMK2A",
-                            "RHS_HP_BD3_USK_A_O25L",
-                            "RHS_HP_APU68_BD3_UMK2A",
-                            "RHS_HP_B13L_BD3_UMK2A",
-                            "RHS_HP_B8M1_BD3_UMK2A",
-                            "RHS_HP_UB16_BD3_UMK2A",
-                            "RHS_HP_UB32_BD3_UMK2A",
-                            "RHS_HP_R77M_AKU170_MIG29",
-                            "RHS_HP_R77_AKU170_MIG29",
-                            "RHS_HP_R27_APU470",
-                            "RHS_HP_R60_APU60",
-                            "RHS_HP_R73_APU73",
-                            "RHS_HP_UPK23_KA52",
-                            "RHS_HP_APU6_9m127_KA52",
-                        };
+
                     };
                     class PylonRight1 : PylonLeft1 {
-                        hardpoints[] = {
-                            "O_MISSILE_PYLON",
-                            "O_BOMB_PYLON_HELI",
-                            "UNI_SCALPEL",
-                            "20MM_TWIN_CANNON",
-                            "vn_o_missile_pylon_mi2_01",
-                            "CUP_EAST_HELO_LARGE",
-                            "RHS_HP_KH25_APU68_MIG29",
-                            "RHS_HP_KH29_AKU58_MIG29",
-                            "RHS_HP_FAB100_BD3_UMK2A",
-                            "RHS_HP_FAB100_MBD3_U4T",
-                            "RHS_HP_FAB250_BD3_UMK2A",
-                            "RHS_HP_FAB500_BD3_UMK2A",
-                            "RHS_HP_KAB500_BD3_UMK2A",
-                            "RHS_HP_KMGU2_BD3_UMK2A",
-                            "RHS_HP_BD3_USK_A_O25L",
-                            "RHS_HP_APU68_BD3_UMK2A",
-                            "RHS_HP_B13L_BD3_UMK2A",
-                            "RHS_HP_B8M1_BD3_UMK2A",
-                            "RHS_HP_UB16_BD3_UMK2A",
-                            "RHS_HP_UB32_BD3_UMK2A",
-                            "RHS_HP_R77M_AKU170_MIG29",
-                            "RHS_HP_R77_AKU170_MIG29",
-                            "RHS_HP_R27_APU470",
-                            "RHS_HP_R60_APU60",
-                            "RHS_HP_R73_APU73",
-                            "RHS_HP_UPK23_KA52",
-                            "RHS_HP_APU6_9m127_KA52",
-                        };
+
                     };
                     class PylonRight2 : PylonLeft2 {
-                        hardpoints[] = {
-                            "O_MISSILE_PYLON",
-                            "O_BOMB_PYLON_HELI",
-                            "UNI_SCALPEL",
-                            "20MM_TWIN_CANNON",
-                            "vn_o_missile_pylon_mi2_01",
-                            "CUP_EAST_HELO_LARGE",
-                            "RHS_HP_KH25_APU68_MIG29",
-                            "RHS_HP_KH29_AKU58_MIG29",
-                            "RHS_HP_FAB100_BD3_UMK2A",
-                            "RHS_HP_FAB100_MBD3_U4T",
-                            "RHS_HP_FAB250_BD3_UMK2A",
-                            "RHS_HP_FAB500_BD3_UMK2A",
-                            "RHS_HP_KAB500_BD3_UMK2A",
-                            "RHS_HP_KMGU2_BD3_UMK2A",
-                            "RHS_HP_BD3_USK_A_O25L",
-                            "RHS_HP_APU68_BD3_UMK2A",
-                            "RHS_HP_B13L_BD3_UMK2A",
-                            "RHS_HP_B8M1_BD3_UMK2A",
-                            "RHS_HP_UB16_BD3_UMK2A",
-                            "RHS_HP_UB32_BD3_UMK2A",
-                            "RHS_HP_R77M_AKU170_MIG29",
-                            "RHS_HP_R77_AKU170_MIG29",
-                            "RHS_HP_R27_APU470",
-                            "RHS_HP_R60_APU60",
-                            "RHS_HP_R73_APU73",
-                            "RHS_HP_UPK23_KA52",
-                            "RHS_HP_APU6_9m127_KA52",
-                        };
+
                     };
                 };
             };
@@ -600,10 +552,12 @@ class CfgVehicles {
                     };
                     class Pylons10 : Pylons1 {};
                     class Pylons2 : Pylons1 {
+                        maxweight = 1250;
                         hardpoints[] = {
                             "B_MISSILE_PYLON",
                             "B_BOMB_PYLON",
-                            "vn_b_rocket_pylon_f4_in",
+                            "vn_b_rocket_pylon_f4_cl",
+                            "vn_b_rocket_pylon_f4_out",
                             "RHS_HP_FFAR_USAF",
                             "RHS_HP_FFAR_USAF_3x",
                             "RHS_HP_FFAR_HEAVY_USAF",
@@ -616,10 +570,12 @@ class CfgVehicles {
                         };
                     };
                     class Pylons3 : Pylons1 {
+                        maxweight = 1600;
                         hardpoints[] = {
                             "B_MISSILE_PYLON",
                             "B_BOMB_PYLON",
                             "vn_b_rocket_pylon_f4_in",
+                            "vn_b_rocket_pylon_f4_out",
                             "RHS_HP_FFAR_USAF",
                             "RHS_HP_FFAR_USAF_3x",
                             "RHS_HP_FFAR_HEAVY_USAF",
@@ -635,12 +591,14 @@ class CfgVehicles {
                         };
                     };
                     class Pylons4 : Pylons1 {
+                        maxweight = 1600;
                         hardpoints[] = {
                             "B_MISSILE_PYLON",
                             "B_BOMB_PYLON",
                             "B_SDB_QUAD_RAIL",
                             "B_GBU12_DUAL_RAIL",
                             "vn_b_rocket_pylon_f4_in",
+                            "vn_b_rocket_pylon_f4_out",
                             "RHS_HP_FFAR_USAF",
                             "RHS_HP_FFAR_USAF_3x",
                             "RHS_HP_FFAR_HEAVY_USAF",
@@ -657,11 +615,14 @@ class CfgVehicles {
                         };
                     };
                     class Pylons5 : Pylons1 {
+                        maxweight = 1600;
                         hardpoints[] = {
                             "B_MISSILE_PYLON",
                             "B_BOMB_PYLON",
                             "B_SDB_QUAD_RAIL",
                             "B_GBU12_DUAL_RAIL",
+                            "vn_b_rocket_pylon_f4_in",
+                            "vn_b_rocket_pylon_f4_out",                            
                             "RHS_HP_BOMB_500",
                             "RHS_HP_LGB_500",
                             "RHS_HP_JDAM_500",
@@ -691,10 +652,12 @@ class CfgVehicles {
                     };
                     class Pylons10 : Pylons10 {};
                     class Pylons2 : Pylons2 {
+                        maxweight = 1250;
                         hardpoints[] = {
                             "B_MISSILE_PYLON",
                             "B_BOMB_PYLON",
                             "vn_b_rocket_pylon_f4_in",
+                            "vn_b_rocket_pylon_f4_out",
                             "RHS_HP_FFAR_USAF",
                             "RHS_HP_FFAR_USAF_3x",
                             "RHS_HP_FFAR_HEAVY_USAF",
@@ -707,10 +670,12 @@ class CfgVehicles {
                         };
                     };
                     class Pylons3 : Pylons3 {
+                        maxweight = 1600;
                         hardpoints[] = {
                             "B_MISSILE_PYLON",
                             "B_BOMB_PYLON",
                             "vn_b_rocket_pylon_f4_in",
+                            "vn_b_rocket_pylon_f4_out",
                             "RHS_HP_FFAR_USAF",
                             "RHS_HP_FFAR_USAF_3x",
                             "RHS_HP_FFAR_HEAVY_USAF",
@@ -726,12 +691,14 @@ class CfgVehicles {
                         };
                     };
                     class Pylons4 : Pylons4 {
+                        maxweight = 1600;
                         hardpoints[] = {
                             "B_MISSILE_PYLON",
                             "B_BOMB_PYLON",
                             "B_SDB_QUAD_RAIL",
                             "B_GBU12_DUAL_RAIL",
                             "vn_b_rocket_pylon_f4_in",
+                            "vn_b_rocket_pylon_f4_out",
                             "RHS_HP_FFAR_USAF",
                             "RHS_HP_FFAR_USAF_3x",
                             "RHS_HP_FFAR_HEAVY_USAF",
@@ -748,11 +715,14 @@ class CfgVehicles {
                         };
                     };
                     class Pylons5 : Pylons5 {
+                        maxweight = 1600;
                         hardpoints[] = {
                             "B_MISSILE_PYLON",
                             "B_BOMB_PYLON",
                             "B_SDB_QUAD_RAIL",
                             "B_GBU12_DUAL_RAIL",
+                            "vn_b_rocket_pylon_f4_in",
+                            "vn_b_rocket_pylon_f4_out",                            
                             "RHS_HP_BOMB_500",
                             "RHS_HP_LGB_500",
                             "RHS_HP_JDAM_500",
@@ -983,6 +953,7 @@ class CfgVehicles {
             class TransportPylonsComponent {
                 class pylons {
                     class pylon1 {
+                        maxweight = 1250;
                         hardpoints[] = {
                             "B_BIM9X_RAIL",
                             "B_BIM9X_DUAL_RAIL",
@@ -996,6 +967,7 @@ class CfgVehicles {
                             "B_GBU12",
                             "B_GBU12_DUAL_RAIL",
                             "vn_b_rocket_pylon_f4_in",
+                            "vn_b_rocket_pylon_f4_out",
                             "RHS_HP_AIM9_2x",
                             "RHS_HP_AIM120",
                             "RHS_HP_AGM65_3x",
@@ -1011,6 +983,7 @@ class CfgVehicles {
 
                     };
                     class pylon3 {
+                        maxweight = 1600;
                         hardpoints[] = {
                             "B_BIM9X_RAIL",
                             "B_BIM9X_DUAL_RAIL",
@@ -1027,6 +1000,7 @@ class CfgVehicles {
                             "B_HARM_RAIL",
                             "B_SDB_QUAD_RAIL",
                             "vn_b_rocket_pylon_f4_in",
+                            "vn_b_rocket_pylon_f4_out",
                             "RHS_HP_AIM9_2x",
                             "RHS_HP_AIM120",
                             "RHS_HP_AGM65_3x",
@@ -1338,6 +1312,7 @@ class CfgVehicles {
                             };
                     };
                     class pylons2 : pylons1 {
+                        maxweight = 1600;
                         hardpoints[] =
                             {
                                 "B_MISSILE_PYLON",
@@ -1352,6 +1327,7 @@ class CfgVehicles {
                                 "I_AGM65_RAIL",
                                 "I_AGM65_DUAL_RAIL",
                                 "I_HARM_RAIL",
+                                "vn_b_rocket_pylon_f4_cl",
                                 "vn_b_rocket_pylon_f4_out",
                                 "RHS_HP_Hydra_USAF",
                                 "RHS_HP_Hydra_USAF_3x",
@@ -1365,6 +1341,7 @@ class CfgVehicles {
                             };
                     };
                     class pylons3 : pylons1 {
+                        maxweight = 1600;
                         hardpoints[] =
                             {
                                 "B_MISSILE_PYLON",
@@ -1377,6 +1354,7 @@ class CfgVehicles {
                                 "I_AGM65_RAIL",
                                 "I_AGM65_DUAL_RAIL",
                                 "I_HARM_RAIL",
+                                "vn_b_rocket_pylon_f4_cl",
                                 "vn_b_rocket_pylon_f4_out",
                                 "RHS_HP_Hydra_USAF",
                                 "RHS_HP_Hydra_USAF_3x",
@@ -1426,6 +1404,7 @@ class CfgVehicles {
                             };
                     };
                     class pylons2 : pylons2 {
+                        maxweight = 1600;
                         hardpoints[] =
                             {
                                 "B_MISSILE_PYLON",
@@ -1440,6 +1419,7 @@ class CfgVehicles {
                                 "I_AGM65_RAIL",
                                 "I_AGM65_DUAL_RAIL",
                                 "I_HARM_RAIL",
+                                "vn_b_rocket_pylon_f4_cl",
                                 "vn_b_rocket_pylon_f4_out",
                                 "RHS_HP_Hydra_USAF",
                                 "RHS_HP_Hydra_USAF_3x",
@@ -1453,6 +1433,7 @@ class CfgVehicles {
                             };
                     };
                     class pylons3 : pylons3 {
+                        maxweight = 1600;
                         hardpoints[] =
                             {
                                 "B_MISSILE_PYLON",
@@ -1465,7 +1446,8 @@ class CfgVehicles {
                                 "I_AGM65_RAIL",
                                 "I_AGM65_DUAL_RAIL",
                                 "I_HARM_RAIL",
-                                "vn_b_rocket_pylon_f4_out",    
+                                "vn_b_rocket_pylon_f4_cl",
+                                "vn_b_rocket_pylon_f4_out", 
                                 "RHS_HP_Hydra_USAF",
                                 "RHS_HP_Hydra_USAF_3x",
                                 "RHS_HP_FFAR_USAF",
@@ -1515,6 +1497,7 @@ class CfgVehicles {
 
                     };
                     class pylon3 {
+                        maxweight = 1600;
                         hardpoints[] = {
                             "I_BIM9X_RAIL",
                             "I_BIM9X_DUAL_RAIL",
@@ -1531,6 +1514,7 @@ class CfgVehicles {
                             "B_BOMB_PYLON",
                             "B_MISSILE_PYLON",
                             "B_ZEPHYR",
+                            "vn_b_rocket_pylon_f4_cl",
                             "vn_b_rocket_pylon_f4_out",
                             "RHS_HP_AIM9_2x",
                             "RHS_HP_AIM120",
@@ -1549,6 +1533,7 @@ class CfgVehicles {
 
                     };
                     class pylon5 {
+                        maxweight = 1600;
                         hardpoints[] = {
                             "I_BIM9X_RAIL",
                             "I_BIM9X_DUAL_RAIL",
@@ -1565,6 +1550,7 @@ class CfgVehicles {
                             "B_BOMB_PYLON",
                             "B_MISSILE_PYLON",
                             "B_ZEPHYR",
+                            "vn_b_rocket_pylon_f4_cl",
                             "vn_b_rocket_pylon_f4_out",
                             "RHS_HP_AIM9_2x",
                             "RHS_HP_AIM120",
