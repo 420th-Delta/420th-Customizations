@@ -65,15 +65,16 @@ class CfgVehicles {
                             "B_SHIEKER",
                             "20MM_TWIN_CANNON",
                             "CANNON_PODS_RF",
-                            "CUP_NATO_HELO_UH60",
-                            "CUP_NATO_HELO_LARGE",
-                            "TITAN_NLOS_2RND",
                             "B_SIDEARM",
+                            "TITAN_NLOS_2RND",
+                            "vn_b_rocket_pylon_uh1c_01",                            
+                            "CUP_NATO_HELO_UH60",
+                            "CUP_NATO_HELO_LARGE",                            
                             "RHS_HP_LONGBOW_RACK",
                             "RHS_HP_FFAR_ARMY",
                             "RHS_HP_AIM9_HELI_ARMY",
                             "RHS_HP_ATAS_AH64",
-                            "vn_b_rocket_pylon_uh1c_01",
+
                         };
                     };
                     class pylon2 : pylon1 {
@@ -87,16 +88,16 @@ class CfgVehicles {
                             "B_SHIEKER",
                             "20MM_TWIN_CANNON",
                             "CANNON_PODS_RF",
-                            "CUP_NATO_HELO_UH60",
-                            "CUP_NATO_HELO_LARGE",
                             "TITAN_NLOS_2RND",
                             "B_SIDEARM",
+                            "vn_b_rocket_pylon_uh1c_01",
+                            "CUP_NATO_HELO_UH60",
+                            "CUP_NATO_HELO_LARGE",                             
                             "RHS_HP_MELB_L",
                             "RHS_HP_LONGBOW_RACK",
                             "RHS_HP_FFAR_ARMY",
                             "RHS_HP_AIM9_HELI_ARMY",
-                            "RHS_HP_ATAS_AH64",
-                            "vn_b_rocket_pylon_uh1c_01",
+                            "RHS_HP_ATAS_AH64",                                                       
                         };
                     };
                     class pylon3 : pylon2 {
@@ -110,16 +111,16 @@ class CfgVehicles {
                             "B_SHIEKER",
                             "20MM_TWIN_CANNON",
                             "CANNON_PODS_RF",
-                            "CUP_NATO_HELO_UH60",
-                            "CUP_NATO_HELO_LARGE",
                             "TITAN_NLOS_2RND",
                             "B_SIDEARM",
+                            "vn_b_rocket_pylon_uh1c_01",                            
+                            "CUP_NATO_HELO_UH60",
+                            "CUP_NATO_HELO_LARGE",                            
                             "RHS_HP_MELB_R",
                             "RHS_HP_LONGBOW_RACK",
                             "RHS_HP_FFAR_ARMY",
                             "RHS_HP_AIM9_HELI_ARMY",
                             "RHS_HP_ATAS_AH64",
-                            "vn_b_rocket_pylon_uh1c_01",
                         };
                     };
                     class pylon4 : pylon1 {
@@ -146,14 +147,14 @@ class CfgVehicles {
                             "SCALPEL_1RND_EJECTOR",
                             "B_ASRRAM_EJECTOR",
                             "CANNON_PODS_RF",
-                            "CUP_NATO_HELO_SMALL",
-                            "CUP_NATO_HELO_AH6_RIGHT",
                             "B_SIDEARM",
+                            "vn_b_rocket_pylon_uh1c_01",                            
+                            "CUP_NATO_HELO_SMALL",
+                            "CUP_NATO_HELO_AH6_RIGHT",                            
                             "RHS_HP_MELB",
                             "RHS_HP_FFAR_ARMY",
                             "RHS_HP_AIM9_HELI_ARMY",
                             "RHS_HP_ATAS_AH64",
-                            "vn_b_rocket_pylon_uh1c_01",
                         };
                     };
                     class PylonRight1 : PylonLeft1 {
@@ -165,14 +166,14 @@ class CfgVehicles {
                             "SCALPEL_1RND_EJECTOR",
                             "B_ASRRAM_EJECTOR",
                             "CANNON_PODS_RF",
-                            "CUP_NATO_HELO_SMALL",
-                            "CUP_NATO_HELO_AH6_Left",
                             "B_SIDEARM",
+                            "vn_b_rocket_pylon_uh1c_01",                            
+                            "CUP_NATO_HELO_SMALL",
+                            "CUP_NATO_HELO_AH6_Left",                            
                             "RHS_HP_MELB",
                             "RHS_HP_FFAR_ARMY",
                             "RHS_HP_AIM9_HELI_ARMY",
                             "RHS_HP_ATAS_AH64",
-                            "vn_b_rocket_pylon_uh1c_01",
                         };
                     };
                 };
@@ -197,12 +198,12 @@ class CfgVehicles {
                             "B_ASRRAM_EJECTOR",
                             "CANNON_PODS_RF",
                             "B_SIDEARM",
+                            "vn_b_rocket_pylon_uh1c_01",
                             "RHS_HP_MELB",
                             "RHS_HP_FFAR_ARMY",
                             "RHS_HP_AIM9_HELI_ARMY",
                             "RHS_HP_ATAS_AH64",
-                            "CUP_NATO_HELO_SMALL",
-                            "vn_b_rocket_pylon_uh1c_01",
+                            "CUP_NATO_HELO_SMALL",                            
                         };
                     };
                     class PylonRight1 : PylonLeft1 {
@@ -216,12 +217,12 @@ class CfgVehicles {
                             "B_ASRRAM_EJECTOR",
                             "CANNON_PODS_RF",
                             "B_SIDEARM",
+                            "vn_b_rocket_pylon_uh1c_01",                            
                             "RHS_HP_MELB",
                             "RHS_HP_FFAR_ARMY",
                             "RHS_HP_AIM9_HELI_ARMY",
                             "RHS_HP_ATAS_AH64",
                             "CUP_NATO_HELO_SMALL",
-                            "vn_b_rocket_pylon_uh1c_01",
                         };
                     };
                 };
@@ -247,6 +248,7 @@ class CfgVehicles {
                             "B_ASRRAM_EJECTOR",
                             "O_MISSILE_PYLON",
                             "O_BOMB_PYLON_HELI",
+                            "vn_o_missile_pylon_mi2_01",                            
                             "CUP_EAST_HELO_LARGE",
                             "RHS_HP_KAB250",
                             "RHS_HP_FAB500",
@@ -259,7 +261,6 @@ class CfgVehicles {
                             "RHS_HP_R60",
                             "RHS_HP_R73",
                             "RHS_HP_UPK23_KA52",
-                            "vn_o_missile_pylon_mi2_01",
                         };
                     };
                     class PylonRight1 : PylonLeft1 {
@@ -271,6 +272,7 @@ class CfgVehicles {
                             "B_ASRRAM_EJECTOR",
                             "O_MISSILE_PYLON",
                             "O_BOMB_PYLON_HELI",
+                            "vn_o_missile_pylon_mi2_01",                            
                             "CUP_EAST_HELO_LARGE",
                             "RHS_HP_KAB250",
                             "RHS_HP_FAB500",
@@ -283,7 +285,6 @@ class CfgVehicles {
                             "RHS_HP_R60",
                             "RHS_HP_R73",
                             "RHS_HP_UPK23_KA52",
-                            "vn_o_missile_pylon_mi2_01",
                         };
                     };
                 };
@@ -377,10 +378,10 @@ class CfgVehicles {
                             "DAR",
                             "DAGR",
                             "B_SHIEKER",
-                            "CUP_NATO_HELO_LARGE",
                             "WEAPON_PODS_RF",
                             "TITAN_NLOS_2RND",
-                            "B_SIDEARM",
+                            "B_SIDEARM",                               
+                            "CUP_NATO_HELO_LARGE",
                             "RHS_HP_LONGBOW_RACK",
                             "RHS_HP_FFAR_ARMY",
                             "RHS_HP_AIM9_HELI_ARMY",
@@ -395,15 +396,15 @@ class CfgVehicles {
                             "DAR",
                             "DAGR",
                             "B_SHIEKER",
-                            "CUP_NATO_HELO_LARGE",
                             "WEAPON_PODS_RF",
                             "TITAN_NLOS_2RND",
-                            "B_SIDEARM",
+                            "B_SIDEARM",                            
+                            "vn_b_rocket_pylon_uh1c_01",                            
+                            "CUP_NATO_HELO_LARGE",
                             "RHS_HP_LONGBOW_RACK",
                             "RHS_HP_FFAR_ARMY",
                             "RHS_HP_AIM9_HELI_ARMY",
                             "RHS_HP_ATAS_AH64",
-                            "vn_b_rocket_pylon_uh1c_01",
                         };
                     };
                 };
@@ -423,6 +424,7 @@ class CfgVehicles {
                             "O_BOMB_PYLON_HELI",
                             "UNI_SCALPEL",
                             "20MM_TWIN_CANNON",
+                            "vn_o_missile_pylon_mi2_01",
                             "CUP_EAST_HELO_LARGE",
                             "RHS_HP_KH25_APU68_MIG29",
                             "RHS_HP_KH29_AKU58_MIG29",
@@ -445,7 +447,6 @@ class CfgVehicles {
                             "RHS_HP_R73_APU73",
                             "RHS_HP_UPK23_KA52",
                             "RHS_HP_APU6_9m127_KA52",
-                            "vn_o_missile_pylon_mi2_01",
                         };
                     };
                     class PylonLeft2 : PylonLeft1 {
@@ -454,6 +455,7 @@ class CfgVehicles {
                             "O_BOMB_PYLON_HELI",
                             "UNI_SCALPEL",
                             "20MM_TWIN_CANNON",
+                            "vn_o_missile_pylon_mi2_01",
                             "CUP_EAST_HELO_LARGE",
                             "RHS_HP_KH25_APU68_MIG29",
                             "RHS_HP_KH29_AKU58_MIG29",
@@ -476,7 +478,6 @@ class CfgVehicles {
                             "RHS_HP_R73_APU73",
                             "RHS_HP_UPK23_KA52",
                             "RHS_HP_APU6_9m127_KA52",
-                            "vn_o_missile_pylon_mi2_01",
                         };
                     };
                     class PylonRight1 : PylonLeft1 {
@@ -485,6 +486,7 @@ class CfgVehicles {
                             "O_BOMB_PYLON_HELI",
                             "UNI_SCALPEL",
                             "20MM_TWIN_CANNON",
+                            "vn_o_missile_pylon_mi2_01",
                             "CUP_EAST_HELO_LARGE",
                             "RHS_HP_KH25_APU68_MIG29",
                             "RHS_HP_KH29_AKU58_MIG29",
@@ -507,7 +509,6 @@ class CfgVehicles {
                             "RHS_HP_R73_APU73",
                             "RHS_HP_UPK23_KA52",
                             "RHS_HP_APU6_9m127_KA52",
-                            "vn_o_missile_pylon_mi2_01",
                         };
                     };
                     class PylonRight2 : PylonLeft2 {
@@ -516,6 +517,7 @@ class CfgVehicles {
                             "O_BOMB_PYLON_HELI",
                             "UNI_SCALPEL",
                             "20MM_TWIN_CANNON",
+                            "vn_o_missile_pylon_mi2_01",
                             "CUP_EAST_HELO_LARGE",
                             "RHS_HP_KH25_APU68_MIG29",
                             "RHS_HP_KH29_AKU58_MIG29",
@@ -538,7 +540,6 @@ class CfgVehicles {
                             "RHS_HP_R73_APU73",
                             "RHS_HP_UPK23_KA52",
                             "RHS_HP_APU6_9m127_KA52",
-                            "vn_o_missile_pylon_mi2_01",
                         };
                     };
                 };
@@ -602,6 +603,7 @@ class CfgVehicles {
                         hardpoints[] = {
                             "B_MISSILE_PYLON",
                             "B_BOMB_PYLON",
+                            "vn_b_rocket_pylon_f4_in",
                             "RHS_HP_FFAR_USAF",
                             "RHS_HP_FFAR_USAF_3x",
                             "RHS_HP_FFAR_HEAVY_USAF",
@@ -611,13 +613,13 @@ class CfgVehicles {
                             "RHS_HP_BOMB_500",
                             "RHS_HP_LGB_500",
                             "RHS_HP_JDAM_500",
-                            "vn_b_rocket_pylon_f4_in",
                         };
                     };
                     class Pylons3 : Pylons1 {
                         hardpoints[] = {
                             "B_MISSILE_PYLON",
                             "B_BOMB_PYLON",
+                            "vn_b_rocket_pylon_f4_in",
                             "RHS_HP_FFAR_USAF",
                             "RHS_HP_FFAR_USAF_3x",
                             "RHS_HP_FFAR_HEAVY_USAF",
@@ -630,7 +632,6 @@ class CfgVehicles {
                             "RHS_HP_BOMB_500_3x",
                             "RHS_HP_LGB_500_3x",
                             "RHS_HP_JDAM_500_3x",
-                            "vn_b_rocket_pylon_f4_in",
                         };
                     };
                     class Pylons4 : Pylons1 {
@@ -639,6 +640,7 @@ class CfgVehicles {
                             "B_BOMB_PYLON",
                             "B_SDB_QUAD_RAIL",
                             "B_GBU12_DUAL_RAIL",
+                            "vn_b_rocket_pylon_f4_in",
                             "RHS_HP_FFAR_USAF",
                             "RHS_HP_FFAR_USAF_3x",
                             "RHS_HP_FFAR_HEAVY_USAF",
@@ -652,7 +654,6 @@ class CfgVehicles {
                             "RHS_HP_BOMB_500_3x",
                             "RHS_HP_LGB_500_3x",
                             "RHS_HP_JDAM_500_3x",
-                            "vn_b_rocket_pylon_f4_in",
                         };
                     };
                     class Pylons5 : Pylons1 {
@@ -693,6 +694,7 @@ class CfgVehicles {
                         hardpoints[] = {
                             "B_MISSILE_PYLON",
                             "B_BOMB_PYLON",
+                            "vn_b_rocket_pylon_f4_in",
                             "RHS_HP_FFAR_USAF",
                             "RHS_HP_FFAR_USAF_3x",
                             "RHS_HP_FFAR_HEAVY_USAF",
@@ -702,13 +704,13 @@ class CfgVehicles {
                             "RHS_HP_BOMB_500",
                             "RHS_HP_LGB_500",
                             "RHS_HP_JDAM_500",
-                            "vn_b_rocket_pylon_f4_in",
                         };
                     };
                     class Pylons3 : Pylons3 {
                         hardpoints[] = {
                             "B_MISSILE_PYLON",
                             "B_BOMB_PYLON",
+                            "vn_b_rocket_pylon_f4_in",
                             "RHS_HP_FFAR_USAF",
                             "RHS_HP_FFAR_USAF_3x",
                             "RHS_HP_FFAR_HEAVY_USAF",
@@ -721,7 +723,6 @@ class CfgVehicles {
                             "RHS_HP_BOMB_500_3x",
                             "RHS_HP_LGB_500_3x",
                             "RHS_HP_JDAM_500_3x",
-                            "vn_b_rocket_pylon_f4_in",
                         };
                     };
                     class Pylons4 : Pylons4 {
@@ -730,6 +731,7 @@ class CfgVehicles {
                             "B_BOMB_PYLON",
                             "B_SDB_QUAD_RAIL",
                             "B_GBU12_DUAL_RAIL",
+                            "vn_b_rocket_pylon_f4_in",
                             "RHS_HP_FFAR_USAF",
                             "RHS_HP_FFAR_USAF_3x",
                             "RHS_HP_FFAR_HEAVY_USAF",
@@ -743,7 +745,6 @@ class CfgVehicles {
                             "RHS_HP_BOMB_500_3x",
                             "RHS_HP_LGB_500_3x",
                             "RHS_HP_JDAM_500_3x",
-                            "vn_b_rocket_pylon_f4_in",
                         };
                     };
                     class Pylons5 : Pylons5 {
@@ -787,6 +788,7 @@ class CfgVehicles {
                             "O_MISSILE_PYLON",
                             "O_R73",
                             "UNI_SCALPEL",
+                            "vn_o_missile_pylon",
                             "RHS_HP_R60",
                             "RHS_HP_R73",
                             "RHS_HP_UB16",
@@ -802,6 +804,7 @@ class CfgVehicles {
                             "O_KAB250_BOMB",
                             "O_KH25",
                             "UNI_SCALPEL",
+                            "vn_o_missile_pylon",
                             "RHS_HP_UB16",
                             "RHS_HP_UB32",
                             "RHS_HP_B8M1",
@@ -824,6 +827,7 @@ class CfgVehicles {
                             "O_KH25",
                             "O_KH58",
                             "UNI_SCALPEL",
+                            "vn_o_missile_pylon",
                             "RHS_HP_UB16",
                             "RHS_HP_UB32",
                             "RHS_HP_B8M1",
@@ -846,6 +850,7 @@ class CfgVehicles {
                             "O_KH25",
                             "O_KH58",
                             "UNI_SCALPEL",
+                            "vn_o_missile_pylon",
                             "RHS_HP_UB16",
                             "RHS_HP_UB32",
                             "RHS_HP_B8M1",
@@ -888,6 +893,7 @@ class CfgVehicles {
                             "O_MISSILE_PYLON",
                             "O_R73",
                             "UNI_SCALPEL",
+                            "vn_o_missile_pylon",
                             "RHS_HP_R60",
                             "RHS_HP_R73",
                             "RHS_HP_UB16",
@@ -903,6 +909,7 @@ class CfgVehicles {
                             "O_KAB250_BOMB",
                             "O_KH25",
                             "UNI_SCALPEL",
+                            "vn_o_missile_pylon",
                             "RHS_HP_UB16",
                             "RHS_HP_UB32",
                             "RHS_HP_B8M1",
@@ -925,6 +932,7 @@ class CfgVehicles {
                             "O_KH25",
                             "O_KH58",
                             "UNI_SCALPEL",
+                            "vn_o_missile_pylon",
                             "RHS_HP_UB16",
                             "RHS_HP_UB32",
                             "RHS_HP_B8M1",
@@ -947,6 +955,7 @@ class CfgVehicles {
                             "O_KH25",
                             "O_KH58",
                             "UNI_SCALPEL",
+                            "vn_o_missile_pylon",
                             "RHS_HP_UB16",
                             "RHS_HP_UB32",
                             "RHS_HP_B8M1",
@@ -986,6 +995,7 @@ class CfgVehicles {
                             "B_BOMB_PYLON",
                             "B_GBU12",
                             "B_GBU12_DUAL_RAIL",
+                            "vn_b_rocket_pylon_f4_in",
                             "RHS_HP_AIM9_2x",
                             "RHS_HP_AIM120",
                             "RHS_HP_AGM65_3x",
@@ -995,7 +1005,6 @@ class CfgVehicles {
                             "RHS_HP_BOMB_500_3x",
                             "RHS_HP_LGB_500_3x",
                             "RHS_HP_JDAM_500_3x",
-                            "vn_b_rocket_pylon_f4_in",
                         };
                     };
                     class pylon2 : pylon1 {
@@ -1017,6 +1026,7 @@ class CfgVehicles {
                             "B_GBU12_DUAL_RAIL",
                             "B_HARM_RAIL",
                             "B_SDB_QUAD_RAIL",
+                            "vn_b_rocket_pylon_f4_in",
                             "RHS_HP_AIM9_2x",
                             "RHS_HP_AIM120",
                             "RHS_HP_AGM65_3x",
@@ -1026,7 +1036,6 @@ class CfgVehicles {
                             "RHS_HP_BOMB_500_3x",
                             "RHS_HP_LGB_500_3x",
                             "RHS_HP_JDAM_500_3x",
-                            "vn_b_rocket_pylon_f4_in",
                         };
                     };
                     class pylon4 :pylon3 {
@@ -1201,6 +1210,7 @@ class CfgVehicles {
                             "O_KAB250_BOMB",
                             "O_BOMB_PYLON",
                             "O_MISSILE_PYLON",
+                            "vn_o_missile_pylon",
                             "RHS_HP_R27",
                             "RHS_HP_R77M",
                             "RHS_HP_R77",
@@ -1233,6 +1243,7 @@ class CfgVehicles {
                             "O_BOMB_PYLON",
                             "O_KH58",
                             "O_MISSILE_PYLON",
+                            "vn_o_missile_pylon",
                             "RHS_HP_R27",
                             "RHS_HP_R77M",
                             "RHS_HP_R77",
@@ -1331,7 +1342,6 @@ class CfgVehicles {
                             {
                                 "B_MISSILE_PYLON",
                                 "B_ZEPHYR",
-                                "vn_b_rocket_pylon_f4_out",
                                 "B_BOMB_PYLON",
                                 "B_SDB_QUAD_RAIL",
                                 "I_GBU12_DUAL_RAIL",
@@ -1342,6 +1352,7 @@ class CfgVehicles {
                                 "I_AGM65_RAIL",
                                 "I_AGM65_DUAL_RAIL",
                                 "I_HARM_RAIL",
+                                "vn_b_rocket_pylon_f4_out",
                                 "RHS_HP_Hydra_USAF",
                                 "RHS_HP_Hydra_USAF_3x",
                                 "RHS_HP_FFAR_USAF",
@@ -1358,7 +1369,6 @@ class CfgVehicles {
                             {
                                 "B_MISSILE_PYLON",
                                 "B_ZEPHYR",
-                                "vn_b_rocket_pylon_f4_out",
                                 "B_BOMB_PYLON",
                                 "B_SDB_QUAD_RAIL",
                                 "I_GBU12_DUAL_RAIL",
@@ -1367,6 +1377,7 @@ class CfgVehicles {
                                 "I_AGM65_RAIL",
                                 "I_AGM65_DUAL_RAIL",
                                 "I_HARM_RAIL",
+                                "vn_b_rocket_pylon_f4_out",
                                 "RHS_HP_Hydra_USAF",
                                 "RHS_HP_Hydra_USAF_3x",
                                 "RHS_HP_FFAR_USAF",
@@ -1419,7 +1430,6 @@ class CfgVehicles {
                             {
                                 "B_MISSILE_PYLON",
                                 "B_ZEPHYR",
-                                "vn_b_rocket_pylon_f4_out",
                                 "B_BOMB_PYLON",
                                 "B_SDB_QUAD_RAIL",
                                 "I_GBU12_DUAL_RAIL",
@@ -1430,6 +1440,7 @@ class CfgVehicles {
                                 "I_AGM65_RAIL",
                                 "I_AGM65_DUAL_RAIL",
                                 "I_HARM_RAIL",
+                                "vn_b_rocket_pylon_f4_out",
                                 "RHS_HP_Hydra_USAF",
                                 "RHS_HP_Hydra_USAF_3x",
                                 "RHS_HP_FFAR_USAF",
@@ -1446,7 +1457,6 @@ class CfgVehicles {
                             {
                                 "B_MISSILE_PYLON",
                                 "B_ZEPHYR",
-                                "vn_b_rocket_pylon_f4_out",
                                 "B_BOMB_PYLON",
                                 "B_SDB_QUAD_RAIL",
                                 "I_GBU12_DUAL_RAIL",
@@ -1455,6 +1465,7 @@ class CfgVehicles {
                                 "I_AGM65_RAIL",
                                 "I_AGM65_DUAL_RAIL",
                                 "I_HARM_RAIL",
+                                "vn_b_rocket_pylon_f4_out",    
                                 "RHS_HP_Hydra_USAF",
                                 "RHS_HP_Hydra_USAF_3x",
                                 "RHS_HP_FFAR_USAF",
@@ -1520,6 +1531,7 @@ class CfgVehicles {
                             "B_BOMB_PYLON",
                             "B_MISSILE_PYLON",
                             "B_ZEPHYR",
+                            "vn_b_rocket_pylon_f4_out",
                             "RHS_HP_AIM9_2x",
                             "RHS_HP_AIM120",
                             "RHS_HP_LGB_500",
@@ -1530,7 +1542,6 @@ class CfgVehicles {
                             "RHS_HP_HYDRA_USAF_3x",
                             "RHS_HP_AGM65_3x",
                             "RHS_HP_BOMB_500_3x",
-                            "vn_b_rocket_pylon_f4_in",
 
                         };
                     };
@@ -1554,6 +1565,7 @@ class CfgVehicles {
                             "B_BOMB_PYLON",
                             "B_MISSILE_PYLON",
                             "B_ZEPHYR",
+                            "vn_b_rocket_pylon_f4_out",
                             "RHS_HP_AIM9_2x",
                             "RHS_HP_AIM120",
                             "RHS_HP_LGB_500",
@@ -1598,6 +1610,7 @@ class CfgVehicles {
                             "DAR",
                             "DAGRM",
                             "UNI_SCALPEL",
+                            "vn_o_missile_pylon",
                             "RHS_HP_R60",
                             "RHS_HP_R73",
                             "RHS_HP_R77",
@@ -1629,6 +1642,7 @@ class CfgVehicles {
                             "DAR",
                             "DAGRM",
                             "UNI_SCALPEL",
+                            "vn_o_missile_pylon",
                             "RHS_HP_R60",
                             "RHS_HP_R73",
                             "RHS_HP_R77",
@@ -1674,6 +1688,7 @@ class CfgVehicles {
                             "DAR",
                             "DAGRM",
                             "UNI_SCALPEL",
+                            "vn_o_missile_pylon",
                             "RHS_HP_R60",
                             "RHS_HP_R73",
                             "RHS_HP_R77",
@@ -1705,6 +1720,7 @@ class CfgVehicles {
                             "DAR",
                             "DAGRM",
                             "UNI_SCALPEL",
+                            "vn_o_missile_pylon",
                             "RHS_HP_R60",
                             "RHS_HP_R73",
                             "RHS_HP_R77",
