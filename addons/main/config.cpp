@@ -289,4 +289,14 @@ class CfgWeapons {
             containerClass = "Supply300"; // "Supply80"
         };
     };
+    class U_O_CombatUniform_ocamo : Uniform_Base {
+        class ItemInfo : UniformItem {
+            containerClass = "Supply120"; // "Supply40"
+        };
+    };
+    class U_O_CombatUniform_oucamo : Uniform_Base {
+        class ItemInfo : UniformItem {
+            containerClass = "Supply120"; // "Supply40"
+        };
+    };
 };
