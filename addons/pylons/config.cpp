@@ -4,7 +4,7 @@ class CfgPatches {
         author = "ol1034, thegamecracks";
         url = "https://github.com/thegamecracks/420th-Customizations";
 
-        requiredVersion = 2.20;
+        requiredVersion = 2.22;
         requiredAddons[] = {
             "A3_Air_F",
             "A3_Air_F_Beta",

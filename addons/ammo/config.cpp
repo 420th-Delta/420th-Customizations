@@ -4,7 +4,7 @@ class CfgPatches {
         author = "Seathre0420";
         url = "https://github.com/Seathre0420/420th-Customizations";
 
-        requiredVersion = 2.20;
+        requiredVersion = 2.22;
         requiredAddons[] = {
             "A3_Weapons_F_Jets",
             "fdelta_main",

@@ -4,7 +4,7 @@ class CfgPatches {
         author = "thegamecracks";
         url = "https://github.com/thegamecracks/420th-Customizations";
 
-        requiredVersion = 2.20;
+        requiredVersion = 2.22;
         requiredAddons[] = {
             "CUP_Weapons_Backpacks",
             "fdelta_main",

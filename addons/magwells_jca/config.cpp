@@ -6,7 +6,7 @@ class CfgPatches {
         author = "ol1034, thegamecracks";
         url = "https://github.com/thegamecracks/420th-Customizations";
 
-        requiredVersion = 2.20;
+        requiredVersion = 2.22;
         requiredAddons[] = {
             "cba_jam",
             "fdelta_magwells",
