@@ -2,7 +2,7 @@ class CfgPatches {
     class fdelta_ammo {
         name = "420th Customizations - Vanilla Ammunition Tweaks";
         author = "Seathre0420";
-        url = "https://github.com/Seathre0420/420th-Customizations";
+        url = "https://github.com/thegamecracks/420th-Customizations";
 
         requiredVersion = 2.22;
         requiredAddons[] = {
