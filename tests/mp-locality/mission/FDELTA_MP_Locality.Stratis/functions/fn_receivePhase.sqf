@@ -12,5 +12,3 @@ private _key = format ["%1|%2", _case, _phase];
 fdelta_test_phases set [_key, [_sender, serverTime, _data]];
 
 ["CLIENT_PHASE", [_case, _phase, _sender, _data]] call fdelta_test_fnc_log;
-
-

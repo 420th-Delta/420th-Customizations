@@ -44,5 +44,3 @@ private _data = [
 triggerAmmo _projectile;
 
 fdelta_test_localProjectiles deleteAt _case;
-
-

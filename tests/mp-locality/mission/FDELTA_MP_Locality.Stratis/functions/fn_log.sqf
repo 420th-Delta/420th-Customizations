@@ -2,7 +2,6 @@ params [
     ["_event", "UNKNOWN", [""]],
     ["_data", [], [[]]]
 ];
-
 private _role = if (isServer) then {
     if (isDedicated) then {"DEDICATED_SERVER"} else {"LISTEN_SERVER"};
 } else {
@@ -17,5 +16,3 @@ diag_log format [
     _event,
     _data
 ];
-
-

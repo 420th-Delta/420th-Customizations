@@ -54,5 +54,3 @@ private _data = [
 
 ["SHOT_READY", [_case, _data]] call fdelta_test_fnc_log;
 [_case, "READY", _data] remoteExecCall ["fdelta_test_fnc_receivePhase", 2];
-
-

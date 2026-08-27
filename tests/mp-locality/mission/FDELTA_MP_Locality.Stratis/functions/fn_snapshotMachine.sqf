@@ -31,4 +31,3 @@ private _patchState = _patchNames apply {
         ]
     ]
 ] call fdelta_test_fnc_log;
-

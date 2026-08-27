@@ -21,5 +21,3 @@ fdelta_test_nodes set [str _actualOwner, _record];
     "NODE_REGISTERED",
     [_actualOwner, _claimedOwner, _remoteOwner, isRemoteExecuted, _record]
 ] call fdelta_test_fnc_log;
-
-

@@ -98,4 +98,3 @@ fdelta_test_projectileEH = addMissionEventHandler ["ProjectileCreated", {
 }];
 
 ["DIAGNOSTICS_INSTALLED", [fdelta_test_projectileEH]] call fdelta_test_fnc_log;
-
