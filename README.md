@@ -11,7 +11,15 @@ An Arma 3 mod for the 420th Delta community.
 ## Features
 
 - Increase capacity of various clothing (see [Capacity Changes](#capacity-changes))
-- Increase HE blast radius of GBU SDBs
+- Rebalance native indirect damage for selected vanilla unitary HE bombs,
+  rockets, SPG, MLRS/MRL, and VLS ammunition—including the SDB—and add
+  cover-aware cumulative blast trauma for exposed infantry
+- Allow DAGR/DAGRM rockets to acquire aircraft travelling at up to 700 m/s
+  without removing ground targeting
+- Add Scalpel-L, a separate pylon ATGM with immutable launch cues, a scripted
+  vertical top-attack profile, terminal LOAL acquisition, and lock-loss recovery
+- Add UAV camera tools for ASL loiter altitude, minimum terrain clearance,
+  orbit radius, loiter-center retasking, map marking, and range/bearing measurement
 - Allow loading vanilla magazines into modded weapons (CUP, JCA, NIArms, RHS, SOG, GM)
 - Allow loading modded pylons onto vanilla aircraft (CUP, RHS)
 - Allow attaching RHS grips on NIArms weaponry
@@ -19,6 +27,9 @@ An Arma 3 mod for the 420th Delta community.
 - Fix [A3TI] incompatibility with thermal-capable MH-80 Camera Pods
 - Fix A3TI causing units/vehicles to appear pink when changing cameras
 - Fix MH-80 DAP ECM Pods (DIRCM variants) not detecting some IR missiles
+
+See [Gameplay and compatibility details](docs/gameplay-and-compatibility.md)
+for exact scope, multiplayer requirements, known limits, and validation status.
 
 [A3TI]: https://steamcommunity.com/workshop/filedetails/?id=2041057379
 
