@@ -47,11 +47,11 @@ if (isNull _turretConfig) then {
         private _turretPlayer = _veh unitTurret _unit;
         if (_turretPlayer isEqualTo []) exitWith { /*_unit not in a turret*/ configNull };
 
-        private _turretConfigName = [_veh, _turretPlayer] call BIS_fnc_turretConfig;
-        if ((getNumber(_turretConfigName >> "isPersonTurret") > 0) && (isTurnedOut _unit)) then {
+        private _candidate = [_veh, _turretPlayer] call BIS_fnc_turretConfig;
+        if ((getNumber(_candidate >> "isPersonTurret") > 0) && (isTurnedOut _unit)) then {
             systemChat "FFV";
         } else {
-            _turretConfig = _turretConfigName;
+            _turretConfig = _candidate;
         };
     };
 };
