@@ -1,0 +1,11 @@
+author = "zobri";
+onLoadName = "420th Customizations Integrated Automated Validation";
+disabledAI = 0;
+respawn = 0;
+saving = 0;
+
+class Header {
+    gameType = COOP;
+    minPlayers = 1;
+    maxPlayers = 1;
+};

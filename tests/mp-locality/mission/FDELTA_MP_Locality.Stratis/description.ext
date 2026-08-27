@@ -1,0 +1,79 @@
+author = "zobri";
+onLoadName = "420th Customizations - MP Locality Harness";
+onLoadMission = "Measures config and blast behavior for client-owned projectiles.";
+disabledAI = 1;
+joinUnassigned = 0;
+skipLobby = 1;
+respawn = 3;
+respawnDelay = 999;
+saving = 0;
+
+class Header {
+    gameType = COOP;
+    minPlayers = 1;
+    maxPlayers = 2;
+};
+
+class Params {
+    class ShooterRole {
+        title = "Projectile owner";
+        texts[] = {"Auto (prefer HC)", "Interface client", "Headless client", "Server"};
+        values[] = {0, 1, 2, 3};
+        default = 2;
+    };
+
+};
+
+class CfgFunctions {
+    class fdelta_test {
+        tag = "fdelta_test";
+
+        class MPLocality {
+            file = "functions";
+
+            class log {};
+            class installScriptErrorHandler {};
+            class snapshotMachine {};
+            class installDiagnostics {};
+            class registerNode {};
+            class receivePhase {};
+            class attemptStatePoison {};
+            class attemptScalpelCuePoison {};
+            class submitEarlyBlastReport {};
+            class createSyntheticShot {};
+            class createWeaponShot {};
+            class triggerDisplacedShot {};
+            class triggerSyntheticShot {};
+        };
+    };
+};
+
+// The mission remains loadable without 420th Customizations. Naming optional addon
+// functions here only permits them when they exist; it does not create an
+// addon dependency for an unmodded client.
+class CfgRemoteExec {
+    class Functions {
+        mode = 1;
+        jip = 0;
+
+        class fdelta_test_fnc_registerNode { allowedTargets = 2; };
+        class fdelta_test_fnc_receivePhase { allowedTargets = 2; };
+        class fdelta_test_fnc_attemptStatePoison { allowedTargets = 1; };
+        class fdelta_test_fnc_attemptScalpelCuePoison { allowedTargets = 1; };
+        class fdelta_test_fnc_submitEarlyBlastReport { allowedTargets = 0; };
+        class fdelta_test_fnc_createSyntheticShot { allowedTargets = 0; };
+        class fdelta_test_fnc_createWeaponShot { allowedTargets = 0; };
+        class fdelta_test_fnc_triggerDisplacedShot { allowedTargets = 0; };
+        class fdelta_test_fnc_triggerSyntheticShot { allowedTargets = 0; };
+
+        class fdelta_fnc_blastRegisterProjectileEvidence { allowedTargets = 2; };
+        class fdelta_fnc_blastReceiveBlast { allowedTargets = 2; };
+        class fdelta_fnc_blastClientEffect { allowedTargets = 1; };
+        class fdelta_fnc_scalpelLReceiveCue { allowedTargets = 0; };
+    };
+
+    class Commands {
+        mode = 0;
+        jip = 0;
+    };
+};
