@@ -1,5 +1,5 @@
 /*
-    Author: Lala14, thegamecracks
+    Author: Lala14, thegamecracks, zobri
 
     Description:
     Attempts to determine whether the player is controlling a uav or is in a
@@ -57,20 +57,38 @@ private _turretPath = _vehicle unitTurret _unit;
 if (_turretPath isEqualTo []) exitWith {configNull};
 
 // https://community.bistudio.com/wiki/Arma_3:_Vehicle_Loadouts#%22Generic%22_Pylons
-// With the introduction of "Generic Pylons" in v2.22, it is now possible for pylons
-// to provide camera functionality. Look for any pylons providing a camera component
-// that matches the turret path of the current unit.
-private _cameraPylonConfigs =
-    getAllPylonsInfo _vehicle
-    select {_x # 2 isEqualTo _turretPath}
-    apply {configFile >> "CfgMagazines" >> _x # 3 >> "Components" >> "CameraComponent"}
-    select {isClass _x};
+// Generic camera pylons store their optics under the loaded pylon magazine rather
+// than the vehicle. Resolve the camera Arma selected for this unit, then validate
+// its live loadout and owner before exposing the PilotCamera optics to A3TI.
+private _cameraPylonConfig = call {
+    if (cameraView isNotEqualTo "GUNNER" || {cameraOn isNotEqualTo _vehicle}) exitWith {configNull};
 
-// As of v2.22, it is possible for a vehicle to have multiple camera pylons via setPylonLoadout,
-// but the player can only view the first camera pylon available to them.
-// As such, we'll always return the first pylon.
-// It'd be nice if we had a getter command for the player's selected pylon...
-if (_cameraPylonConfigs isNotEqualTo []) exitWith {_cameraPylonConfigs # 0};
+    private _pylonIndex = [_vehicle, _unit] call BIS_fnc_pylon_findCameraPylon;
+    if (_pylonIndex < 1) exitWith {configNull};
+
+    private _pylonInfo = getAllPylonsInfo _vehicle select {_x # 0 isEqualTo _pylonIndex};
+    if (_pylonInfo isEqualTo []) exitWith {configNull};
+
+    private _loadedMagazine = getPylonMagazines _vehicle param [_pylonIndex - 1, ""];
+    private _selectedPylon = _pylonInfo # 0;
+    if (
+        _loadedMagazine isEqualTo ""
+        || {_selectedPylon # 2 isNotEqualTo _turretPath}
+        || {_selectedPylon # 3 isNotEqualTo _loadedMagazine}
+    ) exitWith {configNull};
+
+    private _cameraComponent =
+        configFile
+        >> "CfgMagazines"
+        >> _loadedMagazine
+        >> "Components"
+        >> "CameraComponent";
+    private _pilotCamera = _cameraComponent >> "PilotCamera";
+    if (!isClass _cameraComponent || {!isClass _pilotCamera}) exitWith {configNull};
+
+    _pilotCamera
+};
+if (!isNull _cameraPylonConfig) exitWith {_cameraPylonConfig};
 
 // Finally, traditional turret config retrieval
 private _turretConfig = [_vehicle, _turretPath] call BIS_fnc_turretConfig;
