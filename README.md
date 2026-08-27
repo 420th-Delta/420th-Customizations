@@ -10,12 +10,12 @@ An Arma 3 mod for the 420th Delta community.
 
 ## Features
 
-- Increased capacity of various clothing (see [Capacity Changes](#capacity-changes))
-- Increased HE blast radius of GBU SDBs
-- Allowed loading vanilla magazines into modded weapons (CUP, JCA, NIArms, RHS, SOG, GM)
-- Allowed loading modded pylons onto vanilla aircraft (CUP, RHS)
-- Allowed attaching RHS grips on NIArms weaponry
-- Allowed aimed usage of NVGs with modded optics (RHSUSAF)
+- Increase capacity of various clothing (see [Capacity Changes](#capacity-changes))
+- Increase HE blast radius of GBU SDBs
+- Allow loading vanilla magazines into modded weapons (CUP, JCA, NIArms, RHS, SOG, GM)
+- Allow loading modded pylons onto vanilla aircraft (CUP, RHS)
+- Allow attaching RHS grips on NIArms weaponry
+- Allow aimed usage of NVGs with modded optics (RHSUSAF)
 
 ## Capacity Changes
 
