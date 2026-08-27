@@ -1,5 +1,5 @@
 /*
-    Author: Lala14
+    Author: Lala14, thegamecracks
 
     Description:
     Attempts to determine whether the player is controlling a uav or is in a
@@ -47,19 +47,8 @@ if (isNull _turretConfig) then {
         if (_unit isEqualTo (driver _veh)) then {
             _turretConfig = (configFile >> "CfgVehicles" >> typeOf _veh);
         } else {
-            private _turretPlayer = [];
-            _assignedRole = (assignedVehicleRole _unit);
-            if (count _assignedRole < 1) then {
-                {
-                    if ((_veh turretUnit _x) isEqualTo _unit) exitWith { _turretPlayer = _x };
-                }forEach (allTurrets [_veh, true]);
-            } else {
-                if (count _assignedRole > 1) then {
-                    _turretPlayer = (_assignedRole select 1);
-                };
-            };
-
-            if (count _turretPlayer <= 0) exitWith { /*_unit not in a turret*/ configNull };
+            private _turretPlayer = _veh unitTurret _unit;
+            if (_turretPlayer isEqualTo []) exitWith { /*_unit not in a turret*/ configNull };
 
             _turretConfigName = [_veh, _turretPlayer] call BIS_fnc_turretConfig;
             if ((getNumber(_turretConfigName >> "isPersonTurret") > 0) && (isTurnedOut _unit)) then {
