@@ -17,17 +17,16 @@
     (configfile >> "CfgVehicles" >> "B_UAV_05_F")
 */
 #include "constants.h"
-private ["_turretConfig","_unit","_uav","_playerControl","_uavPos","_veh","_turretConfigName","_turretPlayer"];
-_turretConfig = configNull;
+private _turretConfig = configNull;
 
-_unit = missionNamespace getVariable ["bis_fnc_moduleRemoteControl_unit", player];
+private _unit = missionNamespace getVariable ["bis_fnc_moduleRemoteControl_unit", player];
 //this was moved outside as if the player is in a vehicle and is controlling
 //the uav, the uav needs priority over the current player vehicle
 //UAV
 if (!(isNull (getConnectedUAV _unit)) && !(cameraOn isEqualTo _unit)) then {
-    _uav = getConnectedUAV _unit;
-    _playerControl = (UAVControl _uav) find _unit;
-    _uavPos = (UAVControl _uav) select (_playerControl + 1);
+    private _uav = getConnectedUAV _unit;
+    private _playerControl = (UAVControl _uav) find _unit;
+    private _uavPos = (UAVControl _uav) select (_playerControl + 1);
     if ((toLower _uavPos) isEqualTo "gunner") then {
         _turretConfig = [_uav] call FNC(getGunTurret);
     };
@@ -42,13 +41,13 @@ if (isNull _turretConfig) then {
         //still to implement
     } else {
         //normal vehicle
-        _veh = vehicle _unit;
+        private _veh = vehicle _unit;
         if (isNull _veh) exitWith { /*not in veh*/ configNull };
 
         private _turretPlayer = _veh unitTurret _unit;
         if (_turretPlayer isEqualTo []) exitWith { /*_unit not in a turret*/ configNull };
 
-        _turretConfigName = [_veh, _turretPlayer] call BIS_fnc_turretConfig;
+        private _turretConfigName = [_veh, _turretPlayer] call BIS_fnc_turretConfig;
         if ((getNumber(_turretConfigName >> "isPersonTurret") > 0) && (isTurnedOut _unit)) then {
             systemChat "FFV";
         } else {
