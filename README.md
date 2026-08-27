@@ -31,6 +31,11 @@ An Arma 3 mod for the 420th Delta community.
 See [Gameplay and compatibility details](docs/gameplay-and-compatibility.md)
 for exact scope, multiplayer requirements, known limits, and validation status.
 
+Do not load the standalone **ZBR Gameplay Enhancements**, Turret Enhanced, or
+Turret Enhanced Plus mods alongside a 420th release containing these features.
+They duplicate runtime handlers and can apply blast trauma twice or issue
+competing UAV commands. Remove the standalone bundle when migrating.
+
 [A3TI]: https://steamcommunity.com/workshop/filedetails/?id=2041057379
 
 ## Capacity Changes
@@ -73,12 +78,20 @@ for exact scope, multiplayer requirements, known limits, and validation status.
 To build the mod from source, install [HEMTT] and run the following command:
 
 ```sh
+hemtt check
 hemtt build
 ```
 
-You can also build the mod for release with `hemtt release`, but you will need
-to remove the `[signing]` configuration in project.toml to generate an ephemeral
-signing key.
+The reproducible validation missions are documented in
+[`tests/integration`](tests/integration) and
+[`tests/mp-locality`](tests/mp-locality). They cover combined-package config and
+runtime checks plus vanilla/modded server and client locality combinations.
+
+Official releases must be signed by the maintainer or CI holding the private
+key that matches `.hemtt/project.toml`. Contributors can remove the `[signing]`
+configuration to generate an ephemeral key for private test builds, but those
+signatures are not compatible with the official Workshop signing authority and
+must not be published as an official update.
 
 [HEMTT]: https://github.com/brettmayson/HEMTT
 
