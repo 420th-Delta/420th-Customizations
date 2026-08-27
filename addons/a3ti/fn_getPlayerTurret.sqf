@@ -56,6 +56,23 @@ if (isNull _vehicle) exitWith {configNull};
 private _turretPath = _vehicle unitTurret _unit;
 if (_turretPath isEqualTo []) exitWith {configNull};
 
+// https://community.bistudio.com/wiki/Arma_3:_Vehicle_Loadouts#%22Generic%22_Pylons
+// With the introduction of "Generic Pylons" in v2.22, it is now possible for pylons
+// to provide camera functionality. Look for any pylons providing a camera component
+// that matches the turret path of the current unit.
+private _cameraPylonConfigs =
+    getAllPylonsInfo _vehicle
+    select {_x # 2 isEqualTo _turretPath}
+    apply {configFile >> "CfgMagazines" >> _x # 3 >> "Components" >> "CameraComponent"}
+    select {isClass _x};
+
+// As of v2.22, it is possible for a vehicle to have multiple camera pylons via setPylonLoadout,
+// but the player can only view the first camera pylon available to them.
+// As such, we'll always return the first pylon.
+// It'd be nice if we had a getter command for the player's selected pylon...
+if (_cameraPylonConfigs isNotEqualTo []) exitWith {_cameraPylonConfigs # 0};
+
+// Finally, traditional turret config retrieval
 private _turretConfig = [_vehicle, _turretPath] call BIS_fnc_turretConfig;
 if (getNumber (_turretConfig >> "isPersonTurret") > 0 && {isTurnedOut _unit}) exitWith {
     diag_log text format ["%1: in FFV seat", _fnc_scriptName];
