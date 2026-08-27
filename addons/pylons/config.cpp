@@ -6,29 +6,7 @@ class CfgPatches {
 
         requiredVersion = 2.22;
         requiredAddons[] = {
-            "A3_Air_F",
-            "A3_Air_F_Beta",
-            "A3_Air_F_Beta_Heli_Attack_01",
-            "A3_Air_F_Beta_Heli_Attack_02",
-            "A3_Air_F_Beta_Heli_Transport_01",
-            "A3_Air_F_EPB_Heli_Light_03",
-            "A3_Air_F_EPC_Plane_CAS_01",
-            "A3_Air_F_EPC_Plane_CAS_02",
-            "A3_Air_F_Exp",
-            "A3_Air_F_Exp_Plane_Civil_01",
-            "A3_Air_F_Exp_UAV_03",
-            "A3_Air_F_Exp_VTOL_01",
-            "A3_Air_F_Exp_VTOL_02",
-            "A3_Air_F_Gamma_Plane_Fighter_03",
-            "A3_Air_F_Heli",
-            "A3_Air_F_Heli_Light_01",
-            "A3_Air_F_Heli_Light_02",
-            "A3_Air_F_Jets_Plane_Fighter_01",
-            "A3_Air_F_Jets_Plane_Fighter_02",
-            "A3_Air_F_Jets_Plane_Fighter_04",
-            "A3_Air_F_Jets_UAV_05",
-            "A3_Air_F_Orange",
-            "A3_Functions_F",
+            "A3_Data_F_Decade_Loadorder",
             "fdelta_main",
         };
         skipWhenMissingDependencies = 0;
