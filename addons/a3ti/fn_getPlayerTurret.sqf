@@ -44,18 +44,15 @@ if (isNull _turretConfig) then {
         //normal vehicle
         _veh = vehicle _unit;
         if (isNull _veh) exitWith { /*not in veh*/ configNull };
-        if (_unit isEqualTo (driver _veh)) then {
-            _turretConfig = (configFile >> "CfgVehicles" >> typeOf _veh);
-        } else {
-            private _turretPlayer = _veh unitTurret _unit;
-            if (_turretPlayer isEqualTo []) exitWith { /*_unit not in a turret*/ configNull };
 
-            _turretConfigName = [_veh, _turretPlayer] call BIS_fnc_turretConfig;
-            if ((getNumber(_turretConfigName >> "isPersonTurret") > 0) && (isTurnedOut _unit)) then {
-                systemChat "FFV";
-            } else {
-                _turretConfig = _turretConfigName;
-            };
+        private _turretPlayer = _veh unitTurret _unit;
+        if (_turretPlayer isEqualTo []) exitWith { /*_unit not in a turret*/ configNull };
+
+        _turretConfigName = [_veh, _turretPlayer] call BIS_fnc_turretConfig;
+        if ((getNumber(_turretConfigName >> "isPersonTurret") > 0) && (isTurnedOut _unit)) then {
+            systemChat "FFV";
+        } else {
+            _turretConfig = _turretConfigName;
         };
     };
 };
