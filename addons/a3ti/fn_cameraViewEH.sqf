@@ -12,6 +12,7 @@
     NIL
 */
 #include "constants.h"
+isNil {
 /*_curPlayerTurret = call FNC(getPlayerTurret);
 _visions = [];
 if (!isNull _curPlayerTurret) then {
@@ -24,12 +25,10 @@ if (!isNull _curPlayerTurret) then {
     //this case only occurs when zeus is taking control of a unit
     case "unit_switched":
     {
-        isNil {
-            ace_common_oldIsCamera = false;
-            call FNC(disablePPeffects);
-            call FNC(destroySecondSun);
-            ["OFF"] call FNC(setObjects);
-        };
+        ace_common_oldIsCamera = false;
+        call FNC(disablePPeffects);
+        call FNC(destroySecondSun);
+        ["OFF"] call FNC(setObjects);
     };
 };*/
 
@@ -40,12 +39,10 @@ if (
     || {_this isEqualTo "unit_switched"}
 ) then {
     //disable PP
-    isNil {
-        ace_common_oldIsCamera = false;
-        call FNC(disablePPeffects);
-        call FNC(destroySecondSun);
-        ["OFF"] call FNC(setObjects);
-    };
+    ace_common_oldIsCamera = false;
+    call FNC(disablePPeffects);
+    call FNC(destroySecondSun);
+    ["OFF"] call FNC(setObjects);
 } else {
     //enable PP
     //this allows for when switching views from 3rd/1st to gunner to retain vision
@@ -61,3 +58,4 @@ if (
 };
 
 null = [] spawn FNC(pfhLTM);
+};
