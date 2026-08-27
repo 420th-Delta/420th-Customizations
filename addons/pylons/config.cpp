@@ -28,11 +28,20 @@ class CfgPatches {
             "A3_Air_F_Jets_Plane_Fighter_04",
             "A3_Air_F_Jets_UAV_05",
             "A3_Air_F_Orange",
+            "A3_Functions_F",
             "fdelta_main",
         };
         skipWhenMissingDependencies = 0;
 
         units[] = {};
+    };
+};
+
+class CfgFunctions {
+    class BIS {
+        class Pylons {
+            class Pylon_ECMPodIncoming { file = "z\fdelta\addons\pylons\Functions\Pylons\fn_Pylon_ECMPodIncoming.sqf"; };
+        };
     };
 };
 
