@@ -4,6 +4,8 @@
     Traces the firing camera or launcher axis once and returns a fixed ATL
     aimpoint for coordinate guidance.
 */
+if (isRemoteExecuted) exitWith {[]};
+
 params ["_launcher", "_weapon", "_missile", ["_operator", objNull], ["_useCamera", false]];
 
 private _ammoConfig = configOf _missile;

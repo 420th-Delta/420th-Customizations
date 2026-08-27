@@ -3,6 +3,7 @@
 
     Returns the terrain or water position under the center of the active camera.
 */
+if (isRemoteExecuted) exitWith {[]};
 if !(call fdelta_fnc_terCanUseCamera) exitWith {[]};
 
 private _direction = screenToWorldDirection [0.5, 0.5];

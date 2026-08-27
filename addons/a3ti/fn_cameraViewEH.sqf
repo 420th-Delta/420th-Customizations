@@ -12,6 +12,7 @@
     NIL
 */
 #include "constants.h"
+if (isRemoteExecuted) exitWith {};
 isNil {
 /*_curPlayerTurret = call FNC(getPlayerTurret);
 _visions = [];

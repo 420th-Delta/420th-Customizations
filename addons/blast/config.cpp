@@ -23,12 +23,14 @@ class CfgFunctions {
             file = "\z\fdelta\addons\blast\functions";
 
             class blastPreInit { preInit = 1; };
+            class blastConfigureServer {};
             class blastProfile {};
             class blastSampleCurve {};
             class blastRegisterProjectile {};
             class blastRegisterProjectileEvidence {};
             class blastMonitorRegistry {};
             class blastReceiveBlast {};
+            class blastProcessValidationQueue {};
             class blastValidateReport {};
             class blastProcessQueue {};
             class blastProcessBlast {};

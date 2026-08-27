@@ -4,11 +4,63 @@
     Runs the owner-local Scalpel-L loft, pitch-over, terminal acquisition,
     native handoff, lock-loss, and reacquisition controller.
 */
+if (isRemoteExecuted) exitWith {};
+
 params ["_missile"];
 
-if (isNull _missile || {!local _missile} || {typeOf _missile isNotEqualTo "fdelta_M_Scalpel_L"}) exitWith {};
-if (_missile getVariable ["fdelta_scalpelL_controllerActive", false]) exitWith {};
-_missile setVariable ["fdelta_scalpelL_controllerActive", true];
+if (
+    isNull _missile
+    || {!local _missile}
+    || {typeOf _missile isNotEqualTo "fdelta_M_Scalpel_L"}
+) exitWith {};
+
+// Resolve trusted cue/controller state only from this owner's local registry.
+// Hash collisions are disambiguated with the retained projectile identity.
+private _registry = localNamespace getVariable
+    ["fdelta_scalpelL_ownerRegistry", 0];
+if !(_registry isEqualType createHashMap) exitWith {};
+private _missileHash = hashValue _missile;
+private _bucket = _registry getOrDefault [_missileHash, []];
+if !(_bucket isEqualType []) exitWith {};
+private _entryIndex = _bucket findIf {
+    _x isEqualType []
+    && {(count _x) >= 5}
+    && {(_x # 0) isEqualType objNull}
+    && {(_x # 0) isEqualTo _missile}
+};
+if (_entryIndex < 0) exitWith {};
+private _entry = _bucket # _entryIndex;
+private _controllerStarted = _entry param [2, false];
+private _controllerActive = _entry param [3, false];
+private _registryToken = _entry param [4, -1];
+if !(_controllerStarted isEqualType true) exitWith {};
+if !(_controllerActive isEqualType true) exitWith {};
+if !(_registryToken isEqualType 0) exitWith {};
+if (!_controllerStarted || {_controllerActive}) exitWith {};
+_entry set [3, true];
+
+private _cleanupRegistry = {
+    params ["_stateRegistry", "_stateHash", "_stateToken"];
+    private _stateBucket = _stateRegistry getOrDefault [_stateHash, []];
+    if !(_stateBucket isEqualType []) exitWith {};
+    private _stateIndex = _stateBucket findIf {
+        _x isEqualType []
+        && {(count _x) >= 5}
+        && {(_x # 4) isEqualType 0}
+        && {(_x # 4) isEqualTo _stateToken}
+    };
+    if (_stateIndex >= 0) then {
+        (_stateBucket # _stateIndex) set [3, false];
+        _stateBucket deleteAt _stateIndex;
+        if (_stateBucket isEqualTo []) then {
+            _stateRegistry deleteAt _stateHash;
+        }
+        else {
+            _stateRegistry set [_stateHash, _stateBucket];
+        };
+    };
+};
+
 _missile setVariable ["fdelta_scalpelL_guidanceMode", "pending"];
 
 private _ammoConfig = configOf _missile;
@@ -35,22 +87,24 @@ waitUntil {
     isNull _missile ||
     {!local _missile} ||
     {
-        private _cue = _missile getVariable ["fdelta_scalpelL_launchCue", []];
+        private _cue = _entry param [1, []];
         _cue isNotEqualTo [] && {(_cue # 0) >= 220}
     } ||
     {diag_tickTime >= _deadline}
 };
 
-if (isNull _missile) exitWith {};
+if (isNull _missile) exitWith {
+    [_registry, _missileHash, _registryToken] call _cleanupRegistry;
+};
 if (!local _missile) exitWith {
     _missile setVariable ["fdelta_scalpelL_guidanceMode", "locality-lost"];
-    _missile setVariable ["fdelta_scalpelL_controllerActive", false];
+    [_registry, _missileHash, _registryToken] call _cleanupRegistry;
 };
 
-private _cue = _missile getVariable ["fdelta_scalpelL_launchCue", []];
+private _cue = _entry param [1, []];
 if (_cue isEqualTo []) exitWith {
     _missile setVariable ["fdelta_scalpelL_guidanceMode", "uncued"];
-    _missile setVariable ["fdelta_scalpelL_controllerActive", false];
+    [_registry, _missileHash, _registryToken] call _cleanupRegistry;
 };
 
 _cue params
@@ -64,7 +118,7 @@ _cue params
 
 if ((count _aimpointATL) < 3) exitWith {
     _missile setVariable ["fdelta_scalpelL_guidanceMode", "invalid-cue"];
-    _missile setVariable ["fdelta_scalpelL_controllerActive", false];
+    [_registry, _missileHash, _registryToken] call _cleanupRegistry;
 };
 
 // Detach the guidance reference from the nested launch-cue array. Every
@@ -241,10 +295,12 @@ else {
     };
 };
 
-if (missionNamespace getVariable ["fdelta_scalpelL_debug", false]) then {
+if (localNamespace getVariable ["fdelta_scalpelL_debug", false]) then {
     diag_log format
     [
-        "fdelta_scalpelL_MIDCOURSE|missile=%1|source=%2|aimATL=%3|hard=%4|loft=%5|climbATL=%6|arcStartATL=%7|radius=%8|vertical=%9|selected=%10|lock=%11|state=%12",
+        "fdelta_scalpelL_MIDCOURSE|missile=%1|source=%2|aimATL=%3|hard=%4|"
+            + "loft=%5|climbATL=%6|arcStartATL=%7|radius=%8|vertical=%9|"
+            + "selected=%10|lock=%11|state=%12",
         _missile,
         _source,
         _aimpointATL,
@@ -427,10 +483,11 @@ while {!isNull _missile && {local _missile} && {!_nativeHandoff}} do {
                     _missile setVariable ["fdelta_scalpelL_guidanceMode", "reacquiring"];
                     _missile setMissileTarget [objNull, true];
 
-                    if (missionNamespace getVariable ["fdelta_scalpelL_debug", false]) then {
+                    if (localNamespace getVariable ["fdelta_scalpelL_debug", false]) then {
                         diag_log format
                         [
-                            "fdelta_scalpelL_PRE_HANDOFF_FAILED|missile=%1|target=%2|aimATL=%3|state=%4",
+                            "fdelta_scalpelL_PRE_HANDOFF_FAILED|missile=%1|"
+                                + "target=%2|aimATL=%3|state=%4",
                             _missile,
                             _rejectedTarget,
                             _aimpointATL,
@@ -488,10 +545,11 @@ while {!isNull _missile && {local _missile} && {!_nativeHandoff}} do {
                 _downAngle
             ];
             _missile setVariable ["fdelta_scalpelL_handoffGeometry", _handoffGeometry];
-            if (missionNamespace getVariable ["fdelta_scalpelL_debug", false]) then {
+            if (localNamespace getVariable ["fdelta_scalpelL_debug", false]) then {
                 diag_log format
                 [
-                    "fdelta_scalpelL_TERMINAL|missile=%1|target=%2|geometry=%3|crewOverrides=%4|state=%5|aimATL=%6|ranking=%7",
+                    "fdelta_scalpelL_TERMINAL|missile=%1|target=%2|geometry=%3|"
+                        + "crewOverrides=%4|state=%5|aimATL=%6|ranking=%7",
                     _missile,
                     _terminalTarget,
                     _handoffGeometry,
@@ -672,10 +730,11 @@ if (_nativeHandoff && {!isNull _missile} && {local _missile}) then {
                         _missile setVariable
                             ["fdelta_scalpelL_flightPhase", "reacquired-native"];
 
-                        if (missionNamespace getVariable ["fdelta_scalpelL_debug", false]) then {
+                        if (localNamespace getVariable ["fdelta_scalpelL_debug", false]) then {
                             diag_log format
                             [
-                                "fdelta_scalpelL_REACQUIRED|missile=%1|target=%2|aimATL=%3|ranking=%4|state=%5|count=%6",
+                                "fdelta_scalpelL_REACQUIRED|missile=%1|target=%2|"
+                                    + "aimATL=%3|ranking=%4|state=%5|count=%6",
                                 _missile,
                                 _nativeTarget,
                                 _aimpointATL,
@@ -766,11 +825,12 @@ if (_nativeHandoff && {!isNull _missile} && {local _missile}) then {
                         diag_tickTime + 0.20
                     };
 
-                    if (missionNamespace getVariable ["fdelta_scalpelL_debug", false]) then {
+                    if (localNamespace getVariable ["fdelta_scalpelL_debug", false]) then {
                         if (_wasConfirmedLoss) then {
                             diag_log format
                             [
-                                "fdelta_scalpelL_LOCK_LOST|missile=%1|target=%2|aimATL=%3|state=%4|count=%5",
+                                "fdelta_scalpelL_LOCK_LOST|missile=%1|target=%2|"
+                                    + "aimATL=%3|state=%4|count=%5",
                                 _missile,
                                 _lostTarget,
                                 _aimpointATL,
@@ -782,7 +842,8 @@ if (_nativeHandoff && {!isNull _missile} && {local _missile}) then {
                             if (_failedReacquire) then {
                                 diag_log format
                                 [
-                                    "fdelta_scalpelL_REACQUIRE_FAILED|missile=%1|target=%2|aimATL=%3|state=%4|attempt=%5",
+                                    "fdelta_scalpelL_REACQUIRE_FAILED|missile=%1|"
+                                        + "target=%2|aimATL=%3|state=%4|attempt=%5",
                                     _missile,
                                     _lostTarget,
                                     _aimpointATL,
@@ -793,7 +854,8 @@ if (_nativeHandoff && {!isNull _missile} && {local _missile}) then {
                             else {
                                 diag_log format
                                 [
-                                    "fdelta_scalpelL_HANDOFF_FAILED|missile=%1|target=%2|aimATL=%3|state=%4",
+                                    "fdelta_scalpelL_HANDOFF_FAILED|missile=%1|"
+                                        + "target=%2|aimATL=%3|state=%4",
                                     _missile,
                                     _lostTarget,
                                     _aimpointATL,
@@ -859,10 +921,12 @@ if (_nativeHandoff && {!isNull _missile} && {local _missile}) then {
                         _missile setVariable
                             ["fdelta_scalpelL_flightPhase", "reacquire-pending-native"];
 
-                        if (missionNamespace getVariable ["fdelta_scalpelL_debug", false]) then {
+                        if (localNamespace getVariable ["fdelta_scalpelL_debug", false]) then {
                             diag_log format
                             [
-                                "fdelta_scalpelL_REACQUIRE_ATTEMPT|missile=%1|target=%2|aimATL=%3|ranking=%4|state=%5|attempt=%6",
+                                "fdelta_scalpelL_REACQUIRE_ATTEMPT|missile=%1|"
+                                    + "target=%2|aimATL=%3|ranking=%4|state=%5|"
+                                    + "attempt=%6",
                                 _missile,
                                 _reacquiredTarget,
                                 _aimpointATL,
@@ -888,5 +952,5 @@ if (!isNull _missile) then {
     if (!local _missile) then {
         _missile setVariable ["fdelta_scalpelL_guidanceMode", "locality-lost"];
     };
-    _missile setVariable ["fdelta_scalpelL_controllerActive", false];
 };
+[_registry, _missileHash, _registryToken] call _cleanupRegistry;

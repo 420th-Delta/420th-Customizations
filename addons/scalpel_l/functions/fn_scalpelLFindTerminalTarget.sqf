@@ -4,6 +4,8 @@
     Finds and ranks valid terminal ground targets using sensor eligibility,
     hostility, line of sight, launch aimpoint proximity, and seeker geometry.
 */
+if (isRemoteExecuted) exitWith {objNull};
+
 params [
     "_missile",
     "_launcher",

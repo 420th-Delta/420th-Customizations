@@ -17,6 +17,7 @@
     (configfile >> "CfgVehicles" >> "B_UAV_05_F")
 */
 #include "constants.h"
+if (isRemoteExecuted) exitWith {configNull};
 
 private _unit = missionNamespace getVariable ["bis_fnc_moduleRemoteControl_unit", player];
 

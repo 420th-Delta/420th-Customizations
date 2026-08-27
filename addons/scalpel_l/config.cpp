@@ -1,6 +1,6 @@
 class CfgPatches {
     class fdelta_scalpel_l {
-        name = "420th Customizations - Scalpel-L";
+        name = "$STR_FDELTA_SCALPEL_L_ADDON_NAME";
         author = "zobri";
         url = "https://github.com/thegamecracks/420th-Customizations";
 
@@ -30,6 +30,7 @@ class CfgFunctions {
             class scalpelLTraceAimpoint {};
             class scalpelLTargetPointATL {};
             class scalpelLReceiveCue {};
+            class scalpelLMonitorRegistryEntry {};
             class scalpelLGuideMissile {};
             class scalpelLFindTerminalTarget {};
         };
@@ -199,36 +200,36 @@ class CfgMagazines {
 
     class fdelta_PylonRack_1Rnd_Scalpel_L : PylonRack_1Rnd_LG_scalpel {
         author = "zobri";
-        displayName = "Scalpel-L";
-        displayNameShort = "Scalpel-L";
-        descriptionShort = "Longbow-style radar/IR fire-and-forget ATGM with top-attack and terminal LOAL.";
+        displayName = "$STR_FDELTA_SCALPEL_L_NAME";
+        displayNameShort = "$STR_FDELTA_SCALPEL_L_NAME";
+        descriptionShort = "$STR_FDELTA_SCALPEL_L_DESCRIPTION_SINGLE";
         ammo = "fdelta_M_Scalpel_L";
         pylonWeapon = "fdelta_missiles_Scalpel_L";
     };
 
     class fdelta_PylonMissile_1Rnd_Scalpel_L : PylonMissile_1Rnd_LG_scalpel {
         author = "zobri";
-        displayName = "Scalpel-L";
-        displayNameShort = "Scalpel-L";
-        descriptionShort = "Longbow-style radar/IR fire-and-forget ATGM with top-attack and terminal LOAL.";
+        displayName = "$STR_FDELTA_SCALPEL_L_NAME";
+        displayNameShort = "$STR_FDELTA_SCALPEL_L_NAME";
+        descriptionShort = "$STR_FDELTA_SCALPEL_L_DESCRIPTION_SINGLE";
         ammo = "fdelta_M_Scalpel_L";
         pylonWeapon = "fdelta_missiles_Scalpel_L";
     };
 
     class fdelta_PylonRack_3Rnd_Scalpel_L : PylonRack_3Rnd_LG_scalpel {
         author = "zobri";
-        displayName = "Scalpel-L 3x";
-        displayNameShort = "Scalpel-L";
-        descriptionShort = "Three Longbow-style radar/IR fire-and-forget ATGMs with top-attack and terminal LOAL.";
+        displayName = "$STR_FDELTA_SCALPEL_L_NAME_3X";
+        displayNameShort = "$STR_FDELTA_SCALPEL_L_NAME";
+        descriptionShort = "$STR_FDELTA_SCALPEL_L_DESCRIPTION_THREE";
         ammo = "fdelta_M_Scalpel_L";
         pylonWeapon = "fdelta_missiles_Scalpel_L";
     };
 
     class fdelta_PylonRack_4Rnd_Scalpel_L : PylonRack_4Rnd_LG_scalpel {
         author = "zobri";
-        displayName = "Scalpel-L 4x";
-        displayNameShort = "Scalpel-L";
-        descriptionShort = "Four Longbow-style radar/IR fire-and-forget ATGMs with top-attack and terminal LOAL.";
+        displayName = "$STR_FDELTA_SCALPEL_L_NAME_4X";
+        displayNameShort = "$STR_FDELTA_SCALPEL_L_NAME";
+        descriptionShort = "$STR_FDELTA_SCALPEL_L_DESCRIPTION_FOUR";
         ammo = "fdelta_M_Scalpel_L";
         pylonWeapon = "fdelta_missiles_Scalpel_L";
     };
@@ -242,7 +243,7 @@ class CfgWeapons {
 
     class fdelta_missiles_Scalpel_L : missiles_SCALPEL {
         author = "zobri";
-        displayName = "Scalpel-L";
+        displayName = "$STR_FDELTA_SCALPEL_L_NAME";
         canLock = 2;
         weaponLockDelay = 3;
         weaponLockSystem = 2 + 4 + 8 + 16;
@@ -255,7 +256,7 @@ class CfgWeapons {
         };
 
         class TopDown : TopDown {
-            displayName = "Scalpel-L";
+            displayName = "$STR_FDELTA_SCALPEL_L_NAME";
         };
 
         class EventHandlers {

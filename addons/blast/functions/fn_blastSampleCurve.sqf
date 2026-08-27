@@ -12,6 +12,8 @@
     Returns:
         Interpolated dose <NUMBER>
 */
+if (isRemoteExecuted) exitWith {0};
+
 params [
     ["_distance", 0, [0]],
     ["_ranges", [], [[]]],

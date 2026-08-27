@@ -12,6 +12,8 @@
     Returns:
         Cover factor and diagnostic data <ARRAY>
 */
+if (isRemoteExecuted) exitWith {[0, true, false, false, [], []]};
+
 params [
     ["_originASL", [], [[]]],
     ["_target", objNull, [objNull]],

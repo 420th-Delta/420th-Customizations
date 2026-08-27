@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project name="420th Customizations">
+    <Package name="Turret Enhanced">
+        <Key ID="STR_FDELTA_TER_ACTION_MARK_AIM">
+            <English>Mark Camera Aim</English>
+        </Key>
+        <Key ID="STR_FDELTA_TER_ACTION_MARK_AIM_RED">
+            <English>Mark Camera Aim (Red)</English>
+        </Key>
+        <Key ID="STR_FDELTA_TER_ACTION_MARK_AIM_RED_TOOLTIP">
+            <English>Place a red map marker at the center of the aircraft camera</English>
+        </Key>
+        <Key ID="STR_FDELTA_TER_ACTION_MARK_AIM_TOOLTIP">
+            <English>Place a side-colored map marker at the center of the aircraft camera</English>
+        </Key>
+        <Key ID="STR_FDELTA_TER_ACTION_MEASURE_AIM">
+            <English>Measure Between Camera Points</English>
+        </Key>
+        <Key ID="STR_FDELTA_TER_ACTION_MEASURE_AIM_TOOLTIP">
+            <English>Capture two camera points and report their distance and bearing</English>
+        </Key>
+        <Key ID="STR_FDELTA_TER_ACTION_MOVE_LOITER">
+            <English>Move Loiter Center to Camera Aim</English>
+        </Key>
+        <Key ID="STR_FDELTA_TER_ACTION_MOVE_LOITER_TOOLTIP">
+            <English>Move the active UAV LOITER waypoint to the center of the camera</English>
+        </Key>
+        <Key ID="STR_FDELTA_TER_ACTION_OPEN_LOITER">
+            <English>UAV Loiter Controls</English>
+        </Key>
+        <Key ID="STR_FDELTA_TER_ACTION_OPEN_LOITER_TOOLTIP">
+            <English>Set orbit radius, ASL altitude, and minimum terrain clearance</English>
+        </Key>
+        <Key ID="STR_FDELTA_TER_ADDON_NAME">
+            <English>420th Customizations - Turret Enhanced</English>
+        </Key>
+        <Key ID="STR_FDELTA_TER_ADD_ACTION_MARK_AIM">
+            <English>TER: Mark camera aim</English>
+        </Key>
+        <Key ID="STR_FDELTA_TER_ADD_ACTION_MARK_AIM_RED">
+            <English>TER: Mark camera aim (red)</English>
+        </Key>
+        <Key ID="STR_FDELTA_TER_ADD_ACTION_MEASURE_AIM">
+            <English>TER: Measure from/to camera aim</English>
+        </Key>
+        <Key ID="STR_FDELTA_TER_ADD_ACTION_MOVE_LOITER">
+            <English>TER: Move loiter center here</English>
+        </Key>
+        <Key ID="STR_FDELTA_TER_ADD_ACTION_OPEN_LOITER">
+            <English>TER: UAV loiter controls</English>
+        </Key>
+        <Key ID="STR_FDELTA_TER_DIALOG_ALTITUDE_LABEL">
+            <English>Target altitude (m ASL)</English>
+        </Key>
+        <Key ID="STR_FDELTA_TER_DIALOG_ALTITUDE_TOOLTIP">
+            <English>Absolute altitude above sea level. Valid range: 20-20000 m.</English>
+        </Key>
+        <Key ID="STR_FDELTA_TER_DIALOG_APPLY">
+            <English>APPLY</English>
+        </Key>
+        <Key ID="STR_FDELTA_TER_DIALOG_CANCEL">
+            <English>CANCEL</English>
+        </Key>
+        <Key ID="STR_FDELTA_TER_DIALOG_CLEARANCE_LABEL">
+            <English>Terrain clearance (m AGL)</English>
+        </Key>
+        <Key ID="STR_FDELTA_TER_DIALOG_CLEARANCE_TOOLTIP">
+            <English>Terrain safety floor; overrides the ASL target only when needed.</English>
+        </Key>
+        <Key ID="STR_FDELTA_TER_DIALOG_RADIUS_LABEL">
+            <English>Loiter radius (m)</English>
+        </Key>
+        <Key ID="STR_FDELTA_TER_DIALOG_RADIUS_TOOLTIP">
+            <English>Radius of the active LOITER waypoint. Valid range: 100-20000 m.</English>
+        </Key>
+        <Key ID="STR_FDELTA_TER_DIALOG_STATUS_ACTIVE_LOITER">
+            <English>Active LOITER found. ASL is primary; clearance is the safety floor.</English>
+        </Key>
+        <Key ID="STR_FDELTA_TER_DIALOG_STATUS_NO_LOITER">
+            <English>No active LOITER. Altitude applies; radius and center require one.</English>
+        </Key>
+        <Key ID="STR_FDELTA_TER_DIALOG_TITLE">
+            <English>UAV Loiter Controls</English>
+        </Key>
+        <Key ID="STR_FDELTA_TER_DIALOG_TITLE_FORMAT">
+            <English>UAV Loiter Controls - %1</English>
+        </Key>
+        <Key ID="STR_FDELTA_TER_GROUP_NAME">
+            <English>Turret Enhanced</English>
+        </Key>
+        <Key ID="STR_FDELTA_TER_MARKER_LABEL">
+            <English>TGT %1</English>
+        </Key>
+        <Key ID="STR_FDELTA_TER_MSG_ALTITUDE_RANGE">
+            <English>TER: ASL altitude must be between 20 and 20000 meters.</English>
+        </Key>
+        <Key ID="STR_FDELTA_TER_MSG_CLEARANCE_RANGE">
+            <English>TER: Terrain clearance must be between 20 and 1000 meters.</English>
+        </Key>
+        <Key ID="STR_FDELTA_TER_MSG_ENTER_GUNNER_OPTIC">
+            <English>TER: Enter an aircraft gunner optic first.</English>
+        </Key>
+        <Key ID="STR_FDELTA_TER_MSG_LOITER_ATTACHED">
+            <English>TER: Active LOITER is object-attached and was not moved.</English>
+        </Key>
+        <Key ID="STR_FDELTA_TER_MSG_LOITER_CENTER_MOVED_FORMAT">
+            <English>TER: Active loiter center moved to grid %1.</English>
+        </Key>
+        <Key ID="STR_FDELTA_TER_MSG_LOITER_MOVE_FAILED">
+            <English>TER: The active LOITER waypoint could not be moved on this machine.</English>
+        </Key>
+        <Key ID="STR_FDELTA_TER_MSG_LOITER_REQUIRES_UAV">
+            <English>TER: Loiter controls require an actively controlled UAV.</English>
+        </Key>
+        <Key ID="STR_FDELTA_TER_MSG_MARKED_FORMAT">
+            <English>TER: %1 marked at grid %2.</English>
+        </Key>
+        <Key ID="STR_FDELTA_TER_MSG_MARKER_FAILED">
+            <English>TER: The map marker could not be created.</English>
+        </Key>
+        <Key ID="STR_FDELTA_TER_MSG_MEASURE_RESULT_FORMAT">
+            <English>TER: %1 m, bearing %2 deg (grid %3 to %4).</English>
+        </Key>
+        <Key ID="STR_FDELTA_TER_MSG_MEASURE_START_FORMAT">
+            <English>TER: Start captured at grid %1. Aim elsewhere and measure again.</English>
+        </Key>
+        <Key ID="STR_FDELTA_TER_MSG_NO_ACTIVE_LOITER">
+            <English>TER: The UAV has no active LOITER waypoint to move.</English>
+        </Key>
+        <Key ID="STR_FDELTA_TER_MSG_NO_CAMERA_INTERSECTION">
+            <English>TER: Camera center does not intersect terrain or water in view.</English>
+        </Key>
+        <Key ID="STR_FDELTA_TER_MSG_RADIUS_RANGE">
+            <English>TER: Loiter radius must be between 100 and 20000 meters.</English>
+        </Key>
+        <Key ID="STR_FDELTA_TER_MSG_REQUEST_CONTROL_CHANGED">
+            <English>TER: Request rejected because you no longer control that UAV gunner.</English>
+        </Key>
+        <Key ID="STR_FDELTA_TER_MSG_RETASK_CONTROL_CHANGED">
+            <English>TER: Retask rejected because you no longer control that UAV gunner.</English>
+        </Key>
+        <Key ID="STR_FDELTA_TER_MSG_RETASK_REQUIRES_UAV">
+            <English>TER: Loiter retasking requires an actively controlled UAV.</English>
+        </Key>
+        <Key ID="STR_FDELTA_TER_MSG_SETTINGS_NO_WAYPOINT_FORMAT">
+            <English>TER: %1 at %2 m ASL/%3 m clearance. No LOITER; radius unchanged.</English>
+        </Key>
+        <Key ID="STR_FDELTA_TER_MSG_SETTINGS_SUCCESS_FORMAT">
+            <English>TER: %1 set to %2 m ASL, %3 m terrain clearance, %4 m loiter radius.</English>
+        </Key>
+        <Key ID="STR_FDELTA_TER_MSG_SETTINGS_WAYPOINT_FAILED_FORMAT">
+            <English>TER: %1 set to %2 m ASL and %3 m clearance; LOITER update failed.</English>
+        </Key>
+        <Key ID="STR_FDELTA_TER_MSG_UAV_CONTROL_CHANGED">
+            <English>TER: UAV control changed before the settings were applied.</English>
+        </Key>
+        <Key ID="STR_FDELTA_TER_MSG_UAV_UNAVAILABLE">
+            <English>TER: The controlled UAV is no longer available.</English>
+        </Key>
+    </Package>
+</Project>

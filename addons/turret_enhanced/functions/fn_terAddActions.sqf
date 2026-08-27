@@ -3,6 +3,8 @@
 
     Adds the local player's Turret Enhanced interaction actions once.
 */
+if (isRemoteExecuted) exitWith {[]};
+
 if (!hasInterface || {isNull player}) exitWith {[]};
 
 private _existing = player getVariable ["fdelta_terActionIds", []];
@@ -15,7 +17,10 @@ private _uavCondition = "(call fdelta_fnc_terCanUseCamera) && "
 private _ids = [];
 
 _ids pushBack (player addAction [
-    "<t color='#7FDBFF'>TER: UAV loiter controls</t>",
+    format [
+        "<t color='#7FDBFF'>%1</t>",
+        localize "STR_FDELTA_TER_ADD_ACTION_OPEN_LOITER"
+    ],
     {[] call fdelta_fnc_terOpenLoiterDialog},
     nil,
     -10,
@@ -30,7 +35,10 @@ _ids pushBack (player addAction [
 ]);
 
 _ids pushBack (player addAction [
-    "<t color='#FFD65A'>TER: Mark camera aim</t>",
+    format [
+        "<t color='#FFD65A'>%1</t>",
+        localize "STR_FDELTA_TER_ADD_ACTION_MARK_AIM"
+    ],
     {[] call fdelta_fnc_terMarkAim},
     nil,
     -11,
@@ -45,7 +53,10 @@ _ids pushBack (player addAction [
 ]);
 
 _ids pushBack (player addAction [
-    "<t color='#FF6868'>TER: Mark camera aim (red)</t>",
+    format [
+        "<t color='#FF6868'>%1</t>",
+        localize "STR_FDELTA_TER_ADD_ACTION_MARK_AIM_RED"
+    ],
     {["ColorRed"] call fdelta_fnc_terMarkAim},
     nil,
     -12,
@@ -60,7 +71,10 @@ _ids pushBack (player addAction [
 ]);
 
 _ids pushBack (player addAction [
-    "<t color='#7FDBFF'>TER: Move loiter center here</t>",
+    format [
+        "<t color='#7FDBFF'>%1</t>",
+        localize "STR_FDELTA_TER_ADD_ACTION_MOVE_LOITER"
+    ],
     {[] call fdelta_fnc_terMoveLoiterCenter},
     nil,
     -13,
@@ -75,7 +89,7 @@ _ids pushBack (player addAction [
 ]);
 
 _ids pushBack (player addAction [
-    "TER: Measure from/to camera aim",
+    localize "STR_FDELTA_TER_ADD_ACTION_MEASURE_AIM",
     {[] call fdelta_fnc_terMeasureAim},
     nil,
     -14,

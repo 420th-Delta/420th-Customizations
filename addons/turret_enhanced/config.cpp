@@ -1,6 +1,6 @@
 class CfgPatches {
     class fdelta_turret_enhanced {
-        name = "420th Customizations - Turret Enhanced";
+        name = "$STR_FDELTA_TER_ADDON_NAME";
         author = "zobri";
         url = "https://github.com/thegamecracks/420th-Customizations";
 
@@ -49,8 +49,8 @@ class CfgFunctions {
 
 class CfgUserActions {
     class Fdelta_TER_OpenLoiter {
-        displayName = "UAV Loiter Controls";
-        tooltip = "Set orbit radius, ASL altitude, and minimum terrain clearance";
+        displayName = "$STR_FDELTA_TER_ACTION_OPEN_LOITER";
+        tooltip = "$STR_FDELTA_TER_ACTION_OPEN_LOITER_TOOLTIP";
         onActivate = "[] call fdelta_fnc_terOpenLoiterDialog";
         onDeactivate = "";
         onAnalog = "";
@@ -59,8 +59,8 @@ class CfgUserActions {
     };
 
     class Fdelta_TER_MarkAim {
-        displayName = "Mark Camera Aim";
-        tooltip = "Place a side-colored map marker at the center of the aircraft camera";
+        displayName = "$STR_FDELTA_TER_ACTION_MARK_AIM";
+        tooltip = "$STR_FDELTA_TER_ACTION_MARK_AIM_TOOLTIP";
         onActivate = "[] call fdelta_fnc_terMarkAim";
         onDeactivate = "";
         onAnalog = "";
@@ -69,8 +69,8 @@ class CfgUserActions {
     };
 
     class Fdelta_TER_MarkAimRed {
-        displayName = "Mark Camera Aim (Red)";
-        tooltip = "Place a red map marker at the center of the aircraft camera";
+        displayName = "$STR_FDELTA_TER_ACTION_MARK_AIM_RED";
+        tooltip = "$STR_FDELTA_TER_ACTION_MARK_AIM_RED_TOOLTIP";
         onActivate = "['ColorRed'] call fdelta_fnc_terMarkAim";
         onDeactivate = "";
         onAnalog = "";
@@ -79,8 +79,8 @@ class CfgUserActions {
     };
 
     class Fdelta_TER_MoveLoiterCenter {
-        displayName = "Move Loiter Center to Camera Aim";
-        tooltip = "Move the active UAV LOITER waypoint to the center of the camera";
+        displayName = "$STR_FDELTA_TER_ACTION_MOVE_LOITER";
+        tooltip = "$STR_FDELTA_TER_ACTION_MOVE_LOITER_TOOLTIP";
         onActivate = "[] call fdelta_fnc_terMoveLoiterCenter";
         onDeactivate = "";
         onAnalog = "";
@@ -89,8 +89,8 @@ class CfgUserActions {
     };
 
     class Fdelta_TER_MeasureAim {
-        displayName = "Measure Between Camera Points";
-        tooltip = "Capture two camera points and report their distance and bearing";
+        displayName = "$STR_FDELTA_TER_ACTION_MEASURE_AIM";
+        tooltip = "$STR_FDELTA_TER_ACTION_MEASURE_AIM_TOOLTIP";
         onActivate = "[] call fdelta_fnc_terMeasureAim";
         onDeactivate = "";
         onAnalog = "";
@@ -101,7 +101,7 @@ class CfgUserActions {
 
 class UserActionGroups {
     class Fdelta_TER_Actions {
-        name = "Turret Enhanced";
+        name = "$STR_FDELTA_TER_GROUP_NAME";
         isAddon = 1;
         group[] = {
             "Fdelta_TER_OpenLoiter",
@@ -152,7 +152,7 @@ class Fdelta_TER_LoiterDialog {
             y = "safeZoneY + safeZoneH * 0.325";
             w = "safeZoneW * 0.25";
             h = "safeZoneH * 0.035";
-            text = "UAV Loiter Controls";
+            text = "$STR_FDELTA_TER_DIALOG_TITLE";
             sizeEx = "safeZoneH * 0.026";
         };
 
@@ -162,7 +162,7 @@ class Fdelta_TER_LoiterDialog {
             y = "safeZoneY + safeZoneH * 0.385";
             w = "safeZoneW * 0.14";
             h = "safeZoneH * 0.035";
-            text = "Target altitude (m ASL)";
+            text = "$STR_FDELTA_TER_DIALOG_ALTITUDE_LABEL";
             sizeEx = "safeZoneH * 0.021";
         };
 
@@ -173,7 +173,7 @@ class Fdelta_TER_LoiterDialog {
             w = "safeZoneW * 0.075";
             h = "safeZoneH * 0.035";
             text = "500";
-            tooltip = "Absolute altitude above sea level. Valid range: 20-20000 m.";
+            tooltip = "$STR_FDELTA_TER_DIALOG_ALTITUDE_TOOLTIP";
         };
 
         class ClearanceLabel : RscText {
@@ -182,7 +182,7 @@ class Fdelta_TER_LoiterDialog {
             y = "safeZoneY + safeZoneH * 0.435";
             w = "safeZoneW * 0.14";
             h = "safeZoneH * 0.035";
-            text = "Terrain clearance (m AGL)";
+            text = "$STR_FDELTA_TER_DIALOG_CLEARANCE_LABEL";
             sizeEx = "safeZoneH * 0.021";
         };
 
@@ -193,7 +193,7 @@ class Fdelta_TER_LoiterDialog {
             w = "safeZoneW * 0.075";
             h = "safeZoneH * 0.035";
             text = "50";
-            tooltip = "Safety floor above terrain. It overrides the ASL target only when needed.";
+            tooltip = "$STR_FDELTA_TER_DIALOG_CLEARANCE_TOOLTIP";
         };
 
         class RadiusLabel : RscText {
@@ -202,7 +202,7 @@ class Fdelta_TER_LoiterDialog {
             y = "safeZoneY + safeZoneH * 0.485";
             w = "safeZoneW * 0.14";
             h = "safeZoneH * 0.035";
-            text = "Loiter radius (m)";
+            text = "$STR_FDELTA_TER_DIALOG_RADIUS_LABEL";
             sizeEx = "safeZoneH * 0.021";
         };
 
@@ -213,7 +213,7 @@ class Fdelta_TER_LoiterDialog {
             w = "safeZoneW * 0.075";
             h = "safeZoneH * 0.035";
             text = "1000";
-            tooltip = "Radius of the active LOITER waypoint. Valid range: 100-20000 m.";
+            tooltip = "$STR_FDELTA_TER_DIALOG_RADIUS_TOOLTIP";
         };
 
         class Status : RscStructuredText {
@@ -232,7 +232,7 @@ class Fdelta_TER_LoiterDialog {
             y = "safeZoneY + safeZoneH * 0.625";
             w = "safeZoneW * 0.07";
             h = "safeZoneH * 0.035";
-            text = "APPLY";
+            text = "$STR_FDELTA_TER_DIALOG_APPLY";
             action = "[] call fdelta_fnc_terApplyLoiterDialog";
         };
 
@@ -242,7 +242,7 @@ class Fdelta_TER_LoiterDialog {
             y = "safeZoneY + safeZoneH * 0.625";
             w = "safeZoneW * 0.07";
             h = "safeZoneH * 0.035";
-            text = "CANCEL";
+            text = "$STR_FDELTA_TER_DIALOG_CANCEL";
             action = "closeDialog 2";
         };
     };

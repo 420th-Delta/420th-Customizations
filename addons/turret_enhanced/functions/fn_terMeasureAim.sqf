@@ -3,9 +3,11 @@
 
     Captures two camera points and reports their distance and bearing.
 */
+if (isRemoteExecuted) exitWith {false};
+
 private _point = call fdelta_fnc_terAimPoint;
 if (_point isEqualTo []) exitWith {
-    systemChat "TER: The camera center does not intersect terrain or water within view distance.";
+    systemChat localize "STR_FDELTA_TER_MSG_NO_CAMERA_INTERSECTION";
     false
 };
 
@@ -17,7 +19,7 @@ private _expired = _stored isEqualTo []
 if (_expired) exitWith {
     missionNamespace setVariable ["fdelta_terMeasureStart", [_point, diag_tickTime]];
     systemChat format [
-        "TER: Measurement start captured at grid %1. Aim elsewhere and measure again.",
+        localize "STR_FDELTA_TER_MSG_MEASURE_START_FORMAT",
         mapGridPosition _point
     ];
     true
@@ -33,7 +35,7 @@ if (_bearing >= 360) then {
 };
 
 systemChat format [
-    "TER: %1 m, bearing %2 deg (grid %3 to %4).",
+    localize "STR_FDELTA_TER_MSG_MEASURE_RESULT_FORMAT",
     _distance,
     _bearing,
     mapGridPosition _start,

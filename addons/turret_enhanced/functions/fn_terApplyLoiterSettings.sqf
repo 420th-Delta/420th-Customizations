@@ -3,6 +3,8 @@
 
     Submits validated loiter settings for the UAV currently controlled by the player.
 */
+if (isRemoteExecuted) exitWith {false};
+
 params [
     ["_aircraft", objNull, [objNull]],
     ["_altitudeASL", 0, [0]],
@@ -11,13 +13,13 @@ params [
 ];
 
 if (isNull _aircraft || {!unitIsUAV _aircraft} || {!(_aircraft isKindOf "Air")}) exitWith {
-    systemChat "TER: The controlled UAV is no longer available.";
+    systemChat localize "STR_FDELTA_TER_MSG_UAV_UNAVAILABLE";
     false
 };
 
 private _controlled = call fdelta_fnc_terGetCameraAircraft;
 if (_controlled isNotEqualTo _aircraft) exitWith {
-    systemChat "TER: UAV control changed before the settings were applied.";
+    systemChat localize "STR_FDELTA_TER_MSG_UAV_CONTROL_CHANGED";
     false
 };
 

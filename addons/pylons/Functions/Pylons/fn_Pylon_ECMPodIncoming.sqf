@@ -9,6 +9,7 @@
         _instigator - person who pulled the trigger (unused)  [Object]
         _missile    - the missile object  [Object]
 */
+if (isRemoteExecuted) exitWith {};
 params ["_vehicle","_ammo","","","_missile"];
 
 if (isNull _missile) exitWith {};

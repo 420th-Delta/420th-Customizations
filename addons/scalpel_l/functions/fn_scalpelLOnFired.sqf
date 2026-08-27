@@ -4,6 +4,8 @@
     Handles a Scalpel-L Fired event, captures the firing operator's immutable
     launch cue, and starts guidance only where the projectile is local.
 */
+if (isRemoteExecuted) exitWith {};
+
 params [
     "_launcher",
     "_weapon",
@@ -46,19 +48,40 @@ if (hasInterface && {!isNull player}) then {
     // Preserve manual-fire compatibility for carriers whose virtual weapon
     // is not exposed by weaponsTurret, but only when the player controls this
     // exact launcher. An unrelated AI crew target can no longer qualify.
-    if (!_isLocalOperator && {vehicle player isEqualTo _launcher} && {isManualFire _launcher}) then {
+    if (
+        !_isLocalOperator
+        && {vehicle player isEqualTo _launcher}
+        && {isManualFire _launcher}
+    ) then {
         _isLocalOperator = true;
+    };
+
+    // A UAV pilot can see the same pylon event, but only the player actively
+    // controlling the UAV gunner owns the targeting-camera launch snapshot.
+    if (
+        _isLocalOperator
+        && {unitIsUAV _launcher}
+        && {!(player in (UAVControl [_launcher, "gunner"]))}
+    ) then {
+        _isLocalOperator = false;
     };
 };
 if (_isLocalOperator) then {
-    private _uiCue = [_launcher, _weapon, _missile, _instigator, true] call fdelta_fnc_scalpelLCaptureCue;
+    private _uiCue = [
+        _launcher,
+        _weapon,
+        _missile,
+        _instigator,
+        true
+    ] call fdelta_fnc_scalpelLCaptureCue;
     [_missile, _uiCue, player] call fdelta_fnc_scalpelLReceiveCue;
 };
 
-if (missionNamespace getVariable ["fdelta_scalpelL_debug", false]) then {
+if (localNamespace getVariable ["fdelta_scalpelL_debug", false]) then {
     diag_log format
     [
-        "fdelta_scalpelL_FIRED|launcher=%1|eventGunner=%2|shotParents=%3|instigator=%4|localOperator=%5|engineTarget=%6|manualFire=%7",
+        "fdelta_scalpelL_FIRED|launcher=%1|eventGunner=%2|shotParents=%3|"
+            + "instigator=%4|localOperator=%5|engineTarget=%6|manualFire=%7",
         _launcher,
         _gunner,
         _shotParents,
@@ -72,10 +95,60 @@ if (missionNamespace getVariable ["fdelta_scalpelL_debug", false]) then {
 // Every authoritative owner has an AI/engine fallback even if a separate
 // gunner client needs a fraction of a second to deliver the richer UI cue.
 if (local _missile) then {
-    private _fallbackCue = [_launcher, _weapon, _missile, _instigator, false] call fdelta_fnc_scalpelLCaptureCue;
+    private _fallbackCue = [
+        _launcher,
+        _weapon,
+        _missile,
+        _instigator,
+        false
+    ] call fdelta_fnc_scalpelLCaptureCue;
     [_missile, _fallbackCue] call fdelta_fnc_scalpelLReceiveCue;
-    if !(_missile getVariable ["fdelta_scalpelL_controllerStarted", false]) then {
-        _missile setVariable ["fdelta_scalpelL_controllerStarted", true];
+
+    // Objects cannot be direct HashMap keys. Resolve the collision bucket by
+    // object identity and keep the controller gates owner-local.
+    private _registry = localNamespace getVariable
+        ["fdelta_scalpelL_ownerRegistry", createHashMap];
+    if !(_registry isEqualType createHashMap) then {
+        _registry = createHashMap;
+    };
+    localNamespace setVariable ["fdelta_scalpelL_ownerRegistry", _registry];
+    private _missileHash = hashValue _missile;
+    private _bucket = _registry getOrDefault [_missileHash, []];
+    if !(_bucket isEqualType []) then {_bucket = [];};
+    _bucket = _bucket select {
+        _x isEqualType []
+        && {(count _x) >= 5}
+        && {(_x # 0) isEqualType objNull}
+        && {!isNull (_x # 0)}
+    };
+    private _entryIndex = _bucket findIf {(_x # 0) isEqualTo _missile};
+    if (_entryIndex < 0) then {
+        private _serial = localNamespace getVariable
+            ["fdelta_scalpelL_registrySerial", 0];
+        if !(_serial isEqualType 0) then {_serial = 0;};
+        _serial = _serial + 1;
+        if (!(finite _serial) || {_serial > 1000000000}) then {_serial = 1;};
+        localNamespace setVariable ["fdelta_scalpelL_registrySerial", _serial];
+        _bucket pushBack [_missile, [], false, false, _serial, false];
+        _entryIndex = (count _bucket) - 1;
+    };
+    _registry set [_missileHash, _bucket];
+
+    private _entry = _bucket # _entryIndex;
+    private _monitorStarted = _entry param [5, false];
+    if !(_monitorStarted isEqualType true) then {_monitorStarted = false;};
+    if (!_monitorStarted) then {
+        _entry set [5, true];
+        [_missile, _missileHash, _entry # 4]
+            spawn fdelta_fnc_scalpelLMonitorRegistryEntry;
+    };
+    private _controllerStarted = _entry param [2, false];
+    if !(_controllerStarted isEqualType true) then {_controllerStarted = false;};
+    if (!_controllerStarted) then {
+        _entry set [2, true];
         [_missile] spawn fdelta_fnc_scalpelLGuideMissile;
     };
+    _bucket set [_entryIndex, _entry];
+    _registry set [_missileHash, _bucket];
+    localNamespace setVariable ["fdelta_scalpelL_ownerRegistry", _registry];
 };

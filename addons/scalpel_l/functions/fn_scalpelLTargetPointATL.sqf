@@ -3,6 +3,8 @@
 
     Resolves a target object's current aiming point in ATL coordinates.
 */
+if (isRemoteExecuted) exitWith {[]};
+
 params ["_target"];
 
 if (isNull _target) exitWith {[]};

@@ -3,6 +3,8 @@
 
     Validates and submits the values entered in the loiter dialog.
 */
+if (isRemoteExecuted) exitWith {false};
+
 disableSerialization;
 
 private _display = findDisplay 420870;
@@ -13,7 +15,7 @@ private _terrainClearance = parseNumber (ctrlText (_display displayCtrl 420873))
 private _radius = parseNumber (ctrlText (_display displayCtrl 420874));
 
 if (!finite _altitudeASL || {_altitudeASL < 20} || {_altitudeASL > 20000}) exitWith {
-    systemChat "TER: ASL altitude must be between 20 and 20000 meters.";
+    systemChat localize "STR_FDELTA_TER_MSG_ALTITUDE_RANGE";
     false
 };
 if (
@@ -21,11 +23,11 @@ if (
     || {_terrainClearance < 20}
     || {_terrainClearance > 1000}
 ) exitWith {
-    systemChat "TER: Terrain clearance must be between 20 and 1000 meters.";
+    systemChat localize "STR_FDELTA_TER_MSG_CLEARANCE_RANGE";
     false
 };
 if (!finite _radius || {_radius < 100} || {_radius > 20000}) exitWith {
-    systemChat "TER: Loiter radius must be between 100 and 20000 meters.";
+    systemChat localize "STR_FDELTA_TER_MSG_RADIUS_RANGE";
     false
 };
 

@@ -3,6 +3,8 @@
 
     Populates the loiter dialog from the active UAV and waypoint state.
 */
+if (isRemoteExecuted) exitWith {};
+
 disableSerialization;
 params ["_display"];
 
@@ -26,17 +28,24 @@ if (_radius <= 0) then {
 };
 
 private _vehicleName = getText (configOf _aircraft >> "displayName");
-(_display displayCtrl 420871) ctrlSetText format ["UAV Loiter Controls - %1", _vehicleName];
+(_display displayCtrl 420871) ctrlSetText format [
+    localize "STR_FDELTA_TER_DIALOG_TITLE_FORMAT",
+    _vehicleName
+];
 (_display displayCtrl 420872) ctrlSetText str (round _altitudeASL);
 (_display displayCtrl 420873) ctrlSetText str (round _terrainClearance);
 (_display displayCtrl 420874) ctrlSetText str (round _radius);
 
 private _status = if (_loiter isEqualTo []) then {
-    "<t size='0.85' color='#FFD65A'>No active LOITER waypoint. Altitude will apply, "
-        + "but radius and center commands need an active LOITER waypoint.</t>"
+    format [
+        "<t size='0.85' color='#FFD65A'>%1</t>",
+        localize "STR_FDELTA_TER_DIALOG_STATUS_NO_LOITER"
+    ]
 } else {
-    "<t size='0.85' color='#9BE7A1'>Active LOITER waypoint found. ASL is the main "
-        + "altitude; terrain clearance is only the safety floor.</t>"
+    format [
+        "<t size='0.85' color='#9BE7A1'>%1</t>",
+        localize "STR_FDELTA_TER_DIALOG_STATUS_ACTIVE_LOITER"
+    ]
 };
 (_display displayCtrl 420875) ctrlSetStructuredText parseText _status;
 

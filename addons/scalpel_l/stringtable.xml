@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project name="420th Customizations">
+    <Package name="Scalpel-L">
+        <Key ID="STR_FDELTA_SCALPEL_L_ADDON_NAME">
+            <English>420th Customizations - Scalpel-L</English>
+        </Key>
+        <Key ID="STR_FDELTA_SCALPEL_L_DESCRIPTION_FOUR">
+            <English>Four Longbow radar/IR ATGMs with top attack and terminal LOAL.</English>
+        </Key>
+        <Key ID="STR_FDELTA_SCALPEL_L_DESCRIPTION_SINGLE">
+            <English>Longbow radar/IR ATGM with top attack and terminal LOAL.</English>
+        </Key>
+        <Key ID="STR_FDELTA_SCALPEL_L_DESCRIPTION_THREE">
+            <English>Three Longbow radar/IR ATGMs with top attack and terminal LOAL.</English>
+        </Key>
+        <Key ID="STR_FDELTA_SCALPEL_L_NAME">
+            <English>Scalpel-L</English>
+        </Key>
+        <Key ID="STR_FDELTA_SCALPEL_L_NAME_3X">
+            <English>Scalpel-L 3x</English>
+        </Key>
+        <Key ID="STR_FDELTA_SCALPEL_L_NAME_4X">
+            <English>Scalpel-L 4x</English>
+        </Key>
+    </Package>
+</Project>

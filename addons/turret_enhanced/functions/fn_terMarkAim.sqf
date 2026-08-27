@@ -3,11 +3,13 @@
 
     Creates a globally styled channel marker at the center-camera aim point.
 */
+if (isRemoteExecuted) exitWith {""};
+
 params [["_requestedColor", "", [""]]];
 
 private _point = call fdelta_fnc_terAimPoint;
 if (_point isEqualTo []) exitWith {
-    systemChat "TER: The camera center does not intersect terrain or water within view distance.";
+    systemChat localize "STR_FDELTA_TER_MSG_NO_CAMERA_INTERSECTION";
     ""
 };
 
@@ -31,10 +33,10 @@ if (_channel in [-1, 5, 16]) then {
 };
 
 private _markerName = format ["_USER_DEFINED #%1/%2/%3", clientOwner, _counter, _channel];
-private _label = format ["TGT %1", _counter];
+private _label = format [localize "STR_FDELTA_TER_MARKER_LABEL", _counter];
 private _marker = createMarker [_markerName, _point, _channel, player];
 if (_marker isEqualTo "") exitWith {
-    systemChat "TER: The map marker could not be created.";
+    systemChat localize "STR_FDELTA_TER_MSG_MARKER_FAILED";
     ""
 };
 
@@ -45,5 +47,9 @@ _marker setMarkerSizeLocal [0.7, 0.7];
 _marker setMarkerTextLocal _label;
 _marker setMarkerType "mil_dot";
 
-systemChat format ["TER: %1 marked at grid %2.", _label, mapGridPosition _point];
+systemChat format [
+    localize "STR_FDELTA_TER_MSG_MARKED_FORMAT",
+    _label,
+    mapGridPosition _point
+];
 _marker

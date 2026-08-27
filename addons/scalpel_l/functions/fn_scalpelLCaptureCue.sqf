@@ -4,6 +4,8 @@
     Captures the best immutable launch cue available from player UI, engine
     target state, AI target state, or the launcher's forward axis.
 */
+if (isRemoteExecuted) exitWith {[]};
+
 params [
     "_launcher",
     "_weapon",
@@ -45,7 +47,13 @@ if (_capturePlayerUI && {hasInterface}) then {
         _source = ["selected-snapshot", "player-hard-lock"] select (_lockValue >= 0.999);
     }
     else {
-        _aimpointATL = [_launcher, _weapon, _missile, player, true] call fdelta_fnc_scalpelLTraceAimpoint;
+        _aimpointATL = [
+            _launcher,
+            _weapon,
+            _missile,
+            player,
+            true
+        ] call fdelta_fnc_scalpelLTraceAimpoint;
         _priority = 220;
         _source = "camera-los";
     };
@@ -69,7 +77,13 @@ if (_aimpointATL isEqualTo []) then {
             _source = "ai-target-snapshot";
         }
         else {
-            _aimpointATL = [_launcher, _weapon, _missile, _gunner, false] call fdelta_fnc_scalpelLTraceAimpoint;
+            _aimpointATL = [
+                _launcher,
+                _weapon,
+                _missile,
+                _gunner,
+                false
+            ] call fdelta_fnc_scalpelLTraceAimpoint;
         };
     };
 };

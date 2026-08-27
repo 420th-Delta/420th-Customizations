@@ -3,6 +3,7 @@
 
     Returns the aircraft whose gunner camera the local player is actively using.
 */
+if (isRemoteExecuted) exitWith {objNull};
 if (!hasInterface || {isNull player}) exitWith {objNull};
 
 private _connectedUAV = getConnectedUAV player;

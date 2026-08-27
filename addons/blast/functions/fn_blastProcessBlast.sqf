@@ -7,11 +7,10 @@
     Returns:
         Nothing
 */
-if (
-    !isServer
-    || {isRemoteExecuted}
-    || {!(missionNamespace getVariable ["fdelta_blast_enabled", true])}
-) exitWith {};
+if (!isServer || {isRemoteExecuted}) exitWith {};
+
+private _settings = localNamespace getVariable ["fdelta_blast_settings", createHashMap];
+if !(_settings getOrDefault ["fdelta_blast_enabled", true]) exitWith {};
 
 params [
     ["_blastId", "", [""]],
@@ -22,7 +21,10 @@ params [
     ["_instigator", objNull, [objNull]]
 ];
 
-private _profile = [_ammo] call fdelta_fnc_blastProfile;
+private _profile = [_ammo] call (localNamespace getVariable [
+    "fdelta_blast_resolveProfile",
+    {[]}
+]);
 if (_profile isEqualTo [] || {count _originASL != 3}) exitWith {};
 
 _profile params ["_outerRanges", "_outerDoses", "_innerRanges", "_innerDoses", "_virtualLift"];
@@ -43,7 +45,7 @@ _candidates = [_candidates, [], {
     _originASL distance (getPosASL _x vectorAdd [0, 0, 1])
 }, "ASCEND"] call BIS_fnc_sortBy;
 
-private _maxTargets = (missionNamespace getVariable ["fdelta_blast_maxTargets", 256]) max 1;
+private _maxTargets = _settings getOrDefault ["fdelta_blast_maxTargets", 256];
 if (count _candidates > _maxTargets) then {
     _candidates resize _maxTargets;
 };
@@ -101,7 +103,7 @@ private _rayTargets = 0;
     };
 } forEach _candidates;
 
-if (missionNamespace getVariable ["fdelta_blast_debug", false]) then {
+if (_settings getOrDefault ["fdelta_blast_debug", false]) then {
     diag_log format [
         "FDELTA_BLAST|id=%1|ammo=%2|originASL=%3|candidates=%4|rayTargets=%5|"
             + "applied=%6|milliseconds=%7",
