@@ -17,8 +17,8 @@ class CfgPatches {
 class CfgFunctions {
     class A3TI {
         class core {
-            class cameraViewEH { file = "z\fdelta\addons\a3ti\fn_cameraViewEH.sqf"; };
-            class getPlayerTurret { file = "z\fdelta\addons\a3ti\fn_getPlayerTurret.sqf"; };
+            class cameraViewEH { file = "\z\fdelta\addons\a3ti\fn_cameraViewEH.sqf"; };
+            class getPlayerTurret { file = "\z\fdelta\addons\a3ti\fn_getPlayerTurret.sqf"; };
         };
     };
 };

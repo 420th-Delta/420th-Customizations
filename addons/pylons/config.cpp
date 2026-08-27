@@ -18,7 +18,7 @@ class CfgPatches {
 class CfgFunctions {
     class BIS {
         class Pylons {
-            class Pylon_ECMPodIncoming { file = "z\fdelta\addons\pylons\Functions\Pylons\fn_Pylon_ECMPodIncoming.sqf"; };
+            class Pylon_ECMPodIncoming { file = "\z\fdelta\addons\pylons\Functions\Pylons\fn_Pylon_ECMPodIncoming.sqf"; };
         };
     };
 };
