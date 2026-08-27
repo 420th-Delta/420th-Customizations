@@ -16,6 +16,11 @@ An Arma 3 mod for the 420th Delta community.
 - Allow loading modded pylons onto vanilla aircraft (CUP, RHS)
 - Allow attaching RHS grips on NIArms weaponry
 - Allow aimed usage of NVGs with modded optics (RHSUSAF)
+- Fix [A3TI] incompatibility with thermal-capable MH-80 Camera Pods
+- Fix A3TI causing units/vehicles to appear pink when changing cameras
+- Fix MH-80 DAP ECM Pods (DIRCM variants) not detecting some IR missiles
+
+[A3TI]: https://steamcommunity.com/workshop/filedetails/?id=2041057379
 
 ## Capacity Changes
 
