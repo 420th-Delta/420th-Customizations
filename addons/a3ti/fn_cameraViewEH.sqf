@@ -1,5 +1,5 @@
 /*
-    Author: Lala14, Pingopete
+    Author: Lala14, Pingopete, thegamecracks
 
     Description:
     For when the player cycles been vision modes, attempts to check if player
@@ -24,20 +24,24 @@ if (!isNull _curPlayerTurret) then {
     //this case only occurs when zeus is taking control of a unit
     case "unit_switched":
     {
-        ace_common_oldIsCamera = false;
-        call FNC(disablePPeffects);
-        call FNC(destroySecondSun);
-        ["OFF"] call FNC(setObjects);
+        isNil {
+            ace_common_oldIsCamera = false;
+            call FNC(disablePPeffects);
+            call FNC(destroySecondSun);
+            ["OFF"] call FNC(setObjects);
+        };
     };
 };*/
 
 
 if ((!(cameraView isEqualTo "GUNNER")) || ((player == vehicle player) && (!(cameraOn isKindOf "UAV"))) || (_this isEqualTo "unit_switched")) then {
     //disable PP
-    ace_common_oldIsCamera = false;
-    call FNC(disablePPeffects);
-    call FNC(destroySecondSun);
-    ["OFF"] call FNC(setObjects);
+    isNil {
+        ace_common_oldIsCamera = false;
+        call FNC(disablePPeffects);
+        call FNC(destroySecondSun);
+        ["OFF"] call FNC(setObjects);
+    };
 } else {
     //enable PP
     //this allows for when switching views from 3rd/1st to gunner to retain vision
