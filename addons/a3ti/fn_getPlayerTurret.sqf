@@ -17,44 +17,49 @@
     (configfile >> "CfgVehicles" >> "B_UAV_05_F")
 */
 #include "constants.h"
-private _turretConfig = configNull;
 
 private _unit = missionNamespace getVariable ["bis_fnc_moduleRemoteControl_unit", player];
-//this was moved outside as if the player is in a vehicle and is controlling
-//the uav, the uav needs priority over the current player vehicle
-//UAV
-if (!(isNull (getConnectedUAV _unit)) && !(cameraOn isEqualTo _unit)) then {
+
+// If the player is in a vehicle and is controlling a UAV, the UAV needs priority
+// over the current player vehicle.
+private _uavTurret = call {
     private _uav = getConnectedUAV _unit;
-    private _playerControl = (UAVControl _uav) find _unit;
-    private _uavPos = (UAVControl _uav) select (_playerControl + 1);
-    if ((toLower _uavPos) isEqualTo "gunner") then {
-        _turretConfig = [_uav] call FNC(getGunTurret);
-    };
-    if ((toLower _uavPos) isEqualTo "driver") then {
-        _turretConfig = (configFile >> "CfgVehicles" >> typeOf _uav);
-    };
-};
+    if (isNull _uav || {cameraOn isEqualTo _unit}) exitWith {configNull};
 
-if (isNull _turretConfig) then {
-    if (vehicle _unit == _unit) then {
-        //assuming zeus
-        //still to implement
-    } else {
-        //normal vehicle
-        private _veh = vehicle _unit;
-        if (isNull _veh) exitWith { /*not in veh*/ configNull };
-
-        private _turretPlayer = _veh unitTurret _unit;
-        if (_turretPlayer isEqualTo []) exitWith { /*_unit not in a turret*/ configNull };
-
-        private _candidate = [_veh, _turretPlayer] call BIS_fnc_turretConfig;
-        if ((getNumber(_candidate >> "isPersonTurret") > 0) && (isTurnedOut _unit)) then {
-            systemChat "FFV";
-        } else {
-            _turretConfig = _candidate;
+    // Clunky way to get the unit's current vehicle role...
+    private _role = "";
+    private _uavControl = UAVControl _uav;
+    for "_i" from 0 to floor (count _uavControl / 2) - 1 do {
+        if (_uavControl # _i isEqualTo _unit) exitWith {
+            _role = _uavControl # (_i + 1);
         };
     };
+
+    switch (toLowerANSI _role) do {
+        case "gunner": {[_uav] call FNC(getGunTurret)};
+        case "driver": {configOf _uav};
+        default {
+            diag_log text format ["%1: unknown UAV role: %2", _fnc_scriptName, _uavControl];
+            configNull
+        };
+    }
+};
+if (!isNull _uavTurret) exitWith {_uavTurret};
+
+// assuming zeus, still to implement
+if (isNull objectParent _unit) exitWith {configNull};
+
+// normal vehicle
+private _vehicle = objectParent _unit;
+if (isNull _vehicle) exitWith {configNull};
+
+private _turretPath = _vehicle unitTurret _unit;
+if (_turretPath isEqualTo []) exitWith {configNull};
+
+private _turretConfig = [_vehicle, _turretPath] call BIS_fnc_turretConfig;
+if (getNumber (_turretConfig >> "isPersonTurret") > 0 && {isTurnedOut _unit}) exitWith {
+    diag_log text format ["%1: in FFV seat", _fnc_scriptName];
+    configNull
 };
 
-//return config
 _turretConfig
