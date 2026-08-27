@@ -34,7 +34,11 @@ if (!isNull _curPlayerTurret) then {
 };*/
 
 
-if ((!(cameraView isEqualTo "GUNNER")) || ((player == vehicle player) && (!(cameraOn isKindOf "UAV"))) || (_this isEqualTo "unit_switched")) then {
+if (
+    cameraView isNotEqualTo "GUNNER"
+    || {isNull objectParent player && {!unitIsUAV cameraOn}}
+    || {_this isEqualTo "unit_switched"}
+) then {
     //disable PP
     isNil {
         ace_common_oldIsCamera = false;
