@@ -16,7 +16,11 @@ if (isNull _missile) exitWith {};
 // Tracking and jamming must only run where the vehicle is local
 if (!local _vehicle) exitWith {};
 
-private _isIR = (getNumber (configFile >> "CfgAmmo" >> _ammo >> "irLock")) > 0;
+private _ammoCfg = configFile >> "CfgAmmo" >> _ammo;
+private _isIR = (
+    getNumber (_ammoCfg >> "irLock") > 0
+    || {isClass (_ammoCfg >> "Components" >> "SensorsManagerComponent" >> "Components" >> "IRSensorComponent")}
+);
 
 // --- Append to tracked-missile array (guard against duplicates) ---
 private _tracked = _vehicle getVariable ["bis_pylon_ecmTracked", []];
