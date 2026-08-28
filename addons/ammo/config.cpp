@@ -6,6 +6,7 @@
 #define FDELTA_230MM_INDIRECT_RANGE 16.25
 #define FDELTA_CRUISE_INDIRECT_HIT 7000
 #define FDELTA_CRUISE_INDIRECT_RANGE 30
+#define FDELTA_DAGR_AIR_TARGET_SPEED 700
 
 class CfgPatches {
     class fdelta_ammo {
@@ -20,6 +21,7 @@ class CfgPatches {
             "A3_Weapons_F_Orange",
             "A3_Weapons_F_Sams",
             "A3_Weapons_F_Destroyer",
+            "A3_Sounds_F",
             "A3_Data_F_Decade_Loadorder",
             "fdelta_main",
         };
@@ -29,6 +31,9 @@ class CfgPatches {
         weapons[] = {};
     };
 };
+
+class SensorTemplateIR;
+class SensorTemplateLaser;
 
 class CfgAmmo {
     class Default;
@@ -41,7 +46,9 @@ class CfgAmmo {
     class ammo_Bomb_SmallDiameterBase : ammo_Bomb_LaserGuidedBase {};
 
     class MissileCore : Default {};
-    class MissileBase : MissileCore {};
+    class MissileBase : MissileCore {
+        class Components;
+    };
     class ammo_Missile_AntiRadiationBase : MissileBase {};
 
     class RocketCore : Default {};
@@ -154,9 +161,92 @@ class CfgAmmo {
         indirectHitRange = 3;
     };
 
-    class M_PG_AT : MissileBase {};
+    // Keep ground targeting on DAGR/DAGRM and add the air target category.
+    class M_PG_AT : MissileBase {
+        airLock = 1;
+        missileLockMaxSpeed = FDELTA_DAGR_AIR_TARGET_SPEED;
+        aiAmmoUsageFlags = 64 + 128 + 256;
+
+        class Components : Components {
+            class SensorsManagerComponent {
+                class Components {
+                    class IRSensorComponent : SensorTemplateIR {
+                        class AirTarget {
+                            minRange = 500;
+                            maxRange = 4000;
+                            objectDistanceLimitCoef = -1;
+                            viewDistanceLimitCoef = 1;
+                        };
+                        class GroundTarget {
+                            minRange = 500;
+                            maxRange = 4000;
+                            objectDistanceLimitCoef = 1;
+                            viewDistanceLimitCoef = 1;
+                        };
+                        maxTrackableSpeed = FDELTA_DAGR_AIR_TARGET_SPEED;
+                        angleRangeHorizontal = 45;
+                        angleRangeVertical = 35;
+                    };
+
+                    class LaserSensorComponent : SensorTemplateLaser {
+                        class AirTarget {
+                            minRange = 4000;
+                            maxRange = 4000;
+                            objectDistanceLimitCoef = -1;
+                            viewDistanceLimitCoef = -1;
+                        };
+                        class GroundTarget {
+                            minRange = 4000;
+                            maxRange = 4000;
+                            objectDistanceLimitCoef = -1;
+                            viewDistanceLimitCoef = -1;
+                        };
+                        maxTrackableSpeed = FDELTA_DAGR_AIR_TARGET_SPEED;
+                        angleRangeHorizontal = 90;
+                        angleRangeVertical = 70;
+                    };
+                };
+            };
+        };
+    };
+
+    // DAGRM inherits the patched sensor tree from M_PG_AT. Re-state its
+    // top-level gates so both affected projectile classes are explicit.
+    class M_PGM_AT : M_PG_AT {
+        airLock = 1;
+        missileLockMaxSpeed = FDELTA_DAGR_AIR_TARGET_SPEED;
+        aiAmmoUsageFlags = 64 + 128 + 256;
+    };
+
+    // DAR inherits from M_PG_AT in vanilla. Pin its targeting behavior so the
+    // DAGR air-lock changes do not propagate into the unguided rocket family.
     class M_AT : M_PG_AT {
+        airLock = 0;
+        missileLockMaxSpeed = 35;
+        aiAmmoUsageFlags = 128 + 64;
         indirectHit = 250;
         indirectHitRange = 7.5;
+
+        class Components : Components {
+            class SensorsManagerComponent : SensorsManagerComponent {
+                class Components : Components {
+                    class IRSensorComponent : IRSensorComponent {
+                        maxTrackableSpeed = 35;
+                    };
+                    class LaserSensorComponent : LaserSensorComponent {
+                        maxTrackableSpeed = 35;
+                    };
+                };
+            };
+        };
+    };
+};
+
+class CfgMagazines {
+    class VehicleMagazine;
+
+    class 24Rnd_PG_missiles : VehicleMagazine {
+        // Propagates to the legacy and pylon DAGR/DAGRM magazine classes.
+        maxLeadSpeed = FDELTA_DAGR_AIR_TARGET_SPEED;
     };
 };
