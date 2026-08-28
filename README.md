@@ -13,7 +13,7 @@ An Arma 3 mod for the 420th Delta community.
 - Increase capacity of various clothing (see [Capacity Changes](#capacity-changes))
 - Rebalance native indirect damage for selected vanilla unitary HE bombs,
   rockets, SPG, MLRS/MRL, and VLS ammunition—including the SDB—and add
-  cover-aware cumulative blast trauma for exposed infantry
+  locality-processed, cover-aware supplemental blast damage for exposed infantry
 - Allow DAGR/DAGRM rockets to acquire aircraft travelling at up to 700 m/s
   without removing ground targeting
 - Add Scalpel-L, a separate pylon ATGM with immutable launch cues, a scripted
@@ -33,7 +33,7 @@ for exact scope, multiplayer requirements, known limits, and validation status.
 
 Do not load the standalone **ZBR Gameplay Enhancements**, Turret Enhanced, or
 Turret Enhanced Plus mods alongside a 420th release containing these features.
-They duplicate runtime handlers and can apply blast trauma twice or issue
+They duplicate runtime handlers and can apply supplemental damage twice or issue
 competing UAV commands. Remove the standalone bundle when migrating.
 
 [A3TI]: https://steamcommunity.com/workshop/filedetails/?id=2041057379

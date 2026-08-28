@@ -82,27 +82,9 @@ class CfgAmmo {
     };
 
     // 155 mm SPG family. The conventional shell is a direct impact round.
-    // Guided and laser-guided shells are deployment carriers, so they are
-    // repointed to isolated terminal subclasses below. This preserves their
-    // native direct hit, seeker, flight, and fuse behavior while avoiding an
-    // inherited change to the destroyer's guided 120 mm ammunition.
+    // Guided carriers keep their vanilla terminal class names below so an
+    // unmodded observer never has to resolve a replacement projectile asset.
     class Sh_155mm_AMOS : ShellBase {
-        indirectHit = FDELTA_155MM_INDIRECT_HIT;
-        indirectHitRange = FDELTA_155MM_INDIRECT_RANGE;
-    };
-
-    class M_Mo_82mm_AT : MissileBase {};
-    class M_Mo_120mm_AT : M_Mo_82mm_AT {};
-    class M_Mo_155mm_AT : M_Mo_120mm_AT {};
-    class M_Mo_120mm_AT_LG : M_Mo_120mm_AT {};
-    class M_Mo_155mm_AT_LG : M_Mo_120mm_AT_LG {};
-
-    class fdelta_M_Mo_155mm_HE_Guided : M_Mo_155mm_AT {
-        indirectHit = FDELTA_155MM_INDIRECT_HIT;
-        indirectHitRange = FDELTA_155MM_INDIRECT_RANGE;
-    };
-
-    class fdelta_M_Mo_155mm_HE_LG : M_Mo_155mm_AT_LG {
         indirectHit = FDELTA_155MM_INDIRECT_HIT;
         indirectHitRange = FDELTA_155MM_INDIRECT_RANGE;
     };
@@ -110,10 +92,10 @@ class CfgAmmo {
     class Sh_82mm_AMOS_guided : SubmunitionBase {};
     class Sh_82mm_AMOS_LG : Sh_82mm_AMOS_guided {};
     class Sh_155mm_AMOS_guided : Sh_82mm_AMOS_guided {
-        submunitionAmmo = "fdelta_M_Mo_155mm_HE_Guided";
+        submunitionAmmo = "M_Mo_155mm_AT";
     };
     class Sh_155mm_AMOS_LG : Sh_82mm_AMOS_LG {
-        submunitionAmmo = "fdelta_M_Mo_155mm_HE_LG";
+        submunitionAmmo = "M_Mo_155mm_AT_LG";
     };
 
     // The 230 mm HE launcher projectile separates at 500 m. Patch only its
@@ -137,19 +119,12 @@ class CfgAmmo {
         indirectHitRange = 30;
     };
 
-    // The destroyer cannon shares vanilla artillery parents but is not part of
-    // this pass. Pin its unguided splash and restore its two guided terminals.
+    // The destroyer cannon shares the conventional artillery parent but is not
+    // part of this pass. Pin its unguided splash to vanilla.
     class ammo_ShipCannon_120mm_HE : Sh_155mm_AMOS {
         indirectHit = 125;
         indirectHitRange = 30;
     };
-    class ammo_ShipCannon_120mm_HE_guided : Sh_155mm_AMOS_guided {
-        submunitionAmmo = "M_Mo_155mm_AT";
-    };
-    class ammo_ShipCannon_120mm_HE_LG : Sh_155mm_AMOS_LG {
-        submunitionAmmo = "M_Mo_155mm_AT_LG";
-    };
-
     class Rocket_04_HE_F : MissileBase {
         indirectHit = 300;
         indirectHitRange = 10;

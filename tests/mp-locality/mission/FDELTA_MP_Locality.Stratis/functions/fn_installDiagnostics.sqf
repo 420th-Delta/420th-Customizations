@@ -6,8 +6,6 @@ private _supported = [
     "Bomb_03_F",
     "ammo_Bomb_SDB",
     "Sh_155mm_AMOS",
-    "fdelta_M_Mo_155mm_HE_Guided",
-    "fdelta_M_Mo_155mm_HE_LG",
     "R_230mm_fly",
     "ammo_Missile_Cruise_01",
     "Rocket_04_HE_F",
@@ -52,8 +50,6 @@ fdelta_test_projectileEH = addMissionEventHandler ["ProjectileCreated", {
                 netId _projectile,
                 _positionASL,
                 _velocity,
-                _projectile getVariable ["fdelta_blast_ammo", ""],
-                _projectile getVariable ["fdelta_blast_registryKey", ""],
                 alive _projectile
             ]
         ] call fdelta_test_fnc_log;
@@ -90,8 +86,11 @@ fdelta_test_projectileEH = addMissionEventHandler ["ProjectileCreated", {
                 getNumber (_ammoCfg >> "hit"),
                 getNumber (_ammoCfg >> "indirectHit"),
                 getNumber (_ammoCfg >> "indirectHitRange"),
-                _projectile getVariable ["fdelta_blast_ammo", ""],
-                _projectile getVariable ["fdelta_blast_registryKey", ""]
+                isClass (
+                    configFile
+                        >> "CfgFdeltaBlastProfiles"
+                        >> (typeOf _projectile)
+                )
             ]
         ] call fdelta_test_fnc_log;
     };

@@ -16,6 +16,13 @@ if (_loiter isEqualTo []) exitWith {
     systemChat localize "STR_FDELTA_TER_MSG_NO_ACTIVE_LOITER";
     false
 };
+if (
+    !isNull (waypointAttachedVehicle _loiter)
+    || {!isNull (waypointAttachedObject _loiter)}
+) exitWith {
+    systemChat localize "STR_FDELTA_TER_MSG_LOITER_ATTACHED";
+    false
+};
 
 private _point = call fdelta_fnc_terAimPoint;
 if (_point isEqualTo []) exitWith {
@@ -32,5 +39,10 @@ if (isServer) then {
         2
     ];
 };
+
+systemChat format [
+    localize "STR_FDELTA_TER_MSG_LOITER_CENTER_MOVED_FORMAT",
+    mapGridPosition _point
+];
 
 true

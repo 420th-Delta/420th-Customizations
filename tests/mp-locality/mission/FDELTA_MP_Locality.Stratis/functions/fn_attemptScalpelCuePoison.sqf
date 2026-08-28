@@ -1,5 +1,5 @@
 /*
-    Sends the owner-only engine-fallback cue label from a real remote client.
+    Sends an owner-only engine-fallback cue label from a real remote client.
     The projectile owner must reject it before it can enter trusted local state.
 */
 if (isServer) exitWith {false};

@@ -111,6 +111,45 @@ if (local _missile) then {
     if !(_registry isEqualType createHashMap) then {
         _registry = createHashMap;
     };
+
+    // Guidance removes its own entry on every normal exit. Sweep abandoned
+    // entries opportunistically at launch instead of running a second
+    // scheduled cleanup loop for every missile throughout its flight.
+    private _now = diag_tickTime;
+    private _nextSweep = localNamespace getVariable
+        ["fdelta_scalpelL_nextRegistrySweep", 0];
+    if !(_nextSweep isEqualType 0) then {_nextSweep = 0;};
+    if (_now >= _nextSweep) then {
+        localNamespace setVariable
+            ["fdelta_scalpelL_nextRegistrySweep", _now + 15];
+        private _registryUpdates = [];
+        private _emptyHashes = [];
+        {
+            private _liveEntries = if (_y isEqualType []) then {
+                _y select {
+                    _x isEqualType []
+                    && {(count _x) >= 5}
+                    && {(_x # 0) isEqualType objNull}
+                    && {!isNull (_x # 0)}
+                    && {local (_x # 0)}
+                }
+            }
+            else {
+                []
+            };
+            if (_liveEntries isEqualTo []) then {
+                _emptyHashes pushBack _x;
+            }
+            else {
+                if (_liveEntries isNotEqualTo _y) then {
+                    _registryUpdates pushBack [_x, _liveEntries];
+                };
+            };
+        } forEach _registry;
+        {_registry set _x;} forEach _registryUpdates;
+        {_registry deleteAt _x;} forEach _emptyHashes;
+    };
+
     localNamespace setVariable ["fdelta_scalpelL_ownerRegistry", _registry];
     private _missileHash = hashValue _missile;
     private _bucket = _registry getOrDefault [_missileHash, []];
@@ -129,19 +168,12 @@ if (local _missile) then {
         _serial = _serial + 1;
         if (!(finite _serial) || {_serial > 1000000000}) then {_serial = 1;};
         localNamespace setVariable ["fdelta_scalpelL_registrySerial", _serial];
-        _bucket pushBack [_missile, [], false, false, _serial, false];
+        _bucket pushBack [_missile, [], false, false, _serial];
         _entryIndex = (count _bucket) - 1;
     };
     _registry set [_missileHash, _bucket];
 
     private _entry = _bucket # _entryIndex;
-    private _monitorStarted = _entry param [5, false];
-    if !(_monitorStarted isEqualType true) then {_monitorStarted = false;};
-    if (!_monitorStarted) then {
-        _entry set [5, true];
-        [_missile, _missileHash, _entry # 4]
-            spawn fdelta_fnc_scalpelLMonitorRegistryEntry;
-    };
     private _controllerStarted = _entry param [2, false];
     if !(_controllerStarted isEqualType true) then {_controllerStarted = false;};
     if (!_controllerStarted) then {

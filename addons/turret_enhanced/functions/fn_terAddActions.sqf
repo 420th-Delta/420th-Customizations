@@ -5,9 +5,16 @@
 */
 if (isRemoteExecuted) exitWith {[]};
 
-if (!hasInterface || {isNull player}) exitWith {[]};
+params [["_unit", player, [objNull]]];
 
-private _existing = player getVariable ["fdelta_terActionIds", []];
+if (
+    !hasInterface
+    || {isNull _unit}
+    || {!local _unit}
+    || {!isPlayer _unit}
+) exitWith {[]};
+
+private _existing = _unit getVariable ["fdelta_terActionIds", []];
 if (_existing isNotEqualTo []) exitWith {_existing};
 
 private _cameraCondition = "call fdelta_fnc_terCanUseCamera";
@@ -16,7 +23,7 @@ private _uavCondition = "(call fdelta_fnc_terCanUseCamera) && "
     + "!isNull _aircraft && {unitIsUAV _aircraft}}";
 private _ids = [];
 
-_ids pushBack (player addAction [
+_ids pushBack (_unit addAction [
     format [
         "<t color='#7FDBFF'>%1</t>",
         localize "STR_FDELTA_TER_ADD_ACTION_OPEN_LOITER"
@@ -34,7 +41,7 @@ _ids pushBack (player addAction [
     ""
 ]);
 
-_ids pushBack (player addAction [
+_ids pushBack (_unit addAction [
     format [
         "<t color='#FFD65A'>%1</t>",
         localize "STR_FDELTA_TER_ADD_ACTION_MARK_AIM"
@@ -52,7 +59,7 @@ _ids pushBack (player addAction [
     ""
 ]);
 
-_ids pushBack (player addAction [
+_ids pushBack (_unit addAction [
     format [
         "<t color='#FF6868'>%1</t>",
         localize "STR_FDELTA_TER_ADD_ACTION_MARK_AIM_RED"
@@ -70,7 +77,7 @@ _ids pushBack (player addAction [
     ""
 ]);
 
-_ids pushBack (player addAction [
+_ids pushBack (_unit addAction [
     format [
         "<t color='#7FDBFF'>%1</t>",
         localize "STR_FDELTA_TER_ADD_ACTION_MOVE_LOITER"
@@ -88,7 +95,7 @@ _ids pushBack (player addAction [
     ""
 ]);
 
-_ids pushBack (player addAction [
+_ids pushBack (_unit addAction [
     localize "STR_FDELTA_TER_ADD_ACTION_MEASURE_AIM",
     {[] call fdelta_fnc_terMeasureAim},
     nil,
@@ -103,5 +110,5 @@ _ids pushBack (player addAction [
     ""
 ]);
 
-player setVariable ["fdelta_terActionIds", _ids];
+_unit setVariable ["fdelta_terActionIds", _ids];
 _ids

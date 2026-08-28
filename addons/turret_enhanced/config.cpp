@@ -38,7 +38,6 @@ class CfgFunctions {
             class terApplyFlightProfileLocal {};
             class terServerApplyLoiterSettings {};
             class terServerMoveLoiterCenter {};
-            class terNotify {};
             class terAimPoint {};
             class terMarkAim {};
             class terMoveLoiterCenter {};
@@ -260,10 +259,6 @@ class CfgRemoteExec {
         };
         class fdelta_fnc_terApplyFlightProfileLocal {
             allowedTargets = 0;
-            jip = 0;
-        };
-        class fdelta_fnc_terNotify {
-            allowedTargets = 1;
             jip = 0;
         };
     };

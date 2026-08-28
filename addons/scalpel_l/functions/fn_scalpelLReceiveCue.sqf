@@ -248,22 +248,12 @@ if (_entryIndex < 0) then {
     _serial = _serial + 1;
     if (!(finite _serial) || {_serial > 1000000000}) then {_serial = 1;};
     localNamespace setVariable ["fdelta_scalpelL_registrySerial", _serial];
-    // A sixth field records whether an owner-local cleanup monitor actually
-    // started. A child spawned from remoteExecCall inherits remote context and
-    // would be rejected by the monitor's direct-remote guard.
-    _bucket pushBack [_missile, [], false, false, _serial, false];
+    _bucket pushBack [_missile, [], false, false, _serial];
     _entryIndex = (count _bucket) - 1;
 };
 _registry set [_missileHash, _bucket];
 
 private _entry = _bucket # _entryIndex;
-private _monitorStarted = _entry param [5, false];
-if !(_monitorStarted isEqualType true) then {_monitorStarted = false;};
-if (!_remoteCall && {!_monitorStarted}) then {
-    _entry set [5, true];
-    [_missile, _missileHash, _entry # 4]
-        spawn fdelta_fnc_scalpelLMonitorRegistryEntry;
-};
 private _existing = _entry param [1, []];
 if !(_existing isEqualType []) then {_existing = [];};
 if (_existing isEqualTo [] || {(_cue # 0) > (_existing # 0)}) then {

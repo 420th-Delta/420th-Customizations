@@ -30,7 +30,6 @@ class CfgFunctions {
             class scalpelLTraceAimpoint {};
             class scalpelLTargetPointATL {};
             class scalpelLReceiveCue {};
-            class scalpelLMonitorRegistryEntry {};
             class scalpelLGuideMissile {};
             class scalpelLFindTerminalTarget {};
         };

@@ -15,61 +15,58 @@ Workshop items:
 |---|---|---|
 | `fdelta_a3ti` | A3TI camera compatibility | Opted-in clients; activates only where A3TI is loaded |
 | `fdelta_ammo` | DAGR and unitary HE config changes | Server and each projectile owner that should use the changes |
-| `fdelta_ammo_cup` | CUP terminal-ammo compatibility | Conditional; activates only with CUP Weapons |
 | `fdelta_ammo_rhsusaf` | RHSUSAF ammo compatibility | Conditional; activates only with RHSUSAF and Blast Propagation |
-| `fdelta_blast` | Supplemental blast trauma | Server and each supported projectile owner |
+| `fdelta_blast` | Supplemental blast damage | Each projectile owner that should use it; server for server-local AI ordnance |
 | `fdelta_scalpel_l` | New pylon weapon and guidance | Server and every machine that may own a Scalpel-L projectile |
 | `fdelta_turret_enhanced` | Camera UI and UAV control | Server, control users, and every machine that may own the UAV |
 
 `fdelta_a3ti` skips itself when A3TI is absent, so it does not make A3TI a
 requirement for users who do not use it. A3TI itself requires CBA_A3. The CUP
-and RHSUSAF compatibility PBOs likewise skip themselves when their dependency
-is absent. The core gameplay features in this page have no CBA dependency.
+Weapons mod needs no compatibility PBO after the guided-155 terminal redirect
+was removed. The RHSUSAF compatibility PBO skips itself when RHSUSAF is absent.
+The core gameplay features in this page have no CBA dependency.
 
 The mod can be server-installed and player-optional when the server accepts mod
-disparity and the mission does not declare 420th-only assets as required. For
-supported explosives, enhanced behavior is guaranteed only when the server and
-the machine that owns and simulates the projectile load the same release.
-Ammunition config is read on the projectile-owning machine. Blast Propagation
-listens there and validates its reports on the server. Scalpel-L guidance also
-runs where its projectile is local. Turret Enhanced combines client UI, server
-validation, and execution on the UAV-owning machine.
+disparity and the mission does not declare 420th-only assets as required.
+Ammunition config and supplemental Blast Propagation both follow the machine
+that owns and simulates the projectile. That machine handles the local
+`Explode` event, computes cover and dose, and uses Arma's globally propagated
+`setDamage` directly. There is no custom Blast RPC, server registry, persistent
+worker, or JIP entry. Scalpel-L guidance likewise runs where its projectile is
+local. Turret Enhanced combines client UI, the two waypoint operations that
+must run on the server, and a one-shot flight command on the UAV owner.
 
-A dedicated-server matrix on Arma 3 `2.22.154045` measured the following with
-an actual `Mk82BombLauncher` shot from a graphical player's aircraft:
+A dedicated-server matrix uses an actual `Mk82BombLauncher` shot from a
+graphical player's aircraft. The optimized behavior follows the firing client,
+not the server's mod state:
 
 | Server | Firing client | Client Mk 82 config | Clear target at 100 m |
 |---|---|---|---|
-| Vanilla | Modded | `3200 / 16.25` | No native damage and no supplemental BP dose |
+| Vanilla | Vanilla | `1100 / 12` | No native damage and no supplemental BP dose |
+| Vanilla | Modded | `3200 / 16.25` | Approximately `0.18` supplemental BP damage |
 | Modded | Unmodded | `1100 / 12` | No native damage and no supplemental BP dose |
-| Modded | Modded | `3200 / 16.25` | BP validated the shot and applied approximately `0.18` damage |
+| Modded | Modded | `3200 / 16.25` | Approximately `0.18` supplemental BP damage |
 
 The modded graphical client also killed the 55 m target through native UWR
 damage. An unmodded graphical client on the modded server caused no damage at
-that distance. Thus, an opted-in player gets UWR for supported projectiles that
-remain local to that player's machine, and gets BP when the server is also
-modded. An unmodded projectile owner is not promised either enhancement.
+that distance. Thus, an opted-in projectile owner gets both UWR and BP for
+supported projectiles that remain local to that machine; a client-owned blast
+does not require the server addon. An unmodded projectile owner is not promised
+either enhancement.
 
 This is a locality-qualified guarantee, not a promise that every weapon used by
 a modded person is always enhanced. Vehicle locality commonly follows the
 driver, so a modded passenger gunner may fire a projectile simulated by an
 unmodded vehicle owner. Server-local AI and other server-owned projectiles use
-the server's config; this is particularly relevant in PvE. An unmodded player
-can still receive globally authoritative damage caused by a modded projectile
-owner even though that victim does not load 420th Customizations.
+the server's config and local Blast handler; this is particularly relevant in
+PvE. An unmodded player can still receive globally propagated damage caused by
+a modded projectile owner even though that victim does not load 420th
+Customizations.
 
 If AI or vehicles are offloaded to a headless client, load 420th Customizations
-on that HC to obtain native UWR and supplemental BP. Arma exposes HC RPCs with
-`remoteExecutedOwner = 0` and can report `isRemoteExecuted = false`, so BP binds
-the anonymous request to the server-observed projectile or registry owner and
-verifies that owner through `allUsers`/`getUserInfo` as a connected HC. The
-complete HC 2x2 matrix validates this path.
-
-Configured HCs are trusted server infrastructure. Because the engine erases
-the individual HC caller identity, all connected HCs share one trusted ingress
-domain and cannot be isolated from one another as hostile clients. Do not give
-the HC password to untrusted machines. Scalpel-L guidance and Turret Enhanced
-flight changes likewise require their projectile or UAV owner to have the mod.
+on that HC to obtain native UWR, supplemental BP, and Scalpel-L guidance for its
+local ordnance. No Blast-specific HC-to-server message is sent. Turret Enhanced
+flight changes likewise require the UAV owner to have the mod.
 
 Scalpel-L adds custom weapon, magazine, and ammunition classes. A mission that
 places or declares those classes can make `fdelta_scalpel_l` a mission
@@ -82,16 +79,14 @@ Server administrators must allow the documented functions if their mission
 uses a restrictive allowlist. Signature or exact-mod-parity policies must also
 allow the same signed release on connecting clients.
 
-Blast Propagation needs `fdelta_fnc_blastRegisterProjectileEvidence` and
-`fdelta_fnc_blastReceiveBlast` on the server, plus
-`fdelta_fnc_blastClientEffect` on clients. Scalpel-L needs
-`fdelta_fnc_scalpelLReceiveCue` on the projectile owner. Turret Enhanced's four
+Blast Propagation needs no `CfgRemoteExec` allowance. Scalpel-L needs
+`fdelta_fnc_scalpelLReceiveCue` on the projectile owner. Turret Enhanced's three
 remote functions are listed in its section below.
 
 Do not load the standalone **ZBR Gameplay Enhancements** bundle, the original
 Turret Enhanced addons, or the standalone source-project releases alongside a
 420th release containing these integrations. The duplicated BP listeners can
-apply supplemental trauma twice, duplicated Turret Enhanced actions can issue
+apply supplemental damage twice, duplicated Turret Enhanced actions can issue
 competing UAV commands, and the separate Scalpel-L namespaces create duplicate
 weapons. Remove the standalone bundle when migrating to this 420th release.
 
@@ -162,27 +157,30 @@ zero at approximately four times the configured range.
 | AGM-88C HARM | `ammo_Missile_HARM` | 85 / 8 | 2000 / 15 | 60 m |
 | KH-58 | `ammo_Missile_KH58` | 85 / 8 | 2800 / 18.75 | 75 m |
 | 155 mm SPG HE | `Sh_155mm_AMOS` | 125 / 30 | 3600 / 8.75 | 35 m |
-| 155 mm guided terminal | `fdelta_M_Mo_155mm_HE_Guided` | 200 / 4 base | 3600 / 8.75 | 35 m |
-| 155 mm laser terminal | `fdelta_M_Mo_155mm_HE_LG` | 200 / 4 base | 3600 / 8.75 | 35 m |
 | 230 mm M5/Zamak terminal | `R_230mm_fly` | 800 / 30 | 3200 / 16.25 | 65 m |
 | Mk41 VLS unitary cruise | `ammo_Missile_Cruise_01` | 2000 / 30 | 7000 / 30 | 120 m |
 
 Direct-hit damage, guidance, flight performance, fusing, sensors, and weapon
-magazines are not changed. Guided 155 mm shells are deployment carriers, so
-they are redirected to isolated terminal subclasses. This tunes only the
-ground impact and avoids a false carrier blast.
+magazines are not changed. Guided and laser-guided 155 mm shells remain on
+their vanilla `M_Mo_155mm_AT` and `M_Mo_155mm_AT_LG` terminal identities and
+native damage. Replacing those identities with mod-only subclasses makes the
+terminal projectile unavailable to unmodded observers; patching the shared
+vanilla terminals would instead change Mk45 and third-party ammunition. The
+optional-client-safe choice is therefore to rebalance only the conventional
+`Sh_155mm_AMOS` impact shell.
 
 Aircraft and VLS cluster carriers, AP Shrieker and Tratnyr leaves, and Mk45
 destroyer ammunition are explicitly pinned to their vanilla damage or terminal
 classes. Air-to-air missiles, Scalpel, DAGR/DAGRM, tandem or penetrator
 anti-armor weapons, cluster submunitions, non-HE artillery, latent 230 mm
-guided/anti-armor ammunition, and Mk45 are deliberately outside this pass.
+guided/anti-armor ammunition, guided 155 mm terminals, and Mk45 are
+deliberately outside this pass.
 
 As with DAGR, third-party descendants can inherit these vanilla-class edits.
-Conditional compatibility PBOs make the known CUP/RHS behavior explicit:
+The known CUP 105 mm and 122 mm laser-guided shells naturally retain their
+original `M_Mo_155mm_AT_LG` terminal because there is no longer a 155 mm
+carrier redirect. The conditional RHS compatibility PBO remains explicit:
 
-- CUP 105 mm and 122 mm laser-guided shells retain their original
-  `M_Mo_155mm_AT_LG` terminal instead of inheriting the vanilla 155 mm redirect.
 - RHS Mk 82 receives the complete `3200 / 16.25` native policy and an exact Mk
   82 BP profile. RHS cluster carriers retain `1150 / 12` and receive no BP
   profile.
@@ -210,15 +208,16 @@ classified real-world lethality data.
 
 ## Blast Propagation
 
-Blast Propagation adds a supplemental, server-authoritative trauma channel for
-the rebalance's selected unitary HE ammunition. It does not create a second
-explosion and does not edit `hit`, `indirectHit`, or `indirectHitRange`.
+Blast Propagation adds locality-processed supplemental damage for the
+rebalance's selected unitary HE ammunition. It does not create a second
+explosion, edit `hit`, `indirectHit`, or `indirectHitRange`, or add scripted
+camera shake.
 
 The native rebalance owns clear targets inside each handoff. Such targets
 receive no duplicate scripted injury. If the engine's low indirect-fire ray is
 blocked inside that zone, a raised-origin correction models partial propagation
-past shallow terrain or objects. Outside the handoff, a distance-graded dose
-can accumulate across repeated exposures.
+past shallow terrain or objects. Outside the handoff, distance-graded damage
+accumulates naturally through the unit's ordinary global damage value.
 
 | Munition | Native/BP handoff | Outer boundary | Virtual lift |
 |---|---:|---:|---:|
@@ -235,62 +234,54 @@ can accumulate across repeated exposures.
 | KH-58 | 75 m | 250 m | 4 m |
 
 The outer boundary is a potential-incapacitation boundary, not a guaranteed
-kill radius. Existing trauma decays with a 30-minute half-life and can increase
-later increments by up to 50 percent at default settings.
+kill radius. The former private decaying-trauma registry and nonlinear repeat
+exposure multiplier were removed; repeated exposures now add their configured
+doses directly.
 
-Cover uses one low `IFIRE` ray plus three raised rays toward pelvis, torso, and
-head. A shallow terrain obstruction cleared by a raised ray retains 95 percent
+Cover uses one direct `IFIRE` ray and, only when blocked, one raised ray. A
+shallow terrain obstruction cleared by the raised ray retains 95 percent
 transmission; deep terrain retains 35 percent. Raised-clear and fully blocking
 rocks retain 85 and 40 percent. Hard cover retains 35 or 20 percent, light
-cover 75 percent, and unclassified objects 65 or 40 percent. Multiple object
-layers multiply attenuation, with an 8 percent floor. Actual airbursts are not
-lifted again.
+cover 75 percent, and unclassified objects 65 or 40 percent, with an 8 percent
+floor. Actual airbursts are not lifted again.
 
 Only dismounted `CAManBase` targets are affected in this version. Vehicle
 damage and occupants of enclosed vehicles remain native. The nearest targets
-are processed first if a blast exceeds the default 256-target cap.
+are processed first only if a blast exceeds the default 128-target cap, avoiding
+an unnecessary sort for ordinary explosions.
 
-The projectile-owning machine reports one local explosion. The server validates
-the exact ammo registry, report ownership, timing, and position, de-duplicates
-reports, queues bursts, and alone applies trauma with killer/instigator
-attribution. JIP machines install the projectile listener at pre-init; there is
-no persistent remote-execution payload.
+Every modded machine installs a small `ProjectileCreated` listener and adds an
+`Explode` handler only to ammunition in the exact profile cache. `Explode` runs
+only where the projectile is local, so the detonation owner alone enumerates
+nearby infantry, measures cover, and calls globally effective `setDamage`.
+There are no Blast `remoteExec` calls, public variables, server registries,
+queues, watchdogs, permanent scheduled loops, or JIP payloads.
 
-Ordinary client ingress is accepted only through unscheduled `remoteExecCall`.
-HC ingress is recovered from the trusted server-side ownership evidence because
-Arma masks its remote context. Both paths use per-owner and global token buckets
-before entering a server-local validation worker. Registry, validation, target,
-and damage queues are independently bounded; validators are capped at 32 by
-default. Caller positions are advisory—the committed origin comes from the
-server's projectile track.
+This trades adversarial server validation for Arma's normal cooperative-PvE
+client-authoritative model. A player client can already apply global damage in
+Arma. Bohemia documents that the `killer` argument of client-issued `setDamage`
+is ignored in most cases, so a kill caused only by supplemental outer damage may
+have incomplete score attribution. The calculation waits 0.1 seconds for native
+damage to settle, but simultaneous absolute damage writes from different owners
+cannot be made atomic without reintroducing network dispatch. A client can also
+affect only target proxies streamed to that machine; nearby units within the
+400-metre maximum envelope should normally be present, but heavily customized
+dynamic-simulation policies need live acceptance testing.
 
-Legacy `fdelta_blast_*` mission variables are read once during pre-init as
-defaults. Direct assignments after that snapshot are deliberately
-non-authoritative. Apply runtime changes from server-local code through the
-validated configuration API instead:
+Settings are local to the projectile owner. Set them consistently during mission
+initialization on every participating machine if non-default values are needed:
 
 ```sqf
-[createHashMapFromArray [
-    ["fdelta_blast_enabled", true],
-    ["fdelta_blast_damageMultiplier", 1],
-    ["fdelta_blast_halfLife", 1800],
-    ["fdelta_blast_cumulativeGain", 0.5],
-    ["fdelta_blast_maxTargets", 256],
-    ["fdelta_blast_maxDamageQueue", 128],
-    ["fdelta_blast_maxRegistry", 512],
-    ["fdelta_blast_debug", false]
-]] call fdelta_fnc_blastConfigureServer;
+fdelta_blast_enabled = true;
+fdelta_blast_damageMultiplier = 1;
+fdelta_blast_maxTargets = 128;
+fdelta_blast_debug = false;
 ```
 
-The function also accepts an array of `[name, value]` pairs as its first
-argument. It validates types, clamps workload limits, ignores unknown names,
-stores the authoritative settings in `localNamespace`, and returns a detached
-copy. Ingress refill values are tokens per second; change security limits only
-after measuring a legitimate high-volume workload.
-
-Profiles are stored in `CfgFdeltaBlastProfiles`. The vanilla adapter uses
-server-side `setDamage`, which bypasses wearable armor and accumulates naturally
-but does not create `HandleDamage` wounds. ACE or another replacement medical
+Profiles are stored in `CfgFdeltaBlastProfiles` and cached once at pre-init so
+ordinary bullet creation only performs a hash lookup. The vanilla adapter uses
+global `setDamage`, which bypasses wearable armor and accumulates naturally but
+does not create `HandleDamage` wounds. ACE or another replacement medical
 system requires a dedicated adapter; this version does not claim ACE medical
 compatibility and does not force an unconscious state.
 
@@ -359,27 +350,34 @@ From an aircraft gunner optic or remotely controlled UAV gunner camera, it can:
 - capture two camera points and report 2D distance and bearing.
 
 The features are available through scroll-wheel actions and assignable addon
-controls. No keys are bound by default.
+controls. No keys are bound by default. Actions install at player readiness,
+respawn, or team switch; there is no periodic action-discovery loop.
 
 Absolute altitude combines `flyInHeightASL` with a low `flyInHeight` value used
 only as a terrain-clearance safety floor. The aircraft therefore avoids routine
 terrain-following but may climb when terrain violates the floor. Arma AI,
 collision avoidance, objects, or combat behavior can still command a higher
-altitude. Radius and center changes require the group's active waypoint to be
-type `LOITER`; altitude can be applied without one.
+altitude. The flight profile is applied once per user request instead of being
+re-sent every five seconds. Radius and center changes require the group's active
+waypoint to be type `LOITER`; altitude can be applied without one.
 
 Markers use the player's current non-direct channel when possible and are
 created as `_USER_DEFINED` markers, so they are shared in that channel and can
 be deleted normally. Looking above the horizon or beyond the terrain/water
 intersection produces no camera point and therefore no marker.
 
-Client requests are validated on the server, then flight changes execute on
-the UAV-owning machine. Restrictive mission allowlists must permit:
+Each explicit settings or retask action sends one non-JIP request to the server,
+which validates current gunner control and changes the server-owned waypoint.
+The altitude command executes directly on the requesting UAV owner or server.
+One additional owner-targeted, non-JIP call is used when the requester did not
+already apply it locally or when ownership changes before server validation.
+Status messages are produced locally and no server notification RPC or
+profile-maintenance loop remains.
+Restrictive mission allowlists must permit:
 
 - `fdelta_fnc_terServerApplyLoiterSettings`
 - `fdelta_fnc_terServerMoveLoiterCenter`
 - `fdelta_fnc_terApplyFlightProfileLocal`
-- `fdelta_fnc_terNotify`
 
 Map marking and measurement are local UI features using base-game markers.
 Waypoint radius and center changes are server operations. ASL altitude and the
@@ -393,9 +391,10 @@ testing.
 ## Validation Status
 
 The standalone source projects and the integrated branch were tested against
-Arma 3 `2.22.154045`. The standalone results provide deeper feature coverage;
-the integrated results verify the combined HEMTT package and its multiplayer
-boundaries.
+Arma 3 `2.22.154045`. The current integrated results below exercise the
+optimized owner-local Blast implementation and the combined HEMTT package. Any
+older standalone results that mention server registries, report validation, or
+cumulative trauma describe the superseded implementation.
 
 - **A3TI:** the standalone resolver passed 24/24 copilot airframe/livery
   combinations, six non-camera-pod exclusions, Blackfoot fallback, and on-foot
@@ -403,10 +402,11 @@ boundaries.
 - **DAGR/DAGRM:** a live dedicated-server config merge reported `airLock = 1`
   and 700 m/s for the lock, IR, laser, and lead-speed gates.
 - **Unitary warheads:** the standalone dedicated tests confirmed every table
-  value, guided-terminal redirection, and the cluster, AP, VLS, and Mk45 pins.
-- **Blast Propagation:** standalone tests matched configured distance doses,
-  cumulative trauma, cover cases, profile boundaries, and terminal/carrier
-  inclusion and exclusion assertions.
+  value, the preserved vanilla guided-terminal identities, and the cluster, AP,
+  VLS, and Mk45 pins.
+- **Blast Propagation:** the current combined and multiplayer suites verify the
+  exact profile allowlist, curve sampling, clear-path dose, cutoff, additive
+  pre-damaged behavior, real weapon creation, and detonation-owner boundary.
 - **Scalpel-L:** its standalone suite passed 224 assertions, including frozen
   cues, aimpoint-first selection, terminal LOAL, laser identity, cover LOS,
   moving locks, recovery, a fast-jet release matrix, and a real pylon shot.
@@ -417,35 +417,40 @@ boundaries.
 Current integrated validation is reproducible from `tests/integration` and
 `tests/mp-locality`:
 
-- `hemtt check` and `hemtt build` pass 19 addon configs, 48 SQF files, two
-  stringtables, and all 19 PBOs.
-- The dedicated integration mission passes 274/274 assertions with no SQF
-  `ScriptError` events. It covers all 40 registered custom runtime functions,
-  private trusted-state helpers, bounded worker/registry behavior, direct ammo
-  inheritance pins, BP profiles and RemoteExec entries, Scalpel-L exposure,
-  and TER registry pruning and profile reapplication.
-- The same 274/274 suite passes with the locally installed CBA_A3, CUP Weapons,
-  and RHSUSAF set, including the conditional CUP/RHS compatibility policies.
-- The complete graphical-player 2x2 server/client matrix passes. A real
-  client-fired Mk 82 at 100 m produces no BP evidence when either endpoint is
-  vanilla and approximately `0.18` BP damage when both are modded. The 55 m
-  case also demonstrates that native UWR damage follows the projectile owner.
-- The modded/modded graphical cell also passes with CBA_A3, CUP Weapons
-  `1.19.1`, and RHSUSAF loaded. Its real weapon case applied approximately
-  `0.18006` BP damage.
-- The complete HC 2x2 matrix passes. A modded HC on a modded server applied
-  approximately `0.18003` BP damage at 100 m; the other three combinations
-  produced no supplemental dose. The positive cells also pass forged-state,
-  displaced-origin, exactly-once reservation, and immediate locality-transfer
-  regressions.
+- `hemtt check` and `hemtt build` pass 18 addon configs, 30 SQF files, two
+  stringtables, and all 18 PBOs.
+- The dedicated integration mission passes 222/222 assertions with no SQF
+  `ScriptError` events. It covers the four-function Blast surface and populated
+  profile cache, zero Blast RPCs and worker state, additive damage from both
+  zero and 0.4, direct ammo inheritance pins, Scalpel-L exposure, and the
+  reduced TER function and RPC surface.
+- The same suite passes with the locally installed CBA_A3, CUP Weapons, and
+  RHSUSAF set, including vanilla CUP terminal identities and the conditional
+  RHS compatibility policy.
+- The complete graphical-player 2x2 server/client matrix passes. Both
+  client-modded cells apply approximately `0.18` BP damage at 100 m, including
+  a real A-143 `Mk82BombLauncher` shot; both unmodded-client cells apply zero,
+  independently of server mod state. The 55 m native UWR, 255 m cutoff, and
+  pre-damaged `0.4 -> 0.58` cases follow the same owner-local contract. The
+  modded/modded cell also rejects a forged remote Scalpel-L owner-only cue and
+  drives a server-local Greyhawk through authenticated TER Apply/Move RPCs,
+  verifying its ASL profile, LOITER altitude, radius, and moved center.
+- The complete HC 2x2 matrix passes with the same `0 / 0 / 0.18 / 0.18`
+  ordinary-shot pattern. A live projectile transferred from the HC to the
+  server before detonation instead follows its final owner: the two modded-
+  server cells apply one approximately `0.161` increment and the vanilla-server
+  cells apply zero. This also catches duplicate processing during locality
+  migration.
 
 The remaining release gates are interactive or depend on the production
 modset: verify A3TI camera entry/exit and the retained pink-model and MH-80 DAP
 IRCM fixes; test actual DAGR acquisition and third-party ammo descendants;
-exercise representative natural bomb, rocket, and artillery flight; retest
-Scalpel-L with mixed vehicle/projectile ownership and locality migration; and
-exercise TER optics, dialogs, keybinds, marker channels, remote UAV ownership,
-JIP, and restrictive mission `CfgRemoteExec` policies.
+exercise representative natural bomb, rocket, and artillery flight; test
+concurrent or unusually dense blasts, streamed/dynamically simulated targets,
+and client-issued kill attribution; retest Scalpel-L with mixed vehicle/
+projectile ownership and locality migration; and exercise TER optics, dialogs,
+keybinds, marker channels, remote UAV ownership, JIP, and restrictive mission
+`CfgRemoteExec` policies.
 
 ## Attribution and License
 

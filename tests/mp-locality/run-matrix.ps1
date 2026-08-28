@@ -242,6 +242,25 @@ try {
             if (!$done) {
                 throw "Cell did not reach SUITE_DONE before exit or timeout"
             }
+
+            # A negative behavior test is meaningful only when the intended
+            # addon boundary actually loaded. The mission reports, in order,
+            # server UWR, server BP, owner UWR, owner BP, and expected owner BP.
+            $serverState = $cell.ServerMod.ToString().ToLowerInvariant()
+            $ownerState = $cell.ClientMod.ToString().ToLowerInvariant()
+            $expectedMatrixState = (
+                "event=MATRIX_STATE|data=[{0},{0},{1},{1},{1}]" -f `
+                    $serverState, $ownerState
+            )
+            if (
+                !(Select-String -LiteralPath $serverRpt.FullName `
+                    -SimpleMatch $expectedMatrixState -Quiet)
+            ) {
+                throw (
+                    "Cell did not report expected addon/owner state: {0}" -f `
+                        $expectedMatrixState
+                )
+            }
             $scriptErrorReports = @(
                 @($serverRpt, $clientRpt) |
                     Where-Object { $null -ne $_ } |

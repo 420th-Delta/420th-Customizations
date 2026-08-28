@@ -1,6 +1,7 @@
 params [
     ["_case", "", [""]],
-    ["_originASL", [], [[]]]
+    ["_originASL", [], [[]]],
+    ["_stageOnly", false, [false]]
 ];
 
 if (_case isEqualTo "" || {count _originASL < 3}) exitWith {};
@@ -19,13 +20,12 @@ if (isNull _projectile || {!local _projectile}) exitWith {
     [_case, "TRIGGER_FAILED", []] remoteExecCall ["fdelta_test_fnc_receivePhase", 2];
 };
 
-// First move near the impact point, but safely above terrain, and allow that
-// position to replicate to the server proxy. The final 18 m hop then remains
-// inside BP's minimum evidence tolerance even under network latency.
+// Replicate the controlled impact position before detonation. In transfer
+// cases the server takes ownership after this step and detonates locally.
 private _stagingASL = _originASL vectorAdd [0, 0, 20];
 _projectile setPosASL _stagingASL;
 _projectile setVelocity [0, 0, 0];
-uiSleep 1;
+uiSleep 0.25;
 
 private _detonationASL = _originASL vectorAdd [0, 0, 2];
 _projectile setPosASL _detonationASL;
@@ -39,8 +39,25 @@ private _data = [
     getPosASL _projectile
 ];
 
-["SHOT_TRIGGER", [_case, _data, _detonationASL]] call fdelta_test_fnc_log;
-[_case, "TRIGGERED", _data] remoteExecCall ["fdelta_test_fnc_receivePhase", 2];
+private _phase = ["TRIGGERED", "STAGED"] select _stageOnly;
+["SHOT_" + _phase, [_case, _data, _detonationASL]]
+    call fdelta_test_fnc_log;
+[_case, _phase, _data] remoteExecCall ["fdelta_test_fnc_receivePhase", 2];
+
+if (_stageOnly) exitWith {};
+
 triggerAmmo _projectile;
 
 fdelta_test_localProjectiles deleteAt _case;
+
+private _platform = if (isNil "fdelta_test_weaponPlatforms") then {
+    objNull
+} else {
+    fdelta_test_weaponPlatforms getOrDefault [_case, objNull]
+};
+if (!isNull _platform) then {
+    moveOut player;
+    uiSleep 0.5;
+    deleteVehicle _platform;
+    fdelta_test_weaponPlatforms deleteAt _case;
+};

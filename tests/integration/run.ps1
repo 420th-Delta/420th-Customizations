@@ -5,7 +5,7 @@ param(
     ),
     [int]$TimeoutSeconds = 60,
     [int]$Port = 24150,
-    [int]$ExpectedAssertions = 274,
+    [int]$ExpectedAssertions = 222,
     [string[]]$ExtraMods = @()
 )
 

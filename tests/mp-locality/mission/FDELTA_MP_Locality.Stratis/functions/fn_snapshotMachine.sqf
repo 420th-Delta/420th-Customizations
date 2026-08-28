@@ -26,8 +26,13 @@ private _patchState = _patchNames apply {
             isClass (configFile >> "CfgFdeltaBlastProfiles" >> "Bo_Mk82")
         ],
         [
-            "fdeltaReporter",
-            !(isNil "fdelta_fnc_blastRegisterProjectile")
+            "fdeltaOwnerProcessor",
+            !(isNil "fdelta_fnc_blastProcessBlast"),
+            localNamespace getVariable ["fdelta_blast_projectileEH", -1],
+            count (localNamespace getVariable [
+                "fdelta_blast_profiles",
+                createHashMap
+            ])
         ]
     ]
 ] call fdelta_test_fnc_log;

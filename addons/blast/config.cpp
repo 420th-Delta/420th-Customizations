@@ -23,37 +23,9 @@ class CfgFunctions {
             file = "\z\fdelta\addons\blast\functions";
 
             class blastPreInit { preInit = 1; };
-            class blastConfigureServer {};
-            class blastProfile {};
             class blastSampleCurve {};
-            class blastRegisterProjectile {};
-            class blastRegisterProjectileEvidence {};
-            class blastMonitorRegistry {};
-            class blastReceiveBlast {};
-            class blastProcessValidationQueue {};
-            class blastValidateReport {};
-            class blastProcessQueue {};
             class blastProcessBlast {};
             class blastMeasureCover {};
-            class blastApplyTrauma {};
-            class blastClientEffect {};
-        };
-    };
-};
-
-class CfgRemoteExec {
-    class Functions {
-        class fdelta_fnc_blastRegisterProjectileEvidence {
-            allowedTargets = 2;
-            jip = 0;
-        };
-        class fdelta_fnc_blastReceiveBlast {
-            allowedTargets = 2;
-            jip = 0;
-        };
-        class fdelta_fnc_blastClientEffect {
-            allowedTargets = 1;
-            jip = 0;
         };
     };
 };
@@ -86,8 +58,6 @@ class CfgFdeltaBlastProfiles {
         virtualLift = 3;
     };
 
-    // Guided 155 mm carriers separate above the target. Only the terminal
-    // leaves below receive a profile.
     class Sh_155mm_AMOS {
         outerRanges[] = {35, 40, 55, 75, 100, 125};
         outerDoses[] = {0.30, 0.25, 0.16, 0.10, 0.06, 0.035};
@@ -95,8 +65,6 @@ class CfgFdeltaBlastProfiles {
         innerDoses[] = {1.10, 1.10, 1.00, 0.85, 0.35};
         virtualLift = 2.5;
     };
-    class fdelta_M_Mo_155mm_HE_Guided : Sh_155mm_AMOS {};
-    class fdelta_M_Mo_155mm_HE_LG : Sh_155mm_AMOS {};
 
     class R_230mm_fly : Bo_Mk82 {};
 

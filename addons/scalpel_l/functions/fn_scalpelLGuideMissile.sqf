@@ -344,7 +344,7 @@ while {!isNull _missile && {local _missile} && {!_nativeHandoff}} do {
         {_distanceToAim2D <= _terminalRange} &&
         {diag_tickTime >= _preHandoffNextSeekerPoll}
     ) then {
-        _preHandoffNextSeekerPoll = diag_tickTime + 0.05;
+        _preHandoffNextSeekerPoll = diag_tickTime + 0.10;
         private _preHandoffExcludedTarget = if
         (
             diag_tickTime < _preHandoffFailedTargetUntil
@@ -875,10 +875,10 @@ if (_nativeHandoff && {!isNull _missile} && {local _missile}) then {
                 _missile setMissileTarget [objNull, true];
             };
 
-            // Polling at 20 Hz is sufficient for terminal recovery and avoids
+            // Polling at 10 Hz is sufficient for terminal recovery and avoids
             // rebuilding the candidate set on every simulation frame.
             if (diag_tickTime >= _nextSeekerPoll) then {
-                _nextSeekerPoll = diag_tickTime + 0.05;
+                _nextSeekerPoll = diag_tickTime + 0.10;
                 private _cooldownTarget = if (diag_tickTime < _failedTargetUntil) then {
                     _failedTarget
                 }

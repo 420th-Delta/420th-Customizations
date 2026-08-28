@@ -17,7 +17,10 @@
         isClass (configFile >> "CfgPatches" >> "fdelta_blast"),
         getNumber (_ammoCfg >> "hit"),
         getNumber (_ammoCfg >> "indirectHit"),
-        getNumber (_ammoCfg >> "indirectHitRange")
+        getNumber (_ammoCfg >> "indirectHitRange"),
+        isClass (
+            configFile >> "CfgPatches" >> "fdelta_turret_enhanced"
+        )
     ];
 
     if (isServer) then {

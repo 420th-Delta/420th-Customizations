@@ -4,11 +4,6 @@ if (!isServer) exitWith {};
 fdelta_test_nodes = createHashMap;
 fdelta_test_phases = createHashMap;
 
-if !(isNil "fdelta_fnc_blastConfigureServer") then {
-    [createHashMapFromArray [["fdelta_blast_debug", true]]]
-        call fdelta_fnc_blastConfigureServer;
-};
-
 [] spawn {
     waitUntil {time > 0};
     uiSleep 0.5;
@@ -24,26 +19,26 @@ if !(isNil "fdelta_fnc_blastConfigureServer") then {
             private _record = fdelta_test_nodes get _x;
             if (
                 count _record >= 10
-                && {!(_record select 1)}
+                && {!(_record # 1)}
                 && {
-                    (_shooterRole isEqualTo 0)
-                    || {_shooterRole isEqualTo 1 && {_record select 3}}
-                    || {_shooterRole isEqualTo 2 && {!(_record select 3)}}
+                    _shooterRole isEqualTo 0
+                    || {_shooterRole isEqualTo 1 && {_record # 3}}
+                    || {_shooterRole isEqualTo 2 && {!(_record # 3)}}
                 }
             ) exitWith {
                 _shooter = _record;
             };
         } forEach keys fdelta_test_nodes;
-        count _shooter > 0 || {diag_tickTime >= _nodeDeadline}
+        _shooter isNotEqualTo [] || {diag_tickTime >= _nodeDeadline}
     };
 
-    if (count _shooter isEqualTo 0) exitWith {
+    if (_shooter isEqualTo []) exitWith {
         ["SUITE_ERROR", ["No requested projectile owner registered", _shooterRole]]
             call fdelta_test_fnc_log;
         ["SUITE_DONE", [false, "NO_SHOOTER", []]] call fdelta_test_fnc_log;
     };
 
-    private _shooterOwner = _shooter select 0;
+    private _shooterOwner = _shooter # 0;
     private _serverAmmoPatch = isClass (
         configFile >> "CfgPatches" >> "fdelta_ammo"
     );
@@ -53,30 +48,45 @@ if !(isNil "fdelta_fnc_blastConfigureServer") then {
     private _serverScalpelPatch = isClass (
         configFile >> "CfgPatches" >> "fdelta_scalpel_l"
     );
-    private _shooterBlastPatch = _shooter select 6;
+    private _serverTerPatch = isClass (
+        configFile >> "CfgPatches" >> "fdelta_turret_enhanced"
+    );
+    private _shooterAmmoPatch = _shooter # 5;
+    private _shooterBlastPatch = _shooter # 6;
+    private _shooterTerPatch = _shooter param [10, false, [false]];
+
+    // The normal cases remain owned by the client/HC. Therefore their BP and
+    // native UWR behavior must follow that machine, not the server's mod set.
     [
-        "SHOOTER_SELECTED",
-        [_shooterOwner, _shooter, _serverAmmoPatch, _serverBlastPatch]
+        "MATRIX_STATE",
+        [
+            _serverAmmoPatch,
+            _serverBlastPatch,
+            _shooterAmmoPatch,
+            _shooterBlastPatch,
+            _shooterBlastPatch
+        ]
     ] call fdelta_test_fnc_log;
+    ["SHOOTER_SELECTED", [_shooterOwner, _shooter]]
+        call fdelta_test_fnc_log;
 
     private _originXY = [1651.18, 5467.72];
     private _direction = vectorNormalized [0.2588, 0.9659, 0];
     private _originASL = [
-        _originXY select 0,
-        _originXY select 1,
+        _originXY # 0,
+        _originXY # 1,
         (getTerrainHeightASL _originXY) + 0.15
     ];
-    private _distances = [55, 100, 255];
     private _results = [];
     private _allCompleted = true;
 
-    // A network caller must not be able to masquerade as the projectile
-    // owner's AI/engine fallback producer. Exercise the public endpoint from
-    // a real graphical client before accepting the same cue owner-locally.
+    // Keep the still-relevant Scalpel RPC trust regression independent from
+    // the removed Blast ingress tests. A graphical client must not be able to
+    // inject the owner-only engine fallback label into server-local guidance.
     if (
         _serverScalpelPatch
         && {_shooterBlastPatch}
-        && {_shooter select 3}
+        && {_shooter # 3}
     ) then {
         private _scalpelCase = "SCALPEL_CUE_POISON";
         private _scalpelMissile = createVehicle [
@@ -119,7 +129,10 @@ if !(isNil "fdelta_fnc_blastConfigureServer") then {
             createHashMap
         ];
         private _scalpelHash = hashValue _scalpelMissile;
-        private _scalpelBucket = _scalpelRegistry getOrDefault [_scalpelHash, []];
+        private _scalpelBucket = _scalpelRegistry getOrDefault [
+            _scalpelHash,
+            []
+        ];
         private _remoteEntryIndex = _scalpelBucket findIf {
             _x isEqualType []
             && {count _x >= 5}
@@ -155,7 +168,7 @@ if !(isNil "fdelta_fnc_blastConfigureServer") then {
             && {_remoteRejected}
             && {_ownerAccepted}
             && {_ownerEntryIndex >= 0};
-        if (!_scalpelPassed) then {_allCompleted = false};
+        if (!_scalpelPassed) then {_allCompleted = false;};
         [
             "SCALPEL_POISON_RESULT",
             [
@@ -173,393 +186,201 @@ if !(isNil "fdelta_fnc_blastConfigureServer") then {
         deleteVehicle _scalpelTarget;
     };
 
-    // A graphical client can publish arbitrary missionNamespace values to the
-    // server even when it does not load 420th. Prove that Blast's trusted state
-    // and damage multiplier remain machine-local by attempting the old forged-
-    // registry exploit before the normal weapon cases.
-    if (_serverBlastPatch && {_shooter select 3}) then {
-        private _poisonCase = "BLAST_STATE_POISON";
-        private _poisonOriginXY = [1300, 5200];
-        private _poisonOriginASL = [
-            _poisonOriginXY # 0,
-            _poisonOriginXY # 1,
-            (getTerrainHeightASL _poisonOriginXY) + 0.15
-        ];
-        private _poisonTargetXY = [1400, 5200];
-        private _poisonTargetASL = [
-            _poisonTargetXY # 0,
-            _poisonTargetXY # 1,
-            getTerrainHeightASL _poisonTargetXY
-        ];
-        private _poisonGroup = createGroup [east, true];
-        private _poisonTarget = _poisonGroup createUnit [
-            "O_V_Soldier_hex_F",
-            ASLToAGL _poisonTargetASL,
-            [],
-            0,
-            "CAN_COLLIDE"
-        ];
-        _poisonTarget setPosASL _poisonTargetASL;
-        _poisonTarget setUnitPos "UP";
-        _poisonTarget disableAI "ALL";
-        removeAllWeapons _poisonTarget;
-
-        private _poisonKey = format [
-            "forged-%1-%2",
-            _shooterOwner,
-            round (diag_tickTime * 1000)
-        ];
-        [_poisonCase, _poisonKey, _poisonOriginASL]
-            remoteExecCall ["fdelta_test_fnc_attemptStatePoison", _shooterOwner];
-
-        private _poisonDeadline = diag_tickTime + 8;
+    private _waitPhase = {
+        params ["_case", "_phase", ["_seconds", 10]];
+        private _key = format ["%1|%2", _case, _phase];
+        private _deadline = diag_tickTime + _seconds;
         waitUntil {
             uiSleep 0.05;
-            !isNil {
-                fdelta_test_phases get (
-                    format ["%1|POISON_SENT", _poisonCase]
-                )
-            } || {diag_tickTime >= _poisonDeadline}
+            (fdelta_test_phases getOrDefault [_key, []]) isNotEqualTo []
+            || {diag_tickTime >= _deadline}
         };
-        private _poisonArrived = false;
-        private _poisonArrivalDeadline = diag_tickTime + 3;
-        waitUntil {
-            uiSleep 0.05;
-            private _publishedRegistry = missionNamespace getVariable [
-                "fdelta_blast_projectileRegistry",
-                createHashMap
-            ];
-            _poisonArrived = _publishedRegistry isEqualType createHashMap
-                && {_poisonKey in _publishedRegistry}
-                && {
-                    (missionNamespace getVariable [
-                        "fdelta_blast_damageMultiplier",
-                        -1
-                    ]) isEqualTo 100
-                };
-            _poisonArrived || {diag_tickTime >= _poisonArrivalDeadline}
-        };
-        uiSleep 3;
-
-        private _poisonPhase = fdelta_test_phases getOrDefault [
-            format ["%1|POISON_SENT", _poisonCase],
-            []
-        ];
-        private _publishedRegistry = missionNamespace getVariable [
-            "fdelta_blast_projectileRegistry",
-            createHashMap
-        ];
-        private _publishedMultiplier = missionNamespace getVariable [
-            "fdelta_blast_damageMultiplier",
-            -1
-        ];
-        private _poisonDamage = damage _poisonTarget;
-        private _poisonPassed = _poisonPhase isNotEqualTo []
-            && {_poisonArrived}
-            && {_poisonDamage < 0.001};
-        if (!_poisonPassed) then {_allCompleted = false};
-        [
-            "STATE_POISON_RESULT",
-            [
-                _poisonPassed,
-                _poisonDamage,
-                _poisonPhase,
-                _poisonKey,
-                _poisonArrived,
-                _publishedMultiplier,
-                _publishedRegistry isEqualType createHashMap
-                    && {_poisonKey in _publishedRegistry}
-            ]
-        ] call fdelta_test_fnc_log;
-
-        deleteVehicle _poisonTarget;
-        deleteGroup _poisonGroup;
+        fdelta_test_phases getOrDefault [_key, []]
     };
 
-    // Exercise a real mid-flight ownership transfer while an earlier report
-    // is pending. The old reservation must be superseded, the server must
-    // register itself as the new owner, and the final blast must apply once.
-    if (_serverBlastPatch && {_shooterBlastPatch}) then {
-        private _transferCase = "BLAST_LOCALITY_PREEMPT";
-        private _transferOriginXY = [2750, 5200];
-        private _transferOriginASL = [
-            _transferOriginXY # 0,
-            _transferOriginXY # 1,
-            (getTerrainHeightASL _transferOriginXY) + 0.15
-        ];
-        private _transferTargetXY = [2850, 5200];
-        private _transferTargetASL = [
-            _transferTargetXY # 0,
-            _transferTargetXY # 1,
-            getTerrainHeightASL _transferTargetXY
-        ];
-        private _transferGroup = createGroup [east, true];
-        private _transferTarget = _transferGroup createUnit [
-            "O_V_Soldier_hex_F",
-            ASLToAGL _transferTargetASL,
+    // A server-and-client modded graphical run exercises the authenticated
+    // production TER endpoints. The UAV is forced server-local after the
+    // client takes turret control so the flight-profile result is directly
+    // observable alongside the server-owned LOITER waypoint.
+    if (
+        _serverTerPatch
+        && {_shooterTerPatch}
+        && {_shooter # 3}
+    ) then {
+        private _terCase = "TER_AUTH_RPC";
+        private _terPlayer = objNull;
+        {
+            if (owner _x isEqualTo _shooterOwner) exitWith {
+                _terPlayer = _x;
+            };
+        } forEach allPlayers;
+
+        private _terAircraft = createVehicle [
+            "B_UAV_02_dynamicLoadout_F",
+            [2050, 5650, 400],
             [],
             0,
-            "CAN_COLLIDE"
+            "FLY"
         ];
-        _transferTarget setPosASL _transferTargetASL;
-        _transferTarget setUnitPos "UP";
-        _transferTarget disableAI "ALL";
-        removeAllWeapons _transferTarget;
+        createVehicleCrew _terAircraft;
+        private _crewDeadline = diag_tickTime + 5;
+        waitUntil {
+            uiSleep 0.05;
+            !isNull (driver _terAircraft)
+            || {diag_tickTime >= _crewDeadline}
+        };
 
-        [_transferCase, _transferOriginASL] remoteExec [
-            "fdelta_test_fnc_createSyntheticShot",
+        private _terGroup = group (driver _terAircraft);
+        private _terLoiter = _terGroup addWaypoint [
+            [2050, 5650, 0],
+            0
+        ];
+        _terLoiter setWaypointType "LOITER";
+        _terLoiter setWaypointLoiterAltitude 100;
+        _terLoiter setWaypointLoiterRadius 600;
+        _terGroup setCurrentWaypoint _terLoiter;
+        private _terAircraftId = netId _terAircraft;
+        uiSleep 1;
+
+        [_terCase, "SETUP", _terAircraftId] remoteExecCall [
+            "fdelta_test_fnc_attemptTerRpc",
             _shooterOwner
         ];
-        private _transferReadyKey = format [
-            "%1|READY",
-            _transferCase
-        ];
-        private _transferReadyDeadline = diag_tickTime + 10;
+        private _terSetupPhase = [
+            _terCase,
+            "TER_CONTROL_READY",
+            15
+        ] call _waitPhase;
+        private _terSetupData = _terSetupPhase param [2, [], [[]]];
+        private _terSetupOk = _terSetupData param [0, false, [false]];
+
+        private _terControlVisible = false;
+        private _controlDeadline = diag_tickTime + 8;
         waitUntil {
             uiSleep 0.05;
-            (fdelta_test_phases getOrDefault [
-                _transferReadyKey,
-                []
-            ]) isNotEqualTo []
-            || {diag_tickTime >= _transferReadyDeadline}
+            _terControlVisible = !isNull _terPlayer
+                && {_terPlayer in (UAVControl [_terAircraft, "gunner"])};
+            _terControlVisible || {diag_tickTime >= _controlDeadline}
         };
 
-        private _transferReady = fdelta_test_phases getOrDefault [
-            _transferReadyKey,
-            []
-        ];
-        private _transferKey = "";
-        private _transferProjectile = objNull;
-        private _initialEvidence = false;
-        private _earlyReserved = false;
-        private _oldReservation = "";
-        private _transferAccepted = false;
-        private _migrationObserved = false;
-        private _migrationOwner = -1;
-        private _migrationReservation = "";
-        private _localityImmediate = false;
-        private _preDetonationOwner = -1;
-        private _preDetonationReservation = "";
-
-        if (_transferReady isNotEqualTo []) then {
-            _transferKey = (_transferReady # 2) param [0, "", [""]];
-            private _evidenceDeadline = diag_tickTime + 3;
-            waitUntil {
-                uiSleep 0.05;
-                private _registry = localNamespace getVariable [
-                    "fdelta_blast_projectileRegistry",
-                    createHashMap
-                ];
-                private _entry = _registry getOrDefault [
-                    _transferKey,
-                    createHashMap
-                ];
-                _transferProjectile = _entry getOrDefault [
-                    "projectile",
-                    objNull
-                ];
-                _initialEvidence = count _entry > 0
-                    && {!isNull _transferProjectile}
-                    && {(_entry getOrDefault [
-                        "owner",
-                        -1
-                    ]) isEqualTo _shooterOwner};
-                _initialEvidence || {diag_tickTime >= _evidenceDeadline}
-            };
+        if (!local _terAircraft) then {
+            _terAircraft setOwner 2;
         };
-
-        if (_initialEvidence) then {
-            [_transferCase, _transferOriginASL] remoteExec [
-                "fdelta_test_fnc_submitEarlyBlastReport",
-                _shooterOwner
-            ];
-            private _earlyDeadline = diag_tickTime + 4;
-            waitUntil {
-                uiSleep 0.05;
-                private _registry = localNamespace getVariable [
-                    "fdelta_blast_projectileRegistry",
-                    createHashMap
-                ];
-                private _entry = _registry getOrDefault [
-                    _transferKey,
-                    createHashMap
-                ];
-                _oldReservation = _entry getOrDefault [
-                    "reservationId",
-                    ""
-                ];
-                _earlyReserved = _entry getOrDefault ["pending", false]
-                    && {_oldReservation isNotEqualTo ""};
-                _earlyReserved || {diag_tickTime >= _earlyDeadline}
-            };
+        private _ownerDeadline = diag_tickTime + 5;
+        waitUntil {
+            uiSleep 0.05;
+            local _terAircraft
+            || {diag_tickTime >= _ownerDeadline}
         };
+        private _terServerLocal = local _terAircraft
+            && {owner _terAircraft isEqualTo 2};
 
-        if (_earlyReserved && {!isNull _transferProjectile}) then {
-            // Freeze the batched monitor until engine locality confirms, then
-            // trigger before the registry can rebase. This forces Explode-time
-            // evidence—not the monitor—to authenticate the new owner and
-            // supersede the pending reservation.
-            private _monitorHandle = localNamespace getVariable [
-                "fdelta_blast_registryMonitorHandle",
-                scriptNull
-            ];
-            if (!scriptDone _monitorHandle) then {
-                terminate _monitorHandle;
-            };
-            private _monitorPauseHandle = [] spawn {uiSleep 10};
-            localNamespace setVariable [
-                "fdelta_blast_registryMonitorHandle",
-                _monitorPauseHandle
-            ];
-
-            _transferAccepted = _transferProjectile setOwner 2;
-            private _localityDeadline = diag_tickTime + 2;
-            waitUntil {
-                uiSleep 0.01;
-                local _transferProjectile
-                || {diag_tickTime >= _localityDeadline}
-            };
-            _localityImmediate = local _transferProjectile;
-            private _preDetonationRegistry = localNamespace getVariable [
-                "fdelta_blast_projectileRegistry",
-                createHashMap
-            ];
-            private _preDetonationEntry = _preDetonationRegistry getOrDefault [
-                _transferKey,
-                createHashMap
-            ];
-            _preDetonationOwner = _preDetonationEntry getOrDefault [
-                "owner",
-                -1
-            ];
-            _preDetonationReservation = _preDetonationEntry getOrDefault [
-                "reservationId",
-                ""
-            ];
-
-            if (
-                _transferAccepted
-                && {_localityImmediate}
-                && {_preDetonationOwner isEqualTo _shooterOwner}
-                && {_preDetonationReservation isEqualTo _oldReservation}
-            ) then {
-                private _detonationASL = _transferOriginASL vectorAdd [0, 0, 2];
-                _transferProjectile setPosASL _detonationASL;
-                _transferProjectile setVelocity [0, 0, 0];
-                triggerAmmo _transferProjectile;
-
-                private _migrationDeadline = diag_tickTime + 1;
-                waitUntil {
-                    uiSleep 0.01;
-                    private _postDetonationRegistry = localNamespace
-                        getVariable [
-                            "fdelta_blast_projectileRegistry",
-                            createHashMap
-                        ];
-                    private _postDetonationEntry = _postDetonationRegistry
-                        getOrDefault [_transferKey, createHashMap];
-                    _migrationOwner = _postDetonationEntry getOrDefault [
-                        "owner",
-                        -1
-                    ];
-                    _migrationReservation = _postDetonationEntry getOrDefault [
-                        "reservationId",
-                        ""
-                    ];
-                    _migrationObserved = _migrationOwner isEqualTo 2
-                        && {_postDetonationEntry getOrDefault [
-                            "pending",
-                            false
-                        ]}
-                        && {_migrationReservation isNotEqualTo ""}
-                        && {_migrationReservation isNotEqualTo _oldReservation};
-                    _migrationObserved || {diag_tickTime >= _migrationDeadline}
-                };
-            };
-
-            terminate _monitorPauseHandle;
-            localNamespace setVariable [
-                "fdelta_blast_registryMonitorHandle",
-                [] spawn fdelta_fnc_blastMonitorRegistry
-            ];
-        };
-        uiSleep 4;
-
-        private _transferRegistry = localNamespace getVariable [
-            "fdelta_blast_projectileRegistry",
-            createHashMap
+        private _terAltitudeASL = 725;
+        private _terClearance = 140;
+        private _terRadius = 925;
+        private _terCenterXY = [2250, 5450];
+        private _terCenterASL = [
+            _terCenterXY # 0,
+            _terCenterXY # 1,
+            getTerrainHeightASL _terCenterXY
         ];
-        private _transferFinalEntry = _transferRegistry getOrDefault [
-            _transferKey,
-            createHashMap
-        ];
-        private _transferSeen = localNamespace getVariable [
-            "fdelta_blast_seen",
-            createHashMap
-        ];
-        private _transferDamage = damage _transferTarget;
-        private _transferLastBlast = _transferTarget getVariable [
-            "fdelta_blast_lastBlast",
-            []
-        ];
-        private _transferBlastId = _transferLastBlast param [0, "", [""]];
-        private _transferPassed = _transferReady isNotEqualTo []
-            && {_initialEvidence}
-            && {_earlyReserved}
-            && {_transferAccepted}
-            && {_localityImmediate}
-            && {_preDetonationOwner isEqualTo _shooterOwner}
-            && {_preDetonationReservation isEqualTo _oldReservation}
-            && {_migrationObserved}
-            && {_migrationOwner isEqualTo 2}
-            && {_migrationReservation isNotEqualTo _oldReservation}
-            && {_transferDamage > 0.1}
-            && {_transferDamage < 0.3}
-            && {count _transferFinalEntry isEqualTo 0}
-            && {(_transferSeen getOrDefault [_transferKey, -1]) >= 0}
-            && {_transferBlastId find "@2:" >= 0};
-        if (!_transferPassed) then {_allCompleted = false};
         [
-            "LOCALITY_PREEMPT_RESULT",
-            [
-                _transferPassed,
-                _transferKey,
-                _initialEvidence,
-                _earlyReserved,
-                _oldReservation,
-                _transferAccepted,
-                _localityImmediate,
-                _preDetonationOwner,
-                _preDetonationReservation,
-                _migrationObserved,
-                _migrationOwner,
-                _migrationReservation,
-                _transferDamage,
-                _transferBlastId,
-                count _transferFinalEntry,
-                _transferSeen getOrDefault [_transferKey, -1]
-            ]
-        ] call fdelta_test_fnc_log;
+            _terCase,
+            "SUBMIT",
+            _terAircraftId,
+            _terAltitudeASL,
+            _terClearance,
+            _terRadius,
+            _terCenterASL
+        ] remoteExecCall [
+            "fdelta_test_fnc_attemptTerRpc",
+            _shooterOwner
+        ];
+        private _terSubmitPhase = [
+            _terCase,
+            "TER_RPC_SENT",
+            10
+        ] call _waitPhase;
+        private _terSubmitData = _terSubmitPhase param [2, [], [[]]];
+        private _terSubmitOk = _terSubmitData param [0, false, [false]];
 
-        if (!isNull _transferProjectile) then {
-            deleteVehicle _transferProjectile;
+        private _terProfile = [];
+        private _terWaypointAltitude = -1;
+        private _terWaypointRadius = -1;
+        private _terWaypointPosition = [];
+        private _terStateObserved = false;
+        private _stateDeadline = diag_tickTime + 8;
+        waitUntil {
+            uiSleep 0.05;
+            _terProfile = _terAircraft getVariable [
+                "fdelta_terLastAppliedFlightProfile",
+                []
+            ];
+            _terWaypointAltitude = waypointLoiterAltitude _terLoiter;
+            _terWaypointRadius = waypointLoiterRadius _terLoiter;
+            _terWaypointPosition = waypointPosition _terLoiter;
+            _terStateObserved = _terProfile isEqualTo [
+                _terAltitudeASL,
+                _terClearance
+            ]
+                && {abs (_terWaypointAltitude - _terClearance) < 0.1}
+                && {abs (_terWaypointRadius - _terRadius) < 0.1}
+                && {
+                    _terWaypointPosition distance2D (
+                        ASLToAGL _terCenterASL
+                    ) <= 5
+                };
+            _terStateObserved || {diag_tickTime >= _stateDeadline}
         };
-        deleteVehicle _transferTarget;
-        deleteGroup _transferGroup;
+
+        private _terPassed = _terSetupPhase isNotEqualTo []
+            && {_terSetupOk}
+            && {_terControlVisible}
+            && {_terServerLocal}
+            && {_terSubmitPhase isNotEqualTo []}
+            && {_terSubmitOk}
+            && {_terStateObserved}
+            && {toUpper (waypointType _terLoiter) isEqualTo "LOITER"};
+        private _terResult = [
+            _terCase,
+            _terPassed,
+            _terSetupOk,
+            _terControlVisible,
+            _terServerLocal,
+            _terSubmitOk,
+            _terStateObserved,
+            owner _terAircraft,
+            waypointType _terLoiter,
+            _terWaypointAltitude,
+            _terWaypointRadius,
+            _terWaypointPosition,
+            ASLToAGL _terCenterASL,
+            _terProfile,
+            _terSetupData,
+            _terSubmitData
+        ];
+        ["TER_RPC_RESULT", _terResult] call fdelta_test_fnc_log;
+        _results pushBack _terResult;
+        if (!_terPassed) then {_allCompleted = false;};
+
+        [_terCase, "CLEANUP", _terAircraftId] remoteExecCall [
+            "fdelta_test_fnc_attemptTerRpc",
+            _shooterOwner
+        ];
+        [_terCase, "TER_CLEANUP_DONE", 3] call _waitPhase;
+        private _terCrew = crew _terAircraft;
+        {deleteVehicle _x;} forEach _terCrew;
+        deleteVehicle _terAircraft;
+        if (!isNull _terGroup) then {deleteGroup _terGroup;};
+    } else {
+        [
+            "TER_RPC_SKIPPED",
+            [_serverTerPatch, _shooterTerPatch, _shooter # 3]
+        ] call fdelta_test_fnc_log;
     };
 
-    {
-        private _distance = _x;
-        private _case = format ["MK82_%1M", _distance];
-        private _targetXY = [
-            (_originXY select 0) + ((_direction select 0) * _distance),
-            (_originXY select 1) + ((_direction select 1) * _distance)
-        ];
-        private _targetASL = [
-            _targetXY select 0,
-            _targetXY select 1,
-            getTerrainHeightASL _targetXY
-        ];
+    private _createTarget = {
+        params ["_case", "_targetASL", ["_initialDamage", 0]];
         private _group = createGroup [east, true];
         private _target = _group createUnit [
             "O_V_Soldier_hex_F",
@@ -573,392 +394,269 @@ if !(isNil "fdelta_fnc_blastConfigureServer") then {
         _target disableAI "ALL";
         removeAllWeapons _target;
         _target setVariable ["fdelta_test_case", _case];
-        _target addEventHandler ["HandleDamage", {
-            params [
-                "_unit",
-                "_selection",
-                "_damage",
-                "_source",
-                "_projectile",
-                "_hitIndex",
-                "_instigator",
-                "_hitPoint",
-                "_directHit",
-                "_context"
-            ];
-            [
-                "TARGET_HANDLE_DAMAGE",
-                [
-                    _unit getVariable ["fdelta_test_case", ""],
-                    _selection,
-                    _damage,
-                    typeOf _source,
-                    _projectile,
-                    _hitIndex,
-                    typeOf _instigator,
-                    _hitPoint,
-                    _directHit,
-                    _context
-                ]
-            ] call fdelta_test_fnc_log;
-            _damage
-        }];
-
-        uiSleep 0.5;
-        ["CASE_BEGIN", [_case, _distance, getPosASL _target]]
-            call fdelta_test_fnc_log;
-        [_case, _originASL] remoteExec [
-            "fdelta_test_fnc_createSyntheticShot",
-            _shooterOwner
-        ];
-
-        private _readyKey = format ["%1|READY", _case];
-        private _readyDeadline = diag_tickTime + 10;
-        waitUntil {
-            uiSleep 0.05;
-            !((fdelta_test_phases getOrDefault [_readyKey, []]) isEqualTo [])
-            || {diag_tickTime >= _readyDeadline}
+        if (_initialDamage > 0) then {
+            _target setDamage _initialDamage;
         };
-        private _ready = fdelta_test_phases getOrDefault [_readyKey, []];
-        private _networkId = "";
-        private _reportedOriginASL = [];
+        [_target, _group]
+    };
 
-        if (_ready isEqualTo []) then {
-            _allCompleted = false;
-            ["CASE_ERROR", [_case, "READY_TIMEOUT"]] call fdelta_test_fnc_log;
-        } else {
-            private _readyData = _ready select 2;
-            _networkId = _readyData param [0, "", [""]];
-            private _evidenceSeen = false;
-
-            if (_serverBlastPatch && {_shooterBlastPatch}) then {
-                private _evidenceDeadline = diag_tickTime + 3;
-                waitUntil {
-                    uiSleep 0.05;
-                    private _registry = localNamespace getVariable [
-                        "fdelta_blast_projectileRegistry",
-                        createHashMap
-                    ];
-                    private _entry = _registry getOrDefault [
-                        _networkId,
-                        createHashMap
-                    ];
-                    _evidenceSeen = count _entry > 0;
-                    _evidenceSeen || {diag_tickTime >= _evidenceDeadline}
-                };
-            };
-            ["SERVER_EVIDENCE", [_case, _networkId, _evidenceSeen]]
-                call fdelta_test_fnc_log;
-
-            if (
-                _distance isEqualTo 100
-                && {_serverBlastPatch}
-                && {_shooterBlastPatch}
-            ) then {
-                _reportedOriginASL = _originASL vectorAdd [
-                    (_direction # 0) * 20,
-                    (_direction # 1) * 20,
-                    2
-                ];
-                [_case, _originASL, _reportedOriginASL] remoteExec [
-                    "fdelta_test_fnc_triggerDisplacedShot",
-                    _shooterOwner
-                ];
-            } else {
-                [_case, _originASL] remoteExec [
-                    "fdelta_test_fnc_triggerSyntheticShot",
-                    _shooterOwner
-                ];
-            };
-            private _triggerKey = format ["%1|TRIGGERED", _case];
-            private _triggerDeadline = diag_tickTime + 5;
-            waitUntil {
-                uiSleep 0.05;
-                !((fdelta_test_phases getOrDefault [_triggerKey, []]) isEqualTo [])
-                || {diag_tickTime >= _triggerDeadline}
-            };
-            if (
-                (fdelta_test_phases getOrDefault [_triggerKey, []]) isEqualTo []
-            ) then {
-                _allCompleted = false;
-                ["CASE_ERROR", [_case, "TRIGGER_TIMEOUT"]]
-                    call fdelta_test_fnc_log;
-            };
-        };
-
-        uiSleep 4;
-        private _actualDistance = _originASL distance (
-            getPosASL _target vectorAdd [0, 0, 1]
-        );
-        private _finalRegistry = localNamespace getVariable [
-            "fdelta_blast_projectileRegistry",
-            createHashMap
+    private _runOwnerCase = {
+        params [
+            "_case",
+            "_distance",
+            "_initialDamage",
+            "_expectation",
+            ["_realWeapon", false]
         ];
-        private _finalEntry = _finalRegistry getOrDefault [
-            _networkId,
-            createHashMap
+
+        private _targetXY = [
+            (_originXY # 0) + ((_direction # 0) * _distance),
+            (_originXY # 1) + ((_direction # 1) * _distance)
         ];
-        private _result = [
+        private _targetASL = [
+            _targetXY # 0,
+            _targetXY # 1,
+            getTerrainHeightASL _targetXY
+        ];
+        private _targetState = [
+            _case,
+            _targetASL,
+            _initialDamage
+        ] call _createTarget;
+        _targetState params ["_target", "_group"];
+
+        uiSleep 0.35;
+        ["OWNER_CASE_BEGIN", [
             _case,
             _distance,
-            _actualDistance,
-            alive _target,
-            damage _target,
-            _target getVariable ["fdelta_blast_lastDose", -1],
-            _target getVariable ["fdelta_blast_lastIncrement", -1],
-            _target getVariable ["fdelta_blast_traumaState", []],
-            _target getVariable ["fdelta_blast_lastBlast", []],
-            _networkId,
-            _finalEntry,
-            keys _finalRegistry,
-            keys (localNamespace getVariable ["fdelta_blast_seen", createHashMap]),
-            _reportedOriginASL
-        ];
-        _results pushBack _result;
-        ["CASE_RESULT", _result] call fdelta_test_fnc_log;
+            _initialDamage,
+            _expectation,
+            _realWeapon,
+            damage _target
+        ]] call fdelta_test_fnc_log;
 
-        private _observedDamage = _result # 4;
-        private _behaviorPassed = switch (_distance) do {
-            case 55: {
-                if (_shooter select 5) then {
-                    _observedDamage >= 0.99
-                } else {
-                    _observedDamage < 0.001
-                }
-            };
-            case 100: {
-                if (
-                    _serverBlastPatch
-                    && {_shooterBlastPatch}
-                ) then {
-                    _observedDamage > 0.1 && {_observedDamage < 0.3}
-                } else {
-                    _observedDamage < 0.001
-                }
-            };
-            default {_observedDamage < 0.001};
-        };
-        private _originSecurityPassed = true;
-        if (_reportedOriginASL isNotEqualTo []) then {
-            private _lastBlast = _result # 8;
-            private _trustedOrigin = _lastBlast param [4, [], [[]]];
-            private _expectedOrigin = _originASL vectorAdd [0, 0, 2];
-            private _seenKeys = _result # 12;
-            _originSecurityPassed = count _lastBlast >= 5
-                && {count _trustedOrigin isEqualTo 3}
-                && {_trustedOrigin distance _expectedOrigin < 8}
-                && {_trustedOrigin distance _reportedOriginASL > 12}
-                && {count _finalEntry isEqualTo 0}
-                && {_networkId in _seenKeys};
-            [
-                "SERVER_ORIGIN_RESULT",
-                [
-                    _case,
-                    _originSecurityPassed,
-                    _trustedOrigin,
-                    _expectedOrigin,
-                    _reportedOriginASL,
-                    _networkId in _seenKeys
-                ]
-            ] call fdelta_test_fnc_log;
-        };
-        _behaviorPassed = _behaviorPassed && {_originSecurityPassed};
-        if (!_behaviorPassed) then {_allCompleted = false};
-        [
-            "CASE_EXPECTATION",
-            [_case, _behaviorPassed, _observedDamage]
-        ] call fdelta_test_fnc_log;
-
-        deleteVehicle _target;
-        deleteGroup _group;
-        uiSleep 0.5;
-    } forEach _distances;
-
-    // Repeat the decisive 100 m case with a projectile emitted by an actual
-    // aircraft weapon. This confirms the normal Fired/getShotParents path in
-    // addition to the deterministic createVehicle locality matrix above.
-    if (_shooter select 3) then {
-        private _case = "MK82_WEAPON_100M";
-        private _distance = 100;
-        private _targetXY = [
-            (_originXY select 0) + ((_direction select 0) * _distance),
-            (_originXY select 1) + ((_direction select 1) * _distance)
-        ];
-        private _targetASL = [
-            _targetXY select 0,
-            _targetXY select 1,
-            getTerrainHeightASL _targetXY
-        ];
-        private _group = createGroup [east, true];
-        private _target = _group createUnit [
-            "O_V_Soldier_hex_F",
-            ASLToAGL _targetASL,
-            [],
-            0,
-            "CAN_COLLIDE"
-        ];
-        _target setPosASL _targetASL;
-        _target setUnitPos "UP";
-        _target disableAI "ALL";
-        removeAllWeapons _target;
-        _target setVariable ["fdelta_test_case", _case];
-        _target addEventHandler ["HandleDamage", {
-            params [
-                "_unit",
-                "_selection",
-                "_damage",
-                "_source",
-                "_projectile",
-                "_hitIndex",
-                "_instigator",
-                "_hitPoint",
-                "_directHit",
-                "_context"
-            ];
-            [
-                "TARGET_HANDLE_DAMAGE",
-                [
-                    _unit getVariable ["fdelta_test_case", ""],
-                    _selection,
-                    _damage,
-                    typeOf _source,
-                    _projectile,
-                    _hitIndex,
-                    typeOf _instigator,
-                    _hitPoint,
-                    _directHit,
-                    _context
-                ]
-            ] call fdelta_test_fnc_log;
-            _damage
-        }];
-
-        uiSleep 0.5;
-        ["WEAPON_CASE_BEGIN", [_case, _distance, getPosASL _target]]
-            call fdelta_test_fnc_log;
-        [_case, _originASL] remoteExec [
-            "fdelta_test_fnc_createWeaponShot",
-            _shooterOwner
-        ];
-
-        private _readyKey = format ["%1|WEAPON_READY", _case];
-        private _failedKey = format ["%1|WEAPON_FAILED", _case];
-        private _readyDeadline = diag_tickTime + 15;
-        waitUntil {
-            uiSleep 0.05;
-            !((fdelta_test_phases getOrDefault [_readyKey, []]) isEqualTo [])
-            || {!((fdelta_test_phases getOrDefault [_failedKey, []]) isEqualTo [])}
-            || {diag_tickTime >= _readyDeadline}
-        };
-
-        private _ready = fdelta_test_phases getOrDefault [_readyKey, []];
+        private _createFunction = [
+            "fdelta_test_fnc_createSyntheticShot",
+            "fdelta_test_fnc_createWeaponShot"
+        ] select _realWeapon;
+        private _readyPhase = ["READY", "WEAPON_READY"] select _realWeapon;
+        [_case, _originASL] remoteExec [_createFunction, _shooterOwner];
+        private _ready = [_case, _readyPhase, 15] call _waitPhase;
         private _networkId = "";
-        private _firedData = [];
-        private _evidenceSeen = false;
+        private _readyData = [];
+        private _triggered = false;
 
-        if (_ready isEqualTo []) then {
-            _allCompleted = false;
-            [
-                "WEAPON_CASE_ERROR",
-                [
-                    _case,
-                    "READY_FAILED_OR_TIMEOUT",
-                    fdelta_test_phases getOrDefault [_failedKey, []]
-                ]
-            ] call fdelta_test_fnc_log;
-        } else {
-            private _readyData = _ready select 2;
+        if (_ready isNotEqualTo []) then {
+            _readyData = _ready # 2;
             _networkId = _readyData param [0, "", [""]];
-            _firedData = _readyData param [4, [], [[]]];
-
-            if (_serverBlastPatch && {_shooterBlastPatch}) then {
-                private _evidenceDeadline = diag_tickTime + 3;
-                waitUntil {
-                    uiSleep 0.05;
-                    private _registry = localNamespace getVariable [
-                        "fdelta_blast_projectileRegistry",
-                        createHashMap
-                    ];
-                    private _entry = _registry getOrDefault [
-                        _networkId,
-                        createHashMap
-                    ];
-                    _evidenceSeen = count _entry > 0;
-                    _evidenceSeen || {diag_tickTime >= _evidenceDeadline}
-                };
-            };
-            [
-                "WEAPON_SERVER_EVIDENCE",
-                [_case, _networkId, _evidenceSeen]
-            ] call fdelta_test_fnc_log;
-
-            [_case, _originASL] remoteExec [
+            [_case, _originASL, false] remoteExec [
                 "fdelta_test_fnc_triggerSyntheticShot",
                 _shooterOwner
             ];
-            private _triggerKey = format ["%1|TRIGGERED", _case];
-            private _triggerDeadline = diag_tickTime + 5;
-            waitUntil {
-                uiSleep 0.05;
-                !((fdelta_test_phases getOrDefault [_triggerKey, []]) isEqualTo [])
-                || {diag_tickTime >= _triggerDeadline}
-            };
-            if (
-                (fdelta_test_phases getOrDefault [_triggerKey, []]) isEqualTo []
-            ) then {
-                _allCompleted = false;
-                ["WEAPON_CASE_ERROR", [_case, "TRIGGER_TIMEOUT"]]
-                    call fdelta_test_fnc_log;
-            };
+            _triggered = ([_case, "TRIGGERED", 6] call _waitPhase)
+                isNotEqualTo [];
         };
 
-        uiSleep 4;
+        uiSleep 2;
+        private _observedDamage = damage _target;
         private _actualDistance = _originASL distance (
             getPosASL _target vectorAdd [0, 0, 1]
         );
-        private _finalRegistry = localNamespace getVariable [
-            "fdelta_blast_projectileRegistry",
-            createHashMap
-        ];
-        private _finalEntry = _finalRegistry getOrDefault [
-            _networkId,
-            createHashMap
-        ];
+        private _noHealing = _observedDamage >= (_initialDamage - 0.01);
+        private _behaviorPassed = switch (_expectation) do {
+            case "UWR": {
+                if (_shooterAmmoPatch) then {
+                    _observedDamage >= 0.99
+                } else {
+                    _observedDamage < 0.01
+                }
+            };
+            case "BP": {
+                if (_shooterBlastPatch) then {
+                    // The upper bound also detects duplicate processing when
+                    // both server and owner have the addon.
+                    _observedDamage > 0.10 && {_observedDamage < 0.30}
+                } else {
+                    _observedDamage < 0.01
+                }
+            };
+            case "PRE_DAMAGED": {
+                _noHealing && {
+                    if (_shooterBlastPatch) then {
+                        _observedDamage > (_initialDamage + 0.10)
+                            && {_observedDamage < (_initialDamage + 0.30)}
+                    } else {
+                        abs (_observedDamage - _initialDamage) < 0.02
+                    }
+                }
+            };
+            default {
+                _observedDamage < 0.01
+            };
+        };
+        private _passed = _ready isNotEqualTo []
+            && {_networkId isNotEqualTo ""}
+            && {_triggered}
+            && {_noHealing}
+            && {_behaviorPassed};
         private _result = [
             _case,
+            _passed,
+            _expectation,
+            _realWeapon,
             _distance,
             _actualDistance,
-            alive _target,
-            damage _target,
-            _target getVariable ["fdelta_blast_lastDose", -1],
-            _target getVariable ["fdelta_blast_lastIncrement", -1],
-            _target getVariable ["fdelta_blast_traumaState", []],
-            _target getVariable ["fdelta_blast_lastBlast", []],
+            _initialDamage,
+            _observedDamage,
+            _shooterAmmoPatch,
+            _shooterBlastPatch,
             _networkId,
-            _firedData,
-            _evidenceSeen,
-            _finalEntry
+            _readyData
         ];
-        _results pushBack _result;
-        ["WEAPON_CASE_RESULT", _result] call fdelta_test_fnc_log;
-
-        private _weaponDamage = _result # 4;
-        private _weaponBehaviorPassed = if (
-            _serverBlastPatch && {_shooterBlastPatch}
-        ) then {
-            _weaponDamage > 0.1 && {_weaponDamage < 0.3}
-        } else {
-            _weaponDamage < 0.001
-        };
-        if (!_weaponBehaviorPassed) then {_allCompleted = false};
-        [
-            "WEAPON_CASE_EXPECTATION",
-            [_case, _weaponBehaviorPassed, _weaponDamage]
-        ] call fdelta_test_fnc_log;
+        ["OWNER_CASE_RESULT", _result] call fdelta_test_fnc_log;
 
         deleteVehicle _target;
         deleteGroup _group;
+        uiSleep 0.35;
+        [_passed, _result]
     };
+
+    {
+        private _caseResult = _x call _runOwnerCase;
+        _caseResult params ["_passed", "_result"];
+        _results pushBack _result;
+        if (!_passed) then {_allCompleted = false;};
+    } forEach [
+        ["MK82_NATIVE_55M", 55, 0, "UWR", false],
+        ["MK82_BP_100M", 100, 0, "BP", false],
+        ["MK82_CUTOFF_255M", 255, 0, "CUTOFF", false],
+        ["MK82_PRE_DAMAGED_100M", 100, 0.4, "PRE_DAMAGED", false]
+    ];
+
+    // A graphical client additionally emits a real Mk 82 from the A-143. The
+    // HC matrix uses the deterministic synthetic path because it has no player.
+    if (_shooter # 3) then {
+        private _weaponResult = [
+            "MK82_WEAPON_100M",
+            100,
+            0,
+            "BP",
+            true
+        ] call _runOwnerCase;
+        _weaponResult params ["_passed", "_result"];
+        _results pushBack _result;
+        if (!_passed) then {_allCompleted = false;};
+    } else {
+        ["WEAPON_CASE_SKIPPED", ["HEADLESS_CLIENT"]]
+            call fdelta_test_fnc_log;
+    };
+
+    // Transfer a live, staged projectile to the dedicated server immediately
+    // before detonation. This case deliberately follows the *new* owner: a
+    // modded server processes it and a vanilla server does not, regardless of
+    // the creating client's mod set.
+    private _transferCase = "MK82_TRANSFER_100M";
+    private _transferOriginXY = [2750, 5200];
+    private _transferOriginASL = [
+        _transferOriginXY # 0,
+        _transferOriginXY # 1,
+        (getTerrainHeightASL _transferOriginXY) + 0.15
+    ];
+    private _transferTargetXY = [2850, 5200];
+    private _transferTargetASL = [
+        _transferTargetXY # 0,
+        _transferTargetXY # 1,
+        getTerrainHeightASL _transferTargetXY
+    ];
+    private _transferTargetState = [
+        _transferCase,
+        _transferTargetASL,
+        0
+    ] call _createTarget;
+    _transferTargetState params ["_transferTarget", "_transferGroup"];
+
+    [_transferCase, _transferOriginASL] remoteExec [
+        "fdelta_test_fnc_createSyntheticShot",
+        _shooterOwner
+    ];
+    private _transferReady = [
+        _transferCase,
+        "READY",
+        12
+    ] call _waitPhase;
+    private _transferNetworkId = "";
+    private _transferInitialOwner = -1;
+    private _transferFinalOwner = -1;
+    private _transferLocal = false;
+    private _transferTriggered = false;
+
+    if (_transferReady isNotEqualTo []) then {
+        _transferNetworkId = (_transferReady # 2) param [0, "", [""]];
+        [_transferCase, _transferOriginASL, true] remoteExec [
+            "fdelta_test_fnc_triggerSyntheticShot",
+            _shooterOwner
+        ];
+        private _staged = ([_transferCase, "STAGED", 6] call _waitPhase)
+            isNotEqualTo [];
+        private _projectile = objNull;
+        private _resolveDeadline = diag_tickTime + 5;
+        waitUntil {
+            uiSleep 0.05;
+            _projectile = objectFromNetId _transferNetworkId;
+            !isNull _projectile || {diag_tickTime >= _resolveDeadline}
+        };
+
+        if (_staged && {!isNull _projectile}) then {
+            _transferInitialOwner = owner _projectile;
+            _projectile setOwner 2;
+            private _localityDeadline = diag_tickTime + 5;
+            waitUntil {
+                uiSleep 0.02;
+                _transferLocal = local _projectile;
+                _transferFinalOwner = owner _projectile;
+                _transferLocal && {_transferFinalOwner isEqualTo 2}
+                || {diag_tickTime >= _localityDeadline}
+            };
+            if (_transferLocal && {_transferFinalOwner isEqualTo 2}) then {
+                triggerAmmo _projectile;
+                _transferTriggered = true;
+            };
+        };
+    };
+
+    uiSleep 2;
+    private _transferDamage = damage _transferTarget;
+    private _transferBehavior = if (_serverBlastPatch) then {
+        _transferDamage > 0.10 && {_transferDamage < 0.30}
+    } else {
+        _transferDamage < 0.01
+    };
+    private _transferPassed = _transferReady isNotEqualTo []
+        && {_transferNetworkId isNotEqualTo ""}
+        && {_transferInitialOwner isEqualTo _shooterOwner}
+        && {_transferLocal}
+        && {_transferFinalOwner isEqualTo 2}
+        && {_transferTriggered}
+        && {_transferBehavior};
+    private _transferResult = [
+        _transferCase,
+        _transferPassed,
+        _transferDamage,
+        _serverBlastPatch,
+        _shooterBlastPatch,
+        _transferNetworkId,
+        _transferInitialOwner,
+        _transferFinalOwner,
+        _transferLocal,
+        _transferTriggered
+    ];
+    ["LOCALITY_TRANSFER_RESULT", _transferResult]
+        call fdelta_test_fnc_log;
+    _results pushBack _transferResult;
+    if (!_transferPassed) then {_allCompleted = false;};
+
+    deleteVehicle _transferTarget;
+    deleteGroup _transferGroup;
 
     private _scriptErrors = missionNamespace getVariable [
         "fdelta_test_scriptErrors",

@@ -1,11 +1,13 @@
 # Dedicated-server integration smoke test
 
 This combined-package mission validates the imported patches and function
-registrations, ammo changes and inheritance pins, conditional CUP/RHS policies,
-Blast Propagation profiles, private trusted state and queue bounds, Scalpel-L
-classes and remote-exec entry, and Turret Enhanced loiter behavior, remote-exec
-entries, and periodic flight-profile registry pruning. The current suite emits
-274 assertions and fails on any assertion or SQF `ScriptError` event.
+registrations, ammo changes and inheritance pins, vanilla-identity guided 155 mm
+terminals, conditional CUP/RHS policies without a CUP compatibility shim,
+the four-function Blast surface, its local profile cache and additive damage,
+Scalpel-L classes and cue RPC, and Turret Enhanced loiter behavior and scoped
+RPCs. It also verifies that Blast exposes no RPCs or permanent queue/worker
+state. The current suite emits 222 assertions and fails on any assertion or SQF
+`ScriptError` event.
 
 Build the mod and run the test from the repository root:
 

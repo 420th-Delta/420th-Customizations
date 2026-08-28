@@ -104,10 +104,7 @@
             <English>TER: Active LOITER is object-attached and was not moved.</English>
         </Key>
         <Key ID="STR_FDELTA_TER_MSG_LOITER_CENTER_MOVED_FORMAT">
-            <English>TER: Active loiter center moved to grid %1.</English>
-        </Key>
-        <Key ID="STR_FDELTA_TER_MSG_LOITER_MOVE_FAILED">
-            <English>TER: The active LOITER waypoint could not be moved on this machine.</English>
+            <English>TER: Active loiter center commanded to grid %1.</English>
         </Key>
         <Key ID="STR_FDELTA_TER_MSG_LOITER_REQUIRES_UAV">
             <English>TER: Loiter controls require an actively controlled UAV.</English>
@@ -133,23 +130,14 @@
         <Key ID="STR_FDELTA_TER_MSG_RADIUS_RANGE">
             <English>TER: Loiter radius must be between 100 and 20000 meters.</English>
         </Key>
-        <Key ID="STR_FDELTA_TER_MSG_REQUEST_CONTROL_CHANGED">
-            <English>TER: Request rejected because you no longer control that UAV gunner.</English>
-        </Key>
-        <Key ID="STR_FDELTA_TER_MSG_RETASK_CONTROL_CHANGED">
-            <English>TER: Retask rejected because you no longer control that UAV gunner.</English>
-        </Key>
         <Key ID="STR_FDELTA_TER_MSG_RETASK_REQUIRES_UAV">
             <English>TER: Loiter retasking requires an actively controlled UAV.</English>
         </Key>
         <Key ID="STR_FDELTA_TER_MSG_SETTINGS_NO_WAYPOINT_FORMAT">
-            <English>TER: %1 at %2 m ASL/%3 m clearance. No LOITER; radius unchanged.</English>
+            <English>TER: %1 commanded to %2 m ASL/%3 m clearance. No LOITER; radius unchanged.</English>
         </Key>
         <Key ID="STR_FDELTA_TER_MSG_SETTINGS_SUCCESS_FORMAT">
-            <English>TER: %1 set to %2 m ASL, %3 m terrain clearance, %4 m loiter radius.</English>
-        </Key>
-        <Key ID="STR_FDELTA_TER_MSG_SETTINGS_WAYPOINT_FAILED_FORMAT">
-            <English>TER: %1 set to %2 m ASL and %3 m clearance; LOITER update failed.</English>
+            <English>TER: %1 commanded to %2 m ASL, %3 m terrain clearance, %4 m loiter radius.</English>
         </Key>
         <Key ID="STR_FDELTA_TER_MSG_UAV_CONTROL_CHANGED">
             <English>TER: UAV control changed before the settings were applied.</English>

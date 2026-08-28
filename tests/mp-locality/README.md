@@ -1,67 +1,64 @@
 # Multiplayer Locality Validation
 
-This harness compares client-owned explosive behavior in four deployments:
+This harness validates the optional-mod boundary for Unified Weapons Rebalance
+(UWR) and Blast Propagation (BP). BP has no custom production RPC: the machine
+that owns a projectile at detonation computes the supplemental blast locally,
+then uses Arma's global `setDamage` arguments. The mission's small test-control
+RPCs only create, position, and trigger repeatable test shots.
 
-1. vanilla server and vanilla headless client;
-2. modded server and vanilla headless client;
-3. vanilla server and modded headless client; and
-4. modded server and modded headless client.
+## Expected 2x2 matrix
 
-The mission has only vanilla dependencies. For each cell, an independently
-running headless client owns and detonates a `Bo_Mk82` while the dedicated
-server measures fresh AI targets at 55, 100, and 255 metres. RPT telemetry
-records each machine's live `CfgAmmo`, projectile locality, native
-`HandleDamage`, Blast Propagation state, and final damage.
+The ordinary shots stay local to the connected player or headless client. Both
+native UWR splash and scripted BP must therefore follow the projectile owner's
+mod set, not the dedicated server's mod set.
 
-Graphical-client runs add a fourth case at 100 metres. That case seats the
-player in a vanilla A-143, arms its stock `Mk82BombLauncher`, records the
-engine's `Fired` event and shot parents, then uses the same controlled impact
-point. This distinguishes a merely client-created test object from a projectile
-made through Arma's real vehicle-weapon path. It does not test natural bomb
-flight or fusing.
+| Cell | Server | Projectile owner | Native UWR | BP at 100 m |
+|---|---|---|---|---|
+| `S0C0` / `P0C0` | Vanilla | Vanilla | No | No |
+| `S1C0` / `P1C0` | Modded | Vanilla | No | No |
+| `S0C1` / `P0C1` | Vanilla | Modded | Yes | Yes |
+| `S1C1` / `P1C1` | Modded | Modded | Yes | Yes |
 
-Before those shots, each modded-server graphical cell also has the client try
-the former forged-registry exploit: it publishes a fake Blast registry and a
-`damageMultiplier` of 100 to the server, calls the public report endpoint, and
-places a target inside the forged envelope. A passing build leaves that target
-undamaged because every trusted value is kept in `localNamespace`.
+The runner checks the live addon state reported by each cell, so a missing or
+unexpected mod does not silently turn a positive case into a passing negative
+case.
 
-The same cell sends a forged high-priority Scalpel-L `engine-hard-lock` cue
-through the public cue endpoint. The remote cue must leave no trusted registry
-entry, while an otherwise identical owner-local fallback cue must be accepted;
-this guards the distinction between authenticated player-camera traffic and
-owner-only AI/engine fallbacks.
+Each cell performs these controlled `Bo_Mk82` detonations:
 
-Positive cells also send a plausible but displaced explosion position and
-verify that damage uses the server-observed projectile origin. A separate case
-reserves an early report, transfers the live projectile to the server, pauses
-the registry monitor, and detonates immediately. It passes only if Explode-time
-evidence supersedes the stale reservation and commits exactly once.
+- 55 m verifies that native UWR splash follows the projectile owner;
+- 100 m verifies the BP increment, with an upper bound that also catches
+  duplicate processing when both machines have the addon;
+- 255 m verifies the configured BP cutoff;
+- a target pre-damaged to 0.4 at 100 m verifies additive damage and prevents a
+  stale proxy value from healing the unit; and
+- a live projectile transferred to the server before detonation verifies that
+  processing follows the new owner. This final case intentionally follows the
+  server's mod state rather than the creating client's state.
 
-The following graphical-client results were observed on the current integrated
-build:
+Graphical-player runs add a real 100 m Mk 82 case. The player is seated in a
+vanilla A-143, fires its stock `Mk82BombLauncher`, and the harness records the
+engine `Fired` event and shot parents before placing the projectile at the same
+controlled impact point. This covers the ordinary weapon-created path without
+turning natural flight and fusing into timing variables. Headless-client runs
+use the deterministic synthetic path because an HC has no player entity.
 
-| Server | Client | Live Mk 82 config | Actual weapon shot at 100 m |
-|---|---|---|---|
-| Vanilla | Vanilla | `1100 / 12` | No BP evidence; zero damage |
-| Vanilla | Modded | `3200 / 16.25` | No BP evidence; zero damage |
-| Modded | Unmodded | `1100 / 12` | No BP evidence; zero damage |
-| Modded | Modded | `3200 / 16.25` | Evidence validated; approximately `0.18` BP damage |
+When both the server and graphical shooter have Scalpel-L, the harness also
+verifies that a remote caller cannot inject the owner-only engine fallback cue
+while the same endpoint still accepts legitimate owner-local state.
 
-The headless-client 2x2 matrix has the same BP boundary. Only the modded
-server/modded HC cell validates supplemental damage (approximately `0.18` at
-100 m); native 55 m damage follows whether the HC projectile owner is modded.
+When both sides have Turret Enhanced, the graphical run also takes control of
+a real UAV turret and submits Apply and Move requests through the production
+RPCs. It verifies the server's LOITER radius, terrain-clearance altitude, moved
+center, and server-local ASL flight profile.
 
-Build the package with `hemtt build`, then run `run-matrix.ps1` from PowerShell
-for the four headless-client cells. Run `run-matrix.ps1 -ClientMode Player` for
-a complete graphical-client 2x2 matrix. Together they verify ordinary player
-RPCs and the HC recovery path Arma masks as owner 0/server-local. The launcher
-uses random per-run server and admin passwords, temporarily copies the mission
-into a uniquely named test-only directory beside the Arma executable, launches
-isolated server/client processes, stores RPTs below ignored `artifacts/`, and
-removes the temporary mission directory in a `finally` block. The command
-returns failure unless every requested cell reaches a successful `SUITE_DONE`
-and satisfies its expected damage behavior.
+The harness no longer contains the Blast forged-report, registry-poisoning,
+validation queue, watchdog, reservation, or displaced-origin fixtures. Those
+belonged to the removed server-ingress architecture and would not exercise the
+optimized owner-local implementation.
+
+## Running the matrices
+
+Build the package, then run both four-cell matrices from PowerShell:
 
 ```powershell
 hemtt build
@@ -69,8 +66,14 @@ hemtt build
 & .\tests\mp-locality\run-matrix.ps1 -ClientMode Player
 ```
 
-Use `-OnlyCell S1C1` for the headless positive control, or combine
-`-ClientMode Player -OnlyCell P1C1` for the graphical positive control.
+Use `-OnlyCell S1C1` for one headless cell, or combine
+`-ClientMode Player -OnlyCell P1C1` for one graphical cell. The launcher uses
+random per-run server and admin passwords, copies the mission into a unique
+test-only directory beside the Arma executable, launches isolated processes,
+stores RPTs below ignored `artifacts/`, and removes the temporary mission in a
+`finally` block. It fails unless the expected addon state is present, every
+case passes, no ScriptError event appears, and the mission emits a successful
+`SUITE_DONE`.
 
 Pass additional local mod directories as a PowerShell array to include them on
 each side marked modded while leaving the vanilla sides untouched:
@@ -82,16 +85,6 @@ each side marked modded while leaving the vanilla sides untouched:
     "D:\SteamLibrary\steamapps\workshop\content\107410\843577117"
 ```
 
-The example includes CBA_A3 because CUP Weapons declares it as a dependency.
-Load every dependency required by the extra mods or Arma will stop before the
-test mission initializes.
-
-HC-originated remote execution reports owner `0` and can appear server-local.
-The addon therefore binds a request to server-observed projectile/registry
-ownership and verifies that owner as a connected HC. Arma does not expose which
-HC made the call, so all configured HCs share one trusted server-infrastructure
-domain; this harness verifies support for trusted HCs, not isolation from a
-hostile HC that already has the server's HC password.
-
-The launcher defaults to the repository's `.hemttout\build` directory. Pass
-`-BuildPath <path>` to test a different unpacked mod build.
+Load every dependency required by the extra mods. The launcher defaults to the
+repository's `.hemttout\build` directory; pass `-BuildPath <path>` to test a
+different unpacked build.
