@@ -218,8 +218,8 @@ class CfgAmmo {
         aiAmmoUsageFlags = 64 + 128 + 256;
     };
 
-    // DAR inherits from M_PG_AT in vanilla. Pin its targeting behavior so the
-    // DAGR air-lock changes do not propagate into the unguided rocket family.
+    // DAR inherits from M_PG_AT in vanilla. Apply its UWR blast values while
+    // pinning targeting so DAGR air-lock changes do not reach unguided rockets.
     class M_AT : M_PG_AT {
         airLock = 0;
         missileLockMaxSpeed = 35;
