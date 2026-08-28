@@ -67,13 +67,12 @@ class CfgAmmo {
         indirectHitRange = 18.75;
     };
 
-    // Keep the existing 420th SDB adjustment unchanged in this UWR pass.
+    // The SDB remains much smaller than a Mk 82, but is no longer restricted
+    // to the existing short-ranged 200 / 5 splash profile.
     class ammo_Bomb_SDB : ammo_Bomb_SmallDiameterBase {
-        indirectHit = 200; // 85
-        indirectHitRange = 5; // 3
+        indirectHit = 1600;
+        indirectHitRange = 10;
     };
-
-    // Remaining unitary warhead rebalance
 
     class Sh_155mm_AMOS : ShellBase {
         indirectHit = FDELTA_155MM_INDIRECT_HIT;
