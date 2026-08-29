@@ -42,9 +42,20 @@ class CfgAmmo {
     class ShellBase;
 
     // Unitary warhead rebalance
+    //
+    // indirectHit is an Arma damage coefficient, not a weight of explosive.
+    // These values provide the concentrated native core used with the
+    // cover-aware Blast Propagation addon in 420th-Enhancements. Native splash
+    // ends at roughly 4x indirectHitRange; the scripted infantry-only profile
+    // takes over at that handoff. Keeping the native core short also avoids
+    // extending Arma's armor-bypassing radial damage through the outer zone.
+    //
+    // Public warhead statistics below are sanity checks for relative scale,
+    // not a claim that kilograms or pounds convert directly to indirectHit.
 
-    // 500 lb Mk 82 family. In Arma, native indirect damage reaches zero at
-    // roughly four times indirectHitRange, so 16.25 gives a 65 m cutoff.
+    // 500 lb Mk 82 / GBU-12 family. USAF Maritime WSEP data lists 192 lb
+    // net explosive weight. This is the empirical gameplay anchor: controlled
+    // Arma tests put a protected CSAT Viper down near the 65 m native handoff.
     class Bo_Mk82 : BombCore {
         indirectHit = FDELTA_MK82_INDIRECT_HIT; // 1100
         indirectHitRange = FDELTA_MK82_INDIRECT_RANGE; // 12
@@ -55,34 +66,56 @@ class CfgAmmo {
         indirectHitRange = FDELTA_MK82_INDIRECT_RANGE; // 12
     };
 
-    // Larger 250 kg-class guided bomb used by the CSAT aircraft.
+    // The fictional 565 lb LOM-250G is bracketed against the KAB-250LG-E.
+    // Rosoboronexport lists that 256 kg bomb with a 165 kg HE-fragmentation
+    // warhead. Its profile is only modestly above the Mk 82 gameplay anchor.
     class Bomb_03_F : ammo_Bomb_LaserGuidedBase {
-        indirectHit = 3600; // 1400
-        indirectHitRange = 18.75; // 16
+        indirectHit = FDELTA_MK82_INDIRECT_HIT + 400; // 1400
+        indirectHitRange = FDELTA_MK82_INDIRECT_RANGE + 2.5; // 16
     };
 
-    // The SDB remains much smaller than a Mk 82, but is no longer restricted
-    // to the existing short-ranged 200 / 5 splash profile.
+    // GBU-39/B SDB I is a multipurpose penetrating blast-fragmentation weapon,
+    // not a dedicated anti-armor bomb. USAF/Boeing data gives 36 lb explosive
+    // fill in a 205 lb warhead. Cube-root scaling from the Mk 82's 192 lb NEW
+    // gives about 37 m from the 65 m anchor, rounded here to a 40 m handoff;
+    // half the Mk 82 coefficient keeps its hardened-target core smaller.
     class ammo_Bomb_SDB : ammo_Bomb_SmallDiameterBase {
         indirectHit = 1600; // 85
         indirectHitRange = 10; // 3
     };
 
+    // M795 is the public 155 mm HE analogue: the U.S. Army lists a 23.8 lb
+    // TNT/IMX-101 fill in a high-fragmentation steel body and describes its
+    // point-detonating effect as most lethal within 25 m. Charge scaling from
+    // the Mk 82 anchor gives about 32 m, rounded to a 35 m handoff. Although
+    // 3600 looks large alone, pairing it with 8.75 m makes this curve stronger
+    // than vanilla only inside about 20 m, weaker beyond, and zero after 35 m
+    // instead of 120 m. Blast Propagation owns the cover-aware 35-125 m zone.
     class Sh_155mm_AMOS : ShellBase {
         indirectHit = FDELTA_155MM_INDIRECT_HIT; // 125
         indirectHitRange = FDELTA_155MM_INDIRECT_RANGE; // 30
     };
 
-    // The 230 mm HE launcher projectile separates at 500 m. Patch only its
-    // ground-impact terminal leaf; cluster and latent anti-armor leaves use
-    // different terminal classes and remain untouched.
+    // The closest public analogue is the 227 mm M31 GMLRS unitary round.
+    // GD-OTS lists a 195 lb scored-steel warhead with 51 lb PBXN-109; its
+    // fragmentation construction, not just explosive fill, drives effects.
+    // The Mk 82 profile is therefore a gameplay baseline, not an equal-yield
+    // claim. The new curve crosses vanilla near 23 m, is weaker after that,
+    // and ends at 65 m rather than 120 m before BP continues to 250 m.
+    // Patch only the ground-impact terminal leaf; cluster and latent
+    // anti-armor leaves use different terminal classes and remain untouched.
     class R_230mm_fly : ShellBase {
         indirectHit = FDELTA_230MM_INDIRECT_HIT; // 800
         indirectHitRange = FDELTA_230MM_INDIRECT_RANGE; // 30
     };
 
-    // VLS unitary cruise missile. Its cluster child inherits this class, so
-    // the child is explicitly pinned to the complete vanilla damage triplet.
+    // Mk41 VLS unitary cruise missile, bracketed against Tomahawk Block IV.
+    // The U.S. Navy lists a 1,000 lb-class unitary warhead. The 7000 coefficient
+    // is about 2.2x the Mk 82 anchor while retaining vanilla's 120 m cutoff;
+    // it models the inner core rather than equating warhead mass to damage.
+    // Raising indirectHitRange to 50 would push armor-bypassing native splash
+    // to 200 m and overlap the BP profile that owns the 120-400 m outer zone.
+    // The cluster child is explicitly pinned to its vanilla damage triplet.
     class ammo_Missile_Cruise_01 : ammo_Missile_CruiseBase {
         indirectHit = FDELTA_CRUISE_INDIRECT_HIT; // 2000
         indirectHitRange = FDELTA_CRUISE_INDIRECT_RANGE; // 30
@@ -100,6 +133,10 @@ class CfgAmmo {
         indirectHitRange = 30;
     };
 
+    // Fictional 70-80 mm HE rockets are bracketed against the M151 Hydra-70.
+    // U.S. Army data describes its 10 lb unitary warhead as producing thousands
+    // of high-velocity fragments. A 10 m base / 40 m cutoff keeps that effect
+    // concentrated; reducing vanilla's 15 m base offsets the higher coefficient.
     class Rocket_04_HE_F : MissileBase {
         indirectHit = 300; // 55
         indirectHitRange = 10; // 15
@@ -115,11 +152,23 @@ class CfgAmmo {
         indirectHitRange = 10; // 15
     };
 
+    // AGM-88C is not a kinetic-only dart: NAVAIR's HARM training plan describes
+    // its WAU-27/B as 12,845 preformed tungsten fragments plus an improved
+    // explosive charge. 2000 / 15 remains below this patch's Mk 82 baseline
+    // and supplies the fragmentation effect against radar arrays and crews;
+    // the unchanged 2100 direct hit does not supply an adjacent blast envelope.
+    // Every vanilla HARM pylon magazine holds one round; ballisticsComputer = 0
+    // and manualControl = 0. Against a non-radiating ground point there is no
+    // predicted impact cue or manual steering, so dumb fire trades an entire
+    // pylon for an unguided estimate; GBU-12/SDB racks provide PIP and 2/4 shots.
     class ammo_Missile_HARM : ammo_Missile_AntiRadiationBase {
         indirectHit = 2000; // 85
         indirectHitRange = 15; // 8
     };
 
+    // Kh-58UShKE is the closest public analogue. Rosoboronexport lists a 149 kg
+    // warhead; 2800 / 18.75 stays below the 165 kg KAB-250 analogue's
+    // 3600 / 18.75 profile rather than treating both large warheads as equal.
     class ammo_Missile_KH58 : ammo_Missile_AntiRadiationBase {
         indirectHit = 2800; // 85
         indirectHitRange = 18.75; // 8
@@ -205,8 +254,9 @@ class CfgAmmo {
         aiAmmoUsageFlags = 64 + 128 + 256; // 128 + 64
     };
 
-    // DAR inherits from M_PG_AT in vanilla. Apply its UWR blast values while
-    // pinning targeting so DAGR air-lock changes do not reach unguided rockets.
+    // DAR inherits from M_PG_AT in vanilla. Its lower 250 / 7.5 profile is the
+    // 30 m member of the same small HE-fragmentation rocket bracket above.
+    // Pin targeting so DAGR air-lock changes do not reach unguided rockets.
     class M_AT : M_PG_AT {
         airLock = 0;
         missileLockMaxSpeed = 35;
