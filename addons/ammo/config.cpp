@@ -1,12 +1,22 @@
+#define FDELTA_MK82_INDIRECT_HIT 3200
+#define FDELTA_MK82_INDIRECT_RANGE 16.25
+#define FDELTA_155MM_INDIRECT_HIT 3600
+#define FDELTA_155MM_INDIRECT_RANGE 8.75
+#define FDELTA_230MM_INDIRECT_HIT 3200
+#define FDELTA_230MM_INDIRECT_RANGE 16.25
+#define FDELTA_CRUISE_INDIRECT_HIT 7000
+#define FDELTA_CRUISE_INDIRECT_RANGE 30
+#define FDELTA_DAGR_AIR_TARGET_SPEED 700
+
 class CfgPatches {
     class fdelta_ammo {
         name = "420th Customizations - Vanilla Ammunition Tweaks";
-        author = "Seathre0420";
+        author = "Seathre0420, zobri";
         url = "https://github.com/thegamecracks/420th-Customizations";
 
         requiredVersion = 2.22;
         requiredAddons[] = {
-            "A3_Weapons_F_Jets",
+            "A3_Data_F_Decade_Loadorder",
             "fdelta_main",
         };
         skipWhenMissingDependencies = 0;
@@ -15,10 +25,265 @@ class CfgPatches {
     };
 };
 
+class SensorTemplateIR;
+class SensorTemplateLaser;
+
 class CfgAmmo {
+    class ammo_Bomb_LaserGuidedBase;
     class ammo_Bomb_SmallDiameterBase;
+    class ammo_Missile_AntiRadiationBase;
+    class ammo_Missile_CruiseBase;
+    class BombCore;
+    class MissileCore;
+    class MissileBase : MissileCore {
+        class Components;
+    };
+    class RocketBase;
+    class ShellBase;
+
+    // Unitary warhead rebalance
+    //
+    // indirectHit is an Arma damage coefficient, not a weight of explosive.
+    // These values provide the concentrated native core used with the
+    // cover-aware Blast Propagation addon in 420th-Enhancements. Native splash
+    // ends at roughly 4x indirectHitRange; the scripted infantry-only profile
+    // takes over at that handoff. Keeping the native core short also avoids
+    // extending Arma's armor-bypassing radial damage through the outer zone.
+    //
+    // Public warhead statistics below are sanity checks for relative scale,
+    // not a claim that kilograms or pounds convert directly to indirectHit.
+
+    // 500 lb Mk 82 / GBU-12 family. USAF Maritime WSEP data lists 192 lb
+    // net explosive weight. This is the empirical gameplay anchor: controlled
+    // Arma tests put a protected CSAT Viper down near the 65 m native handoff.
+    class Bo_Mk82 : BombCore {
+        indirectHit = FDELTA_MK82_INDIRECT_HIT; // 1100
+        indirectHitRange = FDELTA_MK82_INDIRECT_RANGE; // 12
+    };
+
+    class Bomb_04_F : ammo_Bomb_LaserGuidedBase {
+        indirectHit = FDELTA_MK82_INDIRECT_HIT; // 1100
+        indirectHitRange = FDELTA_MK82_INDIRECT_RANGE; // 12
+    };
+
+    // The fictional 565 lb LOM-250G is bracketed against the KAB-250LG-E.
+    // Rosoboronexport lists that 256 kg bomb with a 165 kg HE-fragmentation
+    // warhead. Its profile is only modestly above the Mk 82 gameplay anchor.
+    class Bomb_03_F : ammo_Bomb_LaserGuidedBase {
+        indirectHit = FDELTA_MK82_INDIRECT_HIT + 400; // 1400
+        indirectHitRange = FDELTA_MK82_INDIRECT_RANGE + 2.5; // 16
+    };
+
+    // GBU-39/B SDB I is a multipurpose penetrating blast-fragmentation weapon,
+    // not a dedicated anti-armor bomb. USAF/Boeing data gives 36 lb explosive
+    // fill in a 205 lb warhead. Cube-root scaling from the Mk 82's 192 lb NEW
+    // gives about 37 m from the 65 m anchor, rounded here to a 40 m handoff;
+    // half the Mk 82 coefficient keeps its hardened-target core smaller.
     class ammo_Bomb_SDB : ammo_Bomb_SmallDiameterBase {
-        indirectHit = 200; // 85
-        indirectHitRange = 5; // 3
+        indirectHit = 1600; // 85
+        indirectHitRange = 10; // 3
+    };
+
+    // M795 is the public 155 mm HE analogue: the U.S. Army lists a 23.8 lb
+    // TNT/IMX-101 fill in a high-fragmentation steel body and describes its
+    // point-detonating effect as most lethal within 25 m. Charge scaling from
+    // the Mk 82 anchor gives about 32 m, rounded to a 35 m handoff. Although
+    // 3600 looks large alone, pairing it with 8.75 m makes this curve stronger
+    // than vanilla only inside about 20 m, weaker beyond, and zero after 35 m
+    // instead of 120 m. Blast Propagation owns the cover-aware 35-125 m zone.
+    class Sh_155mm_AMOS : ShellBase {
+        indirectHit = FDELTA_155MM_INDIRECT_HIT; // 125
+        indirectHitRange = FDELTA_155MM_INDIRECT_RANGE; // 30
+    };
+
+    // The closest public analogue is the 227 mm M31 GMLRS unitary round.
+    // GD-OTS lists a 195 lb scored-steel warhead with 51 lb PBXN-109; its
+    // fragmentation construction, not just explosive fill, drives effects.
+    // The Mk 82 profile is therefore a gameplay baseline, not an equal-yield
+    // claim. The new curve crosses vanilla near 23 m, is weaker after that,
+    // and ends at 65 m rather than 120 m before BP continues to 250 m.
+    // Patch only the ground-impact terminal leaf; cluster and latent
+    // anti-armor leaves use different terminal classes and remain untouched.
+    class R_230mm_fly : ShellBase {
+        indirectHit = FDELTA_230MM_INDIRECT_HIT; // 800
+        indirectHitRange = FDELTA_230MM_INDIRECT_RANGE; // 30
+    };
+
+    // Mk41 VLS unitary cruise missile, bracketed against Tomahawk Block IV.
+    // The U.S. Navy lists a 1,000 lb-class unitary warhead. The 7000 coefficient
+    // is about 2.2x the Mk 82 anchor while retaining vanilla's 120 m cutoff;
+    // it models the inner core rather than equating warhead mass to damage.
+    // Raising indirectHitRange to 50 would push armor-bypassing native splash
+    // to 200 m and overlap the BP profile that owns the 120-400 m outer zone.
+    // The cluster child is explicitly pinned to its vanilla damage triplet.
+    class ammo_Missile_Cruise_01 : ammo_Missile_CruiseBase {
+        indirectHit = FDELTA_CRUISE_INDIRECT_HIT; // 2000
+        indirectHitRange = FDELTA_CRUISE_INDIRECT_RANGE; // 30
+    };
+    class ammo_Missile_Cruise_01_Cluster : ammo_Missile_Cruise_01 {
+        hit = 6000;
+        indirectHit = 2000;
+        indirectHitRange = 30;
+    };
+
+    // The destroyer cannon shares the conventional artillery parent but is not
+    // part of this pass. Pin its unguided splash to vanilla.
+    class ammo_ShipCannon_120mm_HE : Sh_155mm_AMOS {
+        indirectHit = 125;
+        indirectHitRange = 30;
+    };
+
+    // Fictional 70-80 mm HE rockets are bracketed against the M151 Hydra-70.
+    // U.S. Army data describes its 10 lb unitary warhead as producing thousands
+    // of high-velocity fragments. A 10 m base / 40 m cutoff keeps that effect
+    // concentrated; reducing vanilla's 15 m base offsets the higher coefficient.
+    class Rocket_04_HE_F : MissileBase {
+        indirectHit = 300; // 55
+        indirectHitRange = 10; // 15
+    };
+
+    class Rocket_03_HE_F : Rocket_04_HE_F {
+        indirectHit = 300; // 55
+        indirectHitRange = 10; // 15
+    };
+
+    class R_80mm_HE : RocketBase {
+        indirectHit = 350; // 60
+        indirectHitRange = 10; // 15
+    };
+
+    // AGM-88C is not a kinetic-only dart: NAVAIR's HARM training plan describes
+    // its WAU-27/B as 12,845 preformed tungsten fragments plus an improved
+    // explosive charge. 2000 / 15 remains below this patch's Mk 82 baseline
+    // and supplies the fragmentation effect against radar arrays and crews;
+    // the unchanged 2100 direct hit does not supply an adjacent blast envelope.
+    // Every vanilla HARM pylon magazine holds one round; ballisticsComputer = 0
+    // and manualControl = 0. Against a non-radiating ground point there is no
+    // predicted impact cue or manual steering, so dumb fire trades an entire
+    // pylon for an unguided estimate; GBU-12/SDB racks provide PIP and 2/4 shots.
+    class ammo_Missile_HARM : ammo_Missile_AntiRadiationBase {
+        indirectHit = 2000; // 85
+        indirectHitRange = 15; // 8
+    };
+
+    // Kh-58UShKE is the closest public analogue. Rosoboronexport lists a 149 kg
+    // warhead; 2800 / 18.75 stays below the 165 kg KAB-250 analogue's
+    // 3600 / 18.75 profile rather than treating both large warheads as equal.
+    class ammo_Missile_KH58 : ammo_Missile_AntiRadiationBase {
+        indirectHit = 2800; // 85
+        indirectHitRange = 18.75; // 8
+    };
+
+    // BombCluster_01 and its descendants inherit from Bomb_04_F. Pin the
+    // carrier blast to vanilla so changing GBU-12 cannot buff cluster bombs.
+    class BombCluster_01_Ammo_F : Bomb_04_F {
+        hit = 5000;
+        indirectHit = 1100;
+        indirectHitRange = 12;
+    };
+
+    // The AP rocket leaves inherit from the patched HE family. Re-state their
+    // vanilla values so their penetrator/HEAT balance remains untouched.
+    class Rocket_04_AP_F : Rocket_04_HE_F {
+        hit = 95;
+        indirectHit = 25;
+        indirectHitRange = 2.5;
+    };
+
+    class Rocket_03_AP_F : Rocket_04_AP_F {
+        hit = 95;
+        indirectHit = 25;
+        indirectHitRange = 3;
+    };
+
+    // Keep ground targeting on DAGR/DAGRM and add the air target category.
+    class M_PG_AT : MissileBase {
+        airLock = 1; // 0
+        missileLockMaxSpeed = FDELTA_DAGR_AIR_TARGET_SPEED; // 35
+        aiAmmoUsageFlags = 64 + 128 + 256; // 128 + 64
+
+        class Components : Components {
+            class SensorsManagerComponent {
+                class Components {
+                    class IRSensorComponent : SensorTemplateIR {
+                        class AirTarget {
+                            minRange = 500;
+                            maxRange = 4000;
+                            objectDistanceLimitCoef = -1;
+                            viewDistanceLimitCoef = 1;
+                        };
+                        class GroundTarget {
+                            minRange = 500;
+                            maxRange = 4000;
+                            objectDistanceLimitCoef = 1;
+                            viewDistanceLimitCoef = 1;
+                        };
+                        maxTrackableSpeed = FDELTA_DAGR_AIR_TARGET_SPEED; // 35
+                        angleRangeHorizontal = 45;
+                        angleRangeVertical = 35;
+                    };
+
+                    class LaserSensorComponent : SensorTemplateLaser {
+                        class AirTarget {
+                            minRange = 4000;
+                            maxRange = 4000;
+                            objectDistanceLimitCoef = -1;
+                            viewDistanceLimitCoef = -1;
+                        };
+                        class GroundTarget {
+                            minRange = 4000;
+                            maxRange = 4000;
+                            objectDistanceLimitCoef = -1;
+                            viewDistanceLimitCoef = -1;
+                        };
+                        maxTrackableSpeed = FDELTA_DAGR_AIR_TARGET_SPEED; // 35
+                        angleRangeHorizontal = 90;
+                        angleRangeVertical = 70;
+                    };
+                };
+            };
+        };
+    };
+
+    // DAGRM inherits the patched sensor tree and retains vanilla
+    // autoSeekTarget = 1, so aircraft remain eligible after launch. Re-state
+    // its top-level gates so both affected projectile classes are explicit.
+    class M_PGM_AT : M_PG_AT {
+        airLock = 1; // 0
+        missileLockMaxSpeed = FDELTA_DAGR_AIR_TARGET_SPEED; // 35
+        aiAmmoUsageFlags = 64 + 128 + 256; // 128 + 64
+    };
+
+    // DAR inherits from M_PG_AT in vanilla. Its lower 250 / 7.5 profile is the
+    // 30 m member of the same small HE-fragmentation rocket bracket above.
+    // Pin targeting so DAGR air-lock changes do not reach unguided rockets.
+    class M_AT : M_PG_AT {
+        airLock = 0;
+        missileLockMaxSpeed = 35;
+        aiAmmoUsageFlags = 128 + 64;
+        indirectHit = 250; // 50
+        indirectHitRange = 7.5; // 8
+
+        class Components : Components {
+            class SensorsManagerComponent : SensorsManagerComponent {
+                class Components : Components {
+                    class IRSensorComponent : IRSensorComponent {
+                        maxTrackableSpeed = 35;
+                    };
+                    class LaserSensorComponent : LaserSensorComponent {
+                        maxTrackableSpeed = 35;
+                    };
+                };
+            };
+        };
+    };
+};
+
+class CfgMagazines {
+    class VehicleMagazine;
+
+    class 24Rnd_PG_missiles : VehicleMagazine {
+        // Propagates to the legacy and pylon DAGR/DAGRM magazine classes.
+        maxLeadSpeed = FDELTA_DAGR_AIR_TARGET_SPEED; // 41.6667
     };
 };
