@@ -1,7 +1,5 @@
 #define FDELTA_MK82_INDIRECT_HIT 3200
 #define FDELTA_MK82_INDIRECT_RANGE 16.25
-#define FDELTA_SDB_INDIRECT_HIT 1600
-#define FDELTA_SDB_INDIRECT_RANGE 10
 
 class CfgPatches {
     class fdelta_he_rebalance {
@@ -70,8 +68,8 @@ class CfgAmmo {
     // gives about 37 m from the 65 m anchor, rounded here to a 40 m handoff;
     // half the Mk 82 coefficient keeps its hardened-target core smaller.
     class ammo_Bomb_SDB : ammo_Bomb_SmallDiameterBase {
-        indirectHit = FDELTA_SDB_INDIRECT_HIT; // 85
-        indirectHitRange = FDELTA_SDB_INDIRECT_RANGE; // 3
+        indirectHit = 1600; // 85
+        indirectHitRange = 10; // 3
     };
 
     // M795 is the public 155 mm HE analogue: the U.S. Army lists a 23.8 lb
@@ -151,14 +149,14 @@ class CfgAmmo {
 
     // Equivalant to the AGM-88C with a 68 kg (150 lb) warhead.
     class ammo_Missile_HARM : ammo_Missile_AntiRadiationBase {
-        indirectHit = FDELTA_SDB_INDIRECT_HIT - 400; // 85
-        indirectHitRange = FDELTA_SDB_INDIRECT_RANGE - 2.5; // 8
+        indirectHit = 1200; // 85
+        indirectHitRange = 7.5; // 8
     };
 
     // Equivalant to the Kh-58UShKE with a 149 kg (328 lb) warhead.
     class ammo_Missile_KH58 : ammo_Missile_AntiRadiationBase {
-        indirectHit = FDELTA_SDB_INDIRECT_HIT + 1000; // 85
-        indirectHitRange = FDELTA_SDB_INDIRECT_RANGE + 6; // 8
+        indirectHit = 2600; // 85
+        indirectHitRange = 16; // 8
     };
 
     // BombCluster_01 and its descendants inherit from Bomb_04_F. Pin the
