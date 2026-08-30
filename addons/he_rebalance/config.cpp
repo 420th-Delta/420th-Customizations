@@ -1,5 +1,7 @@
 #define FDELTA_MK82_INDIRECT_HIT 3200
 #define FDELTA_MK82_INDIRECT_RANGE 16.25
+#define FDELTA_SDB_INDIRECT_HIT 1600
+#define FDELTA_SDB_INDIRECT_RANGE 10
 
 class CfgPatches {
     class fdelta_he_rebalance {
@@ -68,8 +70,8 @@ class CfgAmmo {
     // gives about 37 m from the 65 m anchor, rounded here to a 40 m handoff;
     // half the Mk 82 coefficient keeps its hardened-target core smaller.
     class ammo_Bomb_SDB : ammo_Bomb_SmallDiameterBase {
-        indirectHit = 1600; // 85
-        indirectHitRange = 10; // 3
+        indirectHit = FDELTA_SDB_INDIRECT_HIT; // 85
+        indirectHitRange = FDELTA_SDB_INDIRECT_RANGE; // 3
     };
 
     // M795 is the public 155 mm HE analogue: the U.S. Army lists a 23.8 lb
@@ -147,26 +149,16 @@ class CfgAmmo {
         indirectHitRange = 7.5; // 8
     };
 
-    // AGM-88C is not a kinetic-only dart: NAVAIR's HARM training plan describes
-    // its WAU-27/B as 12,845 preformed tungsten fragments plus an improved
-    // explosive charge. 2000 / 15 remains below this patch's Mk 82 baseline
-    // and supplies the fragmentation effect against radar arrays and crews;
-    // the unchanged 2100 direct hit does not supply an adjacent blast envelope.
-    // Every vanilla HARM pylon magazine holds one round; ballisticsComputer = 0
-    // and manualControl = 0. Against a non-radiating ground point there is no
-    // predicted impact cue or manual steering, so dumb fire trades an entire
-    // pylon for an unguided estimate; GBU-12/SDB racks provide PIP and 2/4 shots.
+    // Equivalant to the AGM-88C with a 68 kg (150 lb) warhead.
     class ammo_Missile_HARM : ammo_Missile_AntiRadiationBase {
-        indirectHit = 2000; // 85
-        indirectHitRange = 15; // 8
+        indirectHit = FDELTA_SDB_INDIRECT_HIT - 400; // 85
+        indirectHitRange = FDELTA_SDB_INDIRECT_RANGE - 2.5; // 8
     };
 
-    // Kh-58UShKE is the closest public analogue. Rosoboronexport lists a 149 kg
-    // warhead; 2800 / 18.75 stays below the 165 kg KAB-250 analogue's
-    // 3600 / 18.75 profile rather than treating both large warheads as equal.
+    // Equivalant to the Kh-58UShKE with a 149 kg (328 lb) warhead.
     class ammo_Missile_KH58 : ammo_Missile_AntiRadiationBase {
-        indirectHit = 2800; // 85
-        indirectHitRange = 18.75; // 8
+        indirectHit = FDELTA_SDB_INDIRECT_HIT + 1000; // 85
+        indirectHitRange = FDELTA_SDB_INDIRECT_RANGE + 6; // 8
     };
 
     // BombCluster_01 and its descendants inherit from Bomb_04_F. Pin the
