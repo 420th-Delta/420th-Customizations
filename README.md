@@ -11,14 +11,12 @@ An Arma 3 mod for the 420th Delta community.
 ## Features
 
 - Increase capacity of various clothing (see [Capacity Changes](#capacity-changes))
-- Rebalance native indirect damage for selected vanilla unitary HE bombs,
-  rockets, artillery, and missiles (including GBU SDBs)
-- Allow vanilla DAGR/DAGRM rockets to lock air targets travelling at up to
-  700 m/s without removing ground targeting
 - Allow loading vanilla magazines into modded weapons (CUP, JCA, NIArms, RHS, SOG, GM)
 - Allow loading modded pylons onto vanilla aircraft (CUP, RHS)
 - Allow attaching RHS grips on NIArms weaponry
 - Allow aimed usage of NVGs with modded optics (RHSUSAF)
+- Allow DAGR missiles to lock and fire on slow-moving aircraft
+- Rebalance some vanilla HE munitions to reflect real-life counterparts
 - Fix [A3TI] incompatibility with thermal-capable MH-80 Camera Pods
 - Fix A3TI causing units/vehicles to appear pink when changing cameras
 - Fix MH-80 DAP ECM Pods (DIRCM variants) not detecting some IR missiles
