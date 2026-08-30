@@ -1,11 +1,5 @@
 #define FDELTA_MK82_INDIRECT_HIT 3200
 #define FDELTA_MK82_INDIRECT_RANGE 16.25
-#define FDELTA_155MM_INDIRECT_HIT 3600
-#define FDELTA_155MM_INDIRECT_RANGE 8.75
-#define FDELTA_230MM_INDIRECT_HIT 3200
-#define FDELTA_230MM_INDIRECT_RANGE 16.25
-#define FDELTA_CRUISE_INDIRECT_HIT 7000
-#define FDELTA_CRUISE_INDIRECT_RANGE 30
 
 class CfgPatches {
     class fdelta_he_rebalance {
@@ -86,8 +80,8 @@ class CfgAmmo {
     // than vanilla only inside about 20 m, weaker beyond, and zero after 35 m
     // instead of 120 m. Blast Propagation owns the cover-aware 35-125 m zone.
     class Sh_155mm_AMOS : ShellBase {
-        indirectHit = FDELTA_155MM_INDIRECT_HIT; // 125
-        indirectHitRange = FDELTA_155MM_INDIRECT_RANGE; // 30
+        indirectHit = 3600; // 125
+        indirectHitRange = 8.75; // 30
     };
 
     // The closest public analogue is the 227 mm M31 GMLRS round.
@@ -99,8 +93,8 @@ class CfgAmmo {
     // Patch only the ground-impact terminal leaf; cluster and latent
     // anti-armor leaves use different terminal classes and remain untouched.
     class R_230mm_fly : ShellBase {
-        indirectHit = FDELTA_230MM_INDIRECT_HIT; // 800
-        indirectHitRange = FDELTA_230MM_INDIRECT_RANGE; // 30
+        indirectHit = 3200; // 800
+        indirectHitRange = 16.25; // 30
     };
 
     // Mk41 VLS cruise missile, bracketed against Tomahawk Block IV.
@@ -111,8 +105,8 @@ class CfgAmmo {
     // to 200 m and overlap the BP profile that owns the 120-400 m outer zone.
     // The cluster child is explicitly pinned to its vanilla damage triplet.
     class ammo_Missile_Cruise_01 : ammo_Missile_CruiseBase {
-        indirectHit = FDELTA_CRUISE_INDIRECT_HIT; // 2000
-        indirectHitRange = FDELTA_CRUISE_INDIRECT_RANGE; // 30
+        indirectHit = 7000; // 2000
+        indirectHitRange = 30; // 30
     };
     class ammo_Missile_Cruise_01_Cluster : ammo_Missile_Cruise_01 {
         hit = 6000;
