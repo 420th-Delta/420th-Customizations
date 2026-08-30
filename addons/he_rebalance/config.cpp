@@ -27,7 +27,9 @@ class CfgAmmo {
     class ammo_Bomb_SmallDiameterBase;
     class ammo_Missile_AntiRadiationBase;
     class ammo_Missile_CruiseBase;
+    class B_19mm_HE;
     class BombCore;
+    class BulletBase;
     class M_PG_AT;
     class MissileBase;
     class RocketBase;
@@ -179,5 +181,38 @@ class CfgAmmo {
         hit = 95;
         indirectHit = 25;
         indirectHitRange = 3;
+    };
+
+    // HE Shell Rebalance
+    // About a 50% increase-ish. Should make most autocannons more effective on infantry.
+
+    class Gatling_30mm_HE_Plane_CAS_01_F : BulletBase {
+        indirectHit = 6; // 4
+        indirectHitRange = 6; // 3
+    };
+
+    class Cannon_30mm_HE_Plane_CAS_02_F : Gatling_30mm_HE_Plane_CAS_01_F {
+        indirectHit = 6; // 4
+        indirectHitRange = 6; // 4
+    };
+
+    class B_30mm_HE : B_19mm_HE {
+        indirectHit = 12; // 8
+        indirectHitRange = 6; // 3
+    };
+
+    class B_30mm_MP : B_30mm_HE {
+        indirectHit = 8; // 4
+        indirectHitRange = 4; // 2
+    };
+
+    class B_40mm_GPR : B_30mm_HE {
+        indirectHit = 12; // 8
+        indirectHitRange = 6; // 4
+    };
+
+    class B_20mm : BulletBase {
+        indirectHit = 6; // 6
+        indirectHitRange = 4.8; // 1.6
     };
 };
