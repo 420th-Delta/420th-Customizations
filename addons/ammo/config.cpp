@@ -41,7 +41,7 @@ class CfgAmmo {
     class RocketBase;
     class ShellBase;
 
-    // Unitary warhead rebalance
+    // Vanilla warhead rebalance
     //
     // indirectHit is an Arma damage coefficient, not a weight of explosive.
     // These values provide the concentrated native core used with the
@@ -96,7 +96,7 @@ class CfgAmmo {
         indirectHitRange = FDELTA_155MM_INDIRECT_RANGE; // 30
     };
 
-    // The closest public analogue is the 227 mm M31 GMLRS unitary round.
+    // The closest public analogue is the 227 mm M31 GMLRS round.
     // GD-OTS lists a 195 lb scored-steel warhead with 51 lb PBXN-109; its
     // fragmentation construction, not just explosive fill, drives effects.
     // The Mk 82 profile is therefore a gameplay baseline, not an equal-yield
@@ -109,8 +109,8 @@ class CfgAmmo {
         indirectHitRange = FDELTA_230MM_INDIRECT_RANGE; // 30
     };
 
-    // Mk41 VLS unitary cruise missile, bracketed against Tomahawk Block IV.
-    // The U.S. Navy lists a 1,000 lb-class unitary warhead. The 7000 coefficient
+    // Mk41 VLS cruise missile, bracketed against Tomahawk Block IV.
+    // The U.S. Navy lists a 1,000 lb-class warhead. The 7000 coefficient
     // is about 2.2x the Mk 82 anchor while retaining vanilla's 120 m cutoff;
     // it models the inner core rather than equating warhead mass to damage.
     // Raising indirectHitRange to 50 would push armor-bypassing native splash
@@ -134,7 +134,7 @@ class CfgAmmo {
     };
 
     // Fictional 70-80 mm HE rockets are bracketed against the M151 Hydra-70.
-    // U.S. Army data describes its 10 lb unitary warhead as producing thousands
+    // U.S. Army data describes its 10 lb warhead as producing thousands
     // of high-velocity fragments. A 10 m base / 40 m cutoff keeps that effect
     // concentrated; reducing vanilla's 15 m base offsets the higher coefficient.
     class Rocket_04_HE_F : MissileBase {
