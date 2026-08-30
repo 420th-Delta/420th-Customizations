@@ -64,14 +64,11 @@ class CfgAmmo {
         indirectHitRange = FDELTA_MK82_INDIRECT_RANGE + 2.5; // 16
     };
 
-    // GBU-39/B SDB I is a multipurpose penetrating blast-fragmentation weapon,
-    // not a dedicated anti-armor bomb. USAF/Boeing data gives 36 lb explosive
-    // fill in a 205 lb warhead. Cube-root scaling from the Mk 82's 192 lb NEW
-    // gives about 37 m from the 65 m anchor, rounded here to a 40 m handoff;
-    // half the Mk 82 coefficient keeps its hardened-target core smaller.
+    // GBU-39/B SDB I is a multipurpose penetrating blast-fragmentation weapon.
+    // USAF/Boeing data gives 36 lb explosive fill out of a 205 lb warhead.
     class ammo_Bomb_SDB : ammo_Bomb_SmallDiameterBase {
-        indirectHit = 1600; // 85
-        indirectHitRange = 10; // 3
+        indirectHit = 100; // 85
+        indirectHitRange = 25; // 3
     };
 
     // M795 is the public 155 mm HE analogue: the U.S. Army lists a 23.8 lb
