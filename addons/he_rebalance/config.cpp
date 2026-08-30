@@ -73,14 +73,10 @@ class CfgAmmo {
 
     // M795 is the public 155 mm HE analogue: the U.S. Army lists a 23.8 lb
     // TNT/IMX-101 fill in a high-fragmentation steel body and describes its
-    // point-detonating effect as most lethal within 25 m. Charge scaling from
-    // the Mk 82 anchor gives about 32 m, rounded to a 35 m handoff. Although
-    // 3600 looks large alone, pairing it with 8.75 m makes this curve stronger
-    // than vanilla only inside about 20 m, weaker beyond, and zero after 35 m
-    // instead of 120 m. Blast Propagation owns the cover-aware 35-125 m zone.
+    // point-detonating effect as most lethal within 25 m. (citation needed)
     class Sh_155mm_AMOS : ShellBase {
-        indirectHit = 3600; // 125
-        indirectHitRange = 8.75; // 30
+        indirectHit = 125; // 125
+        indirectHitRange = 20.25; // 30
     };
 
     // The closest public analogue is the 227 mm M31 GMLRS round,
