@@ -83,17 +83,15 @@ class CfgAmmo {
         indirectHitRange = 8.75; // 30
     };
 
-    // The closest public analogue is the 227 mm M31 GMLRS round.
-    // GD-OTS lists a 195 lb scored-steel warhead with 51 lb PBXN-109; its
-    // fragmentation construction, not just explosive fill, drives effects.
-    // The Mk 82 profile is therefore a gameplay baseline, not an equal-yield
-    // claim. The new curve crosses vanilla near 23 m, is weaker after that,
-    // and ends at 65 m rather than 120 m before BP continues to 250 m.
+    // The closest public analogue is the 227 mm M31 GMLRS round,
+    // containing 23 kg (51 lb) of HE inside a fragmentation case.
+    // However, the high indirectHit = 800 suggests BI intended this
+    // to be similar to a general purpose bomb.
     // Patch only the ground-impact terminal leaf; cluster and latent
     // anti-armor leaves use different terminal classes and remain untouched.
     class R_230mm_fly : ShellBase {
-        indirectHit = 3200; // 800
-        indirectHitRange = 16.25; // 30
+        indirectHit = 800; // 800
+        indirectHitRange = 23; // 30
     };
 
     // Mk41 VLS cruise missile, bracketed against Tomahawk Block IV.
