@@ -1,5 +1,7 @@
 #define FDELTA_MK82_INDIRECT_HIT 3200
 #define FDELTA_MK82_INDIRECT_RANGE 16.25
+#define FDELTA_SMALL_HEFRAG_INDIRECT_HIT 35
+#define FDELTA_SMALL_HEFRAG_INDIRECT_RANGE 20
 
 class CfgPatches {
     class fdelta_he_rebalance {
@@ -123,28 +125,27 @@ class CfgAmmo {
 
     // Fictional 70-80 mm HE rockets are bracketed against the M151 Hydra-70.
     // U.S. Army data describes its 10 lb warhead as producing thousands
-    // of high-velocity fragments. A 10 m base / 40 m cutoff keeps that effect
-    // concentrated; reducing vanilla's 15 m base offsets the higher coefficient.
+    // of high-velocity fragments.
     class Rocket_04_HE_F : MissileBase {
-        indirectHit = 300; // 55
-        indirectHitRange = 10; // 15
+        indirectHit = FDELTA_SMALL_HEFRAG_INDIRECT_HIT; // 55
+        indirectHitRange = FDELTA_SMALL_HEFRAG_INDIRECT_RANGE; // 15
     };
 
     class Rocket_03_HE_F : Rocket_04_HE_F {
-        indirectHit = 300; // 55
-        indirectHitRange = 10; // 15
+        indirectHit = FDELTA_SMALL_HEFRAG_INDIRECT_HIT; // 55
+        indirectHitRange = FDELTA_SMALL_HEFRAG_INDIRECT_RANGE; // 15
     };
 
     class R_80mm_HE : RocketBase {
-        indirectHit = 350; // 60
-        indirectHitRange = 10; // 15
+        indirectHit = FDELTA_SMALL_HEFRAG_INDIRECT_HIT; // 60
+        indirectHitRange = FDELTA_SMALL_HEFRAG_INDIRECT_RANGE; // 15
     };
 
     // DAR inherits from DAGR but should receive similar effectiveness
     // as the other HE-fragmentation rockets.
     class M_AT : M_PG_AT {
-        indirectHit = 250; // 50
-        indirectHitRange = 7.5; // 8
+        indirectHit = FDELTA_SMALL_HEFRAG_INDIRECT_HIT; // 50
+        indirectHitRange = FDELTA_SMALL_HEFRAG_INDIRECT_RANGE; // 8
     };
 
     // Equivalant to the AGM-88C with a 68 kg (150 lb) warhead.
