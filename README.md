@@ -16,7 +16,7 @@ An Arma 3 mod for the 420th Delta community.
 - Allow attaching RHS grips on NIArms weaponry
 - Allow aimed usage of NVGs with modded optics (RHSUSAF)
 - Allow DAGR missiles to lock and fire on slow-moving aircraft
-- Rebalance some vanilla HE munitions to reflect real-life counterparts
+- Improve effectiveness of certain vanilla HE munitions against infantry
 - Fix [A3TI] incompatibility with thermal-capable MH-80 Camera Pods
 - Fix A3TI causing units/vehicles to appear pink when changing cameras
 - Fix MH-80 DAP ECM Pods (DIRCM variants) not detecting some IR missiles
