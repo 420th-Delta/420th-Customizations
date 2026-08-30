@@ -1,5 +1,7 @@
 #define FDELTA_MK82_INDIRECT_HIT 1100
 #define FDELTA_MK82_INDIRECT_RANGE 21.25
+#define FDELTA_SDB_INDIRECT_HIT 100
+#define FDELTA_SDB_INDIRECT_RANGE 25
 #define FDELTA_SMALL_HEFRAG_INDIRECT_HIT 35
 #define FDELTA_SMALL_HEFRAG_INDIRECT_RANGE 20
 
@@ -67,8 +69,8 @@ class CfgAmmo {
     // GBU-39/B SDB I is a multipurpose penetrating blast-fragmentation weapon.
     // USAF/Boeing data gives 36 lb explosive fill out of a 205 lb warhead.
     class ammo_Bomb_SDB : ammo_Bomb_SmallDiameterBase {
-        indirectHit = 100; // 85
-        indirectHitRange = 25; // 3
+        indirectHit = FDELTA_SDB_INDIRECT_HIT; // 85
+        indirectHitRange = FDELTA_SDB_INDIRECT_RANGE; // 3
     };
 
     // M795 is the public 155 mm HE analogue: the U.S. Army lists a 23.8 lb
@@ -140,15 +142,21 @@ class CfgAmmo {
     };
 
     // Equivalant to the AGM-88C with a 68 kg (150 lb) warhead.
+    // NAVAIR's HARM training plan describes its WAU-27/B as 12,845
+    // preformed tungsten fragments plus an improved explosive charge,
+    // although the amount of explosives is unknown.
+    // Treat it similarly to the SDB HE-FRAG but with slightly reduced range,
+    // assuming these tungsten fragments are concentrated on the point of impact.
     class ammo_Missile_HARM : ammo_Missile_AntiRadiationBase {
-        indirectHit = 1200; // 85
-        indirectHitRange = 7.5; // 8
+        indirectHit = FDELTA_SDB_INDIRECT_HIT * 0.625; // 85
+        indirectHitRange = FDELTA_SDB_INDIRECT_RANGE * 0.8; // 8
     };
 
-    // Equivalant to the Kh-58UShKE with a 149 kg (328 lb) warhead.
+    // Equivalant to the Kh-58UShKE with a 149 kg (328 lb) warhead,
+    // although the ratio of explosives to fragmentation is unknown.
     class ammo_Missile_KH58 : ammo_Missile_AntiRadiationBase {
-        indirectHit = 2600; // 85
-        indirectHitRange = 16; // 8
+        indirectHit = FDELTA_SDB_INDIRECT_HIT * 1.6; // 85
+        indirectHitRange = FDELTA_SDB_INDIRECT_RANGE * 0.8; // 8
     };
 
     // BombCluster_01 and its descendants inherit from Bomb_04_F. Pin the
