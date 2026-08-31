@@ -20,5 +20,8 @@ pdrive = "disallow"
 [hemtt.check]
 pdrive = "ignore"
 
+[lints.config.math_could_be_unquoted]
+options.ignore = ["aiAmmoUsageFlags"]
+
 [signing]
 private_key_hash = "492e44ab7e8c33da235232d06e4e191565937c81"
