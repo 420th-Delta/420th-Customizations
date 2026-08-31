@@ -36,56 +36,18 @@ class CfgAmmo {
             class SensorsManagerComponent {
                 class Components {
                     class IRSensorComponent : SensorTemplateIR {
-                        class AirTarget {
-                            minRange = 500;
-                            maxRange = 4000;
-                            objectDistanceLimitCoef = -1;
-                            viewDistanceLimitCoef = 1;
-                        };
-                        class GroundTarget {
-                            minRange = 500;
-                            maxRange = 4000;
-                            objectDistanceLimitCoef = 1;
-                            viewDistanceLimitCoef = 1;
-                        };
                         maxTrackableSpeed = FDELTA_DAGR_AIR_TARGET_SPEED; // 35
-                        angleRangeHorizontal = 45;
-                        angleRangeVertical = 35;
                     };
 
                     class LaserSensorComponent : SensorTemplateLaser {
-                        class AirTarget {
-                            minRange = 4000;
-                            maxRange = 4000;
-                            objectDistanceLimitCoef = -1;
-                            viewDistanceLimitCoef = -1;
-                        };
-                        class GroundTarget {
-                            minRange = 4000;
-                            maxRange = 4000;
-                            objectDistanceLimitCoef = -1;
-                            viewDistanceLimitCoef = -1;
-                        };
                         maxTrackableSpeed = FDELTA_DAGR_AIR_TARGET_SPEED; // 35
-                        angleRangeHorizontal = 90;
-                        angleRangeVertical = 70;
                     };
                 };
             };
         };
     };
 
-    // DAGRM inherits the patched sensor tree and retains vanilla
-    // autoSeekTarget = 1, so aircraft remain eligible after launch. Re-state
-    // its top-level gates so both affected projectile classes are explicit.
-    class M_PGM_AT : M_PG_AT {
-        airLock = 1; // 0
-        missileLockMaxSpeed = FDELTA_DAGR_AIR_TARGET_SPEED; // 35
-        aiAmmoUsageFlags = 64 + 128 + 256; // 128 + 64
-    };
-
-    // DAR inherits from M_PG_AT in vanilla. Its lower 250 / 7.5 profile is the
-    // 30 m member of the same small HE-fragmentation rocket bracket above.
+    // DAR inherits from M_PG_AT in vanilla.
     // Pin targeting so DAGR air-lock changes do not reach unguided rockets.
     class M_AT : M_PG_AT {
         airLock = 0;
