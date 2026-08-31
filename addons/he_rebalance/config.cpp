@@ -1,14 +1,14 @@
 #define FDELTA_MK82_INDIRECT_HIT 1100
 #define FDELTA_MK82_INDIRECT_RANGE 16.25
-#define FDELTA_SDB_INDIRECT_HIT 100
-#define FDELTA_SDB_INDIRECT_RANGE 25
+#define FDELTA_SDB_INDIRECT_HIT 70
+#define FDELTA_SDB_INDIRECT_RANGE 20
 #define FDELTA_SMALL_HEFRAG_INDIRECT_HIT 35
 #define FDELTA_SMALL_HEFRAG_INDIRECT_RANGE 20
 
 class CfgPatches {
     class fdelta_he_rebalance {
         name = "420th Customizations - Vanilla Warhead Rebalance";
-        author = "Seathre0420, zobri";
+        author = "Seathre0420, zobri, thegamecracks";
         url = "https://github.com/thegamecracks/420th-Customizations";
 
         requiredVersion = 2.22;
@@ -157,7 +157,7 @@ class CfgAmmo {
     // Equivalant to the Kh-58UShKE with a 149 kg (328 lb) warhead,
     // although the ratio of explosives to fragmentation is unknown.
     class ammo_Missile_KH58 : ammo_Missile_AntiRadiationBase {
-        indirectHit = FDELTA_SDB_INDIRECT_HIT * 1.6; // 85
+        indirectHit = FDELTA_SDB_INDIRECT_HIT * 0.875; // 85
         indirectHitRange = FDELTA_SDB_INDIRECT_RANGE * 0.8; // 8
     };
 
