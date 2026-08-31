@@ -30,7 +30,7 @@ class CfgAmmo {
     class M_PG_AT : MissileBase {
         airLock = 1; // 0
         missileLockMaxSpeed = FDELTA_DAGR_AIR_TARGET_SPEED; // 35
-        aiAmmoUsageFlags = 64 + 128 + 256; // 128 + 64
+        aiAmmoUsageFlags = "256 + 128 + 64"; // "128 + 64"
 
         class Components : Components {
             class SensorsManagerComponent {
@@ -52,7 +52,7 @@ class CfgAmmo {
     class M_AT : M_PG_AT {
         airLock = 0;
         missileLockMaxSpeed = 35;
-        aiAmmoUsageFlags = 128 + 64;
+        aiAmmoUsageFlags = "128 + 64";
 
         class Components : Components {
             class SensorsManagerComponent : SensorsManagerComponent {
