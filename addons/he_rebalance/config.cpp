@@ -1,5 +1,5 @@
 #define FDELTA_MK82_INDIRECT_HIT 1100
-#define FDELTA_MK82_INDIRECT_RANGE 21.25
+#define FDELTA_MK82_INDIRECT_RANGE 16.25
 #define FDELTA_SDB_INDIRECT_HIT 100
 #define FDELTA_SDB_INDIRECT_RANGE 25
 #define FDELTA_SMALL_HEFRAG_INDIRECT_HIT 35
@@ -65,7 +65,7 @@ class CfgAmmo {
     // warhead. Its profile is only modestly above the Mk 82 gameplay anchor.
     class Bomb_03_F : ammo_Bomb_LaserGuidedBase {
         indirectHit = FDELTA_MK82_INDIRECT_HIT + 300; // 1400
-        indirectHitRange = FDELTA_MK82_INDIRECT_RANGE + 3.75; // 16
+        indirectHitRange = FDELTA_MK82_INDIRECT_RANGE; // 16
     };
 
     // GBU-39/B SDB I is a multipurpose penetrating blast-fragmentation weapon.
