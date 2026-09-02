@@ -10,7 +10,9 @@ class CfgPatches {
         };
         skipWhenMissingDependencies = 1;
         skipWhenAnyAddonPresent[] = {
-            "Weapons_F_Essentials_Items", // JCA - QOL Essentials V2
+            // This addon is derived from JCA - QOL Essentials V2 with permission:
+            // https://steamcommunity.com/sharedfiles/filedetails/?id=3032405142
+            "Weapons_F_Essentials_Items",
         };
 
         units[] = {};
