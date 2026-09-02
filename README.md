@@ -14,7 +14,7 @@ An Arma 3 mod for the 420th Delta community.
 - Allow loading vanilla magazines into modded weapons (CUP, JCA, NIArms, RHS, SOG, GM)
 - Allow loading modded pylons onto vanilla aircraft (CUP, RHS)
 - Allow attaching RHS grips on NIArms weaponry
-- Allow aimed usage of NVGs with modded optics (RHSUSAF)
+- Allow aimed usage of NVGs with vanilla optics and modded optics (RHSUSAF)
 - Allow DAGR missiles to lock and fire on slow-moving aircraft
 - Improve effectiveness of certain vanilla HE munitions against infantry
 - Fix [A3TI] incompatibility with thermal-capable MH-80 Camera Pods
