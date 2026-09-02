@@ -1,6 +1,6 @@
 class CfgPatches {
-    class fdelta_optics_jca_qol {
-        name = "420th Customizations - JCA QoL Optics";
+    class fdelta_optics_nvgs {
+        name = "420th Customizations - Optics NVGs Compatibility";
         author = "thegamecracks";
         url = "https://github.com/thegamecracks/420th-Customizations";
 
