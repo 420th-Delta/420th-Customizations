@@ -27,6 +27,7 @@ class CfgAmmo {
     class ammo_Bomb_SmallDiameterBase;
     class ammo_Missile_AntiRadiationBase;
     class ammo_Missile_CruiseBase;
+    class B_127x99_Ball;
     class B_19mm_HE;
     class BombCore;
     class BulletBase;
@@ -185,6 +186,11 @@ class CfgAmmo {
 
     // HE Shell Rebalance
     // About a 50% increase-ish. Should make most autocannons more effective on infantry.
+
+    class B_127x99_HEIAP : B_127x99_Ball {
+        indirectHit = 6; // 3
+        indirectHitRange = 4; // 2
+    };
 
     class Gatling_30mm_HE_Plane_CAS_01_F : BulletBase {
         indirectHit = 6; // 4
