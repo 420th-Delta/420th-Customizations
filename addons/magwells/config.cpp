@@ -374,7 +374,7 @@ class CfgMagazineWells {
 };
 class CfgWeapons {
     class Rifle_Base_F;
-    class arifle_AK12_base_F: Rifle_Base_F {
+    class arifle_AK12_base_F : Rifle_Base_F {
         magazineWell[] += {"CBA_545x39_AK","CBA_545x39_RPK"};
     };
 };
