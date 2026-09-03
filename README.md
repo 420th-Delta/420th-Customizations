@@ -2,6 +2,10 @@
 
 An Arma 3 mod for the 420th Delta community.
 
+This mod can work fully client-side. It's signed for multiplayer with a single bikey,
+and the mod version does not need to match between server and clients
+unless loaded as a required mod with [verifySignatures = 2](https://community.bistudio.com/wiki/ArmA:_Armed_Assault:_Addon_Signatures).
+
 <p align="center">
     <a href="https://steamcommunity.com/sharedfiles/filedetails/?id=3647324436">
         <img src="logo.jpg">
