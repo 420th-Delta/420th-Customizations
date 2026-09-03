@@ -82,3 +82,8 @@ signing key.
 This project is written under the [MIT] license.
 
 [MIT]: /LICENSE
+
+## Sponsor Us!
+
+[![420th ko-fi](https://img.shields.io/badge/Ko--fi-420th-grey?style=for-the-badge&logo=kofi&logoColor=%23FF6433&labelColor=white)](https://ko-fi.com/420th)
+[![thegamecracks ko-fi](https://img.shields.io/badge/Ko--fi-thegamecracks-grey?style=for-the-badge&logo=kofi&logoColor=%23FF6433&labelColor=white)](https://ko-fi.com/thegamecracks)
