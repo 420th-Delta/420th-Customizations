@@ -46,6 +46,9 @@ class CfgWeapons {
     class JCA_smg_MP5_base_F : Rifle_Short_Base_F {
         magazineWell[] += {"CBA_9x19_MP5"};
     };
+    class JCA_smg_MP7_base_F : Rifle_Short_Base_F {
+        magazineWell[] += {"CBA_46x30_MP7"};
+    };
     class JCA_smg_UMP_base_F : Rifle_Short_Base_F {
         magazineWell[] += {"CBA_45ACP_UMP"};
     };
