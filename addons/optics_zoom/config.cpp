@@ -32,9 +32,9 @@ class CfgWeapons {
                 };
                 class fdelta_ARCO2scope_4x : ARCO2scope {
                     opticsID = 3;
-                    opticsZoomInit = 0.0625;
-                    opticsZoomMax = 0.0625;
-                    opticsZoomMin = 0.0625;
+                    opticsZoomInit = 0.25 / 4;
+                    opticsZoomMax = 0.25 / 4;
+                    opticsZoomMin = 0.25 / 4;
                 };
             };
         };
@@ -50,9 +50,9 @@ class CfgWeapons {
                 };
                 class fdelta_Hamr2Scope_4x : Hamr2Scope {
                     opticsID = 3;
-                    opticsZoomInit = 0.0625;
-                    opticsZoomMax = 0.0625;
-                    opticsZoomMin = 0.0625;
+                    opticsZoomInit = 0.25 / 4;
+                    opticsZoomMax = 0.25 / 4;
+                    opticsZoomMin = 0.25 / 4;
                 };
             };
         };
@@ -68,9 +68,9 @@ class CfgWeapons {
                 };
                 class fdelta_MRCOscope_4x : MRCOscope {
                     opticsID = 3;
-                    opticsZoomInit = 0.0625;
-                    opticsZoomMax = 0.0625;
-                    opticsZoomMin = 0.0625;
+                    opticsZoomInit = 0.25 / 4;
+                    opticsZoomMax = 0.25 / 4;
+                    opticsZoomMin = 0.25 / 4;
                 };
             };
         };
