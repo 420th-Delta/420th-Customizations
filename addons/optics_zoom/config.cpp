@@ -25,16 +25,18 @@ class CfgWeapons {
             class OpticsModes {
                 class ARCO2collimator;
                 class ARCO2scope : ARCO2collimator {
+                    // Allow zeroing scope in steps
                     discreteDistance[] = {300,400,500,600,700,800,900,1000};
                     discreteDistanceInitIndex = 0;
                     distanceZoomMax = 1000; // 300
                     distanceZoomMin = 300; // 300
-                };
-                class fdelta_ARCO2scope_4x : ARCO2scope {
-                    opticsID = 3;
-                    opticsZoomInit = 0.25 / 4;
-                    opticsZoomMax = 0.25 / 4;
-                    opticsZoomMin = 0.25 / 4;
+
+                    // Allow zooming scope in steps
+                    discreteFov[] = {0.25/2, 0.25/3, 0.25/4};
+                    discreteInitIndex = 0;
+                    opticsZoomInit = 0.25 / 2; // 0.125
+                    opticsZoomMax = 0.25 / 2; // 0.125
+                    opticsZoomMin = 0.25 / 4; // 0.125
                 };
             };
         };
@@ -47,12 +49,12 @@ class CfgWeapons {
                     discreteDistanceInitIndex = 0;
                     distanceZoomMax = 1000; // 300
                     distanceZoomMin = 300; // 300
-                };
-                class fdelta_Hamr2Scope_4x : Hamr2Scope {
-                    opticsID = 3;
-                    opticsZoomInit = 0.25 / 4;
-                    opticsZoomMax = 0.25 / 4;
-                    opticsZoomMin = 0.25 / 4;
+
+                    discreteFov[] = {0.25/2, 0.25/3, 0.25/4};
+                    discreteInitIndex = 0;
+                    opticsZoomInit = 0.25 / 2; // 0.125
+                    opticsZoomMax = 0.25 / 2; // 0.125
+                    opticsZoomMin = 0.25 / 4; // 0.125
                 };
             };
         };
@@ -65,12 +67,12 @@ class CfgWeapons {
                     discreteDistanceInitIndex = 0;
                     distanceZoomMax = 1000; // 300
                     distanceZoomMin = 300; // 300
-                };
-                class fdelta_MRCOscope_4x : MRCOscope {
-                    opticsID = 3;
-                    opticsZoomInit = 0.25 / 4;
-                    opticsZoomMax = 0.25 / 4;
-                    opticsZoomMin = 0.25 / 4;
+
+                    discreteFov[] = {0.25/2, 0.25/3, 0.25/4};
+                    discreteInitIndex = 0;
+                    opticsZoomInit = 0.25 / 2; // 0.125
+                    opticsZoomMax = 0.25 / 2; // 0.125
+                    opticsZoomMin = 0.25 / 4; // 0.125
                 };
             };
         };
