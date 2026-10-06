@@ -21,7 +21,7 @@ unless loaded as a required mod with [verifySignatures = 2](https://community.bi
 - Allow aimed usage of NVGs with vanilla optics and modded optics (RHSUSAF)
 - Allow DAGR missiles to lock and fire on slow-moving aircraft
 - Allow Vehicle-in-Vehicle transport of vanilla MRAPs, APCs, and tanks in the V-44 X Blackfish
-- Add 4x zoom levels and 1km zeroing for ARCO, ERCO, MRCO, and RCO optics
+- Add 2-3-4x zoom levels and 1km zeroing for ARCO, ERCO, MRCO, and RCO optics
 - Improve effectiveness of some vanilla HE munitions against infantry
 - Increase gimbal limits of A-164 Gryphon targeting pod
 - Fix [A3TI] incompatibility with thermal-capable MH-80 Camera Pods
