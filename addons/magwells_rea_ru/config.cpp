@@ -10,7 +10,7 @@ class CfgPatches {
         requiredAddons[] = {
             "cba_jam",
             "fdelta_magwells",
-			"rus_weapon"
+			"rus_weapon_rifles"
         };
         skipWhenMissingDependencies = 1;
 
