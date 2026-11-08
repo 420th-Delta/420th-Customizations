@@ -10,7 +10,7 @@ class CfgPatches {
         requiredAddons[] = {
             "cba_jam",
             "fdelta_magwells",
-            "rus_weapon_rifles"
+            "rus_weapon_rifles",
         };
         skipWhenMissingDependencies = 1;
 
@@ -32,7 +32,7 @@ class CfgWeapons
     {
         magazineWell[]+=
         {
-            "CBA_762x54R_LINKS"
+            "CBA_762x54R_LINKS",
         };
     };
     class MMG_01_base_F: Rifle_Long_Base_F
@@ -42,7 +42,7 @@ class CfgWeapons
     {
         magazineWell[]+=
         {
-            "CBA_762x54R_LINKS"
+            "CBA_762x54R_LINKS",
         };
     };
     class sgun_HunterShotgun_01_base_F: Rifle_Long_Base_F
@@ -52,7 +52,7 @@ class CfgWeapons
     {
         magazineWell[]+=
         {
-            "UBS_12GA"
+            "UBS_12GA",
         };
     };
     class DMR_01_base_F: Rifle_Long_Base_F
@@ -62,7 +62,7 @@ class CfgWeapons
     {
         magazineWell[]+=
         {
-            "CBA_762x54R_SVD"
+            "CBA_762x54R_SVD",
         };
     };
     class DMR_02_base_F: Rifle_Long_Base_F
@@ -72,7 +72,7 @@ class CfgWeapons
     {
         magazineWell[]+=
         {
-            "CBA_762x54R_SVD"
+            "CBA_762x54R_SVD",
         };
     };
 };

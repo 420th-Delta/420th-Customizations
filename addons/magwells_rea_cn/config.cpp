@@ -10,7 +10,7 @@ class CfgPatches {
         requiredAddons[] = {
             "cba_jam",
             "fdelta_magwells",
-            "cn_weapon"
+            "cn_weapon",
         };
         skipWhenMissingDependencies = 1;
 
@@ -36,7 +36,7 @@ class CfgWeapons
             "CTAR_580x42",
             "CTAR_580x42_Large",
             "CBA_580x42_TYPE95",
-            "CBA_580x42_TYPE95_XL"
+            "CBA_580x42_TYPE95_XL",
         };
     };
     class sgun_HunterShotgun_01_base_F: Rifle_Long_Base_F
@@ -46,7 +46,7 @@ class CfgWeapons
     {
         magazineWell[]+=
         {
-            "UBS_12GA"
+            "UBS_12GA",
         };
     };
     class SMG_02_base_F: Rifle_Short_Base_F
@@ -56,7 +56,7 @@ class CfgWeapons
     {
         magazineWell[]+=
         {
-            "CBA_9x19_ScorpionEvo3"
+            "CBA_9x19_ScorpionEvo3",
         };
     };
     class DMR_02_base_F: Rifle_Long_Base_F
@@ -66,7 +66,7 @@ class CfgWeapons
     {
         magazineWell[]+=
         {
-            "MAR10_338"
+            "MAR10_338",
         };
     };
 };

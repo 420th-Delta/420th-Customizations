@@ -10,7 +10,7 @@ class CfgPatches {
         requiredAddons[] = {
             "cba_jam",
             "fdelta_magwells",
-            "us_weapon_rifles"
+            "us_weapon_rifles",
         };
         skipWhenMissingDependencies = 1;
 
@@ -33,7 +33,7 @@ class CfgWeapons
             "MX_65x39",
             "MX_65x39_Large",
             "CBA_65x39_MX",
-            "CBA_65x39_MX_XL"
+            "CBA_65x39_MX_XL",
         };
     };
     class RM277_base_F: DMR_03_base_F
@@ -43,7 +43,7 @@ class CfgWeapons
             "MX_65x39",
             "MX_65x39_Large",
             "CBA_65x39_MX",
-            "CBA_65x39_MX_XL"
+            "CBA_65x39_MX_XL",
         };
     };
     class RM277UW_F: RM277_base_F
@@ -53,7 +53,7 @@ class CfgWeapons
             "MX_65x39",
             "MX_65x39_Large",
             "CBA_65x39_MX",
-            "CBA_65x39_MX_XL"
+            "CBA_65x39_MX_XL",
         };
     };
     class arifle_SPAR_01_base_F: Rifle_Base_F
@@ -69,7 +69,7 @@ class CfgWeapons
             "CBA_556x45_STANAG_L",
             "CBA_556x45_STANAG_XL",
             "CBA_556x45_STANAG_2D",
-            "CBA_556x45_STANAG_2D_XL"
+            "CBA_556x45_STANAG_2D_XL",
         };
     };
     class SMG_02_base_F: Rifle_Short_Base_F
@@ -79,7 +79,7 @@ class CfgWeapons
     {
         magazineWell[]+=
         {
-            "CBA_46x30_MP7"
+            "CBA_46x30_MP7",
         };
     };
     class MMG_02_base_F: Rifle_Long_Base_F
@@ -90,7 +90,7 @@ class CfgWeapons
         magazineWell[]+=
         {
             "Mk200_65x39",
-            "CBA_65x39_Mk200"
+            "CBA_65x39_Mk200",
         };
     };
 };
