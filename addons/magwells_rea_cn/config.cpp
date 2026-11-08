@@ -41,7 +41,7 @@ class CfgWeapons
 	};
 	class sgun_HunterShotgun_01_base_F: Rifle_Long_Base_F
 	{
-	};	
+	};
 	class qbs09: sgun_HunterShotgun_01_base_F
 	{
 		magazineWell[]+=
@@ -51,7 +51,7 @@ class CfgWeapons
 	};
 	class SMG_02_base_F: Rifle_Short_Base_F
 	{
-	};	
+	};
 	class QCQ171_F: SMG_02_base_F
 	{
 		magazineWell[]+=
@@ -61,7 +61,7 @@ class CfgWeapons
 	};
 	class DMR_02_base_F: Rifle_Long_Base_F
 	{
-	};	
+	};
 	class QBU202: DMR_02_base_F
 	{
 		magazineWell[]+=

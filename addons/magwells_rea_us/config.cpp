@@ -92,5 +92,5 @@ class CfgWeapons
 			"Mk200_65x39",
 			"CBA_65x39_Mk200"
 		};
-	};    
+	};
 };

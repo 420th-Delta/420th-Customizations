@@ -38,7 +38,7 @@ class CfgMagazineWells {
          fdelta_magwells_mastiff_magazines[] = {
             MAGAZINES_GENERAL_SMG
          };
-    };    
+    };
     class CBA_OSS65Carcano
     {
          fdelta_magwells_mastiff_magazines[] = {
@@ -68,7 +68,7 @@ class CfgMagazineWells {
          fdelta_magwells_mastiff_magazines[] = {
             MAGAZINES_GENERAL_Shotgun1
          };
-    };    
+    };
     class CBA_OSS_30Carbine
     {
          fdelta_magwells_mastiff_magazines[] = {
@@ -98,7 +98,7 @@ class CfgMagazineWells {
          fdelta_magwells_mastiff_magazines[] = {
             MAGAZINES_GENERAL_SMG
          };
-    }; 
+    };
     class CBA_OSS8mmlebel
     {
          fdelta_magwells_mastiff_magazines[] = {
@@ -110,7 +110,7 @@ class CfgMagazineWells {
          fdelta_magwells_mastiff_magazines[] = {
             MAGAZINES_GENERAL_SMG
          };
-    };  
+    };
     class CBA_65CarcanoBreda_20rnd
     {
          fdelta_magwells_mastiff_magazines[] = {
@@ -122,7 +122,7 @@ class CfgMagazineWells {
          fdelta_magwells_mastiff_magazines[] = {
             MAGAZINES_GENERAL_Rifle1
          };
-    }; 
+    };
     class CBA_OSS65CarcanoBreda30
     {
          fdelta_magwells_mastiff_magazines[] = {
@@ -146,7 +146,7 @@ class CfgMagazineWells {
          fdelta_magwells_mastiff_magazines[] = {
             MAGAZINES_GENERAL_Rifle1
          };
-    };     
+    };
     class CBA_OSS4440
     {
          fdelta_magwells_mastiff_magazines[] = {
@@ -158,7 +158,7 @@ class CfgMagazineWells {
          fdelta_magwells_mastiff_magazines[] = {
             MAGAZINES_GENERAL_SMG
          };
-    }; 
+    };
     class CBA_DKS501_AHA
     {
          fdelta_magwells_mastiff_magazines[] = {
@@ -176,7 +176,7 @@ class CfgMagazineWells {
          fdelta_magwells_mastiff_magazines[] = {
             MAGAZINES_GENERAL_Rifle2
          };
-    }; 
+    };
     class CBA_FarquharHillRifle_magazines
     {
          fdelta_magwells_mastiff_magazines[] = {
@@ -188,7 +188,7 @@ class CfgMagazineWells {
          fdelta_magwells_mastiff_magazines[] = {
             MAGAZINES_GENERAL_Rifle1
          };
-    };  
+    };
     class CBA_AHA_FN_FAL
     {
          fdelta_magwells_mastiff_magazines[] = {
@@ -212,7 +212,7 @@ class CfgMagazineWells {
          fdelta_magwells_mastiff_magazines[] = {
             MAGAZINES_556x45
          };
-    };          
+    };
     class AHA_308BattleRifleMags
     {
          fdelta_magwells_mastiff_magazines[] = {
@@ -242,7 +242,7 @@ class CfgMagazineWells {
          fdelta_magwells_mastiff_magazines[] = {
             MAGAZINES_762x51
          };
-    }; 
+    };
     class AHA_4570Govt_6Rnd_MagWell
     {
          fdelta_magwells_mastiff_magazines[] = {
@@ -260,19 +260,19 @@ class CfgMagazineWells {
          fdelta_magwells_mastiff_magazines[] = {
             MAGAZINES_GENERAL_Rifle2
          };
-    };       
+    };
     class CBA_8mmMauserSelbstlader25rnd
     {
          fdelta_magwells_mastiff_magazines[] = {
             MAGAZINES_GENERAL_Rifle1
          };
-    };    
+    };
     class CBA_AHA_M1Garand_458WinMag
     {
          fdelta_magwells_mastiff_magazines[] = {
             MAGAZINES_GENERAL_Rifle1
          };
-    }; 
+    };
     class CBA_OSS_MG08
     {
          fdelta_magwells_mastiff_magazines[] = {
@@ -303,7 +303,7 @@ class CfgMagazineWells {
             "5Rnd_127x108_Mag",
             "5Rnd_127x108_APDS_Mag",
          };
-    }; 
+    };
     class CBA_OSS_WZ39
     {
          fdelta_magwells_mastiff_magazines[] = {
@@ -321,21 +321,21 @@ class CfgMagazineWells {
          fdelta_magwells_mastiff_magazines[] = {
             MAGAZINES_GENERAL_SMG
          };
-    };   
+    };
     class CBA_OSSSnipex
     {
          fdelta_magwells_mastiff_magazines[] = {
             "5Rnd_127x108_Mag",
             "5Rnd_127x108_APDS_Mag",
          };
-    };   
+    };
     class CBA_OSSWZ35Mags
     {
          fdelta_magwells_mastiff_magazines[] = {
             "5Rnd_127x108_Mag",
             "5Rnd_127x108_APDS_Mag",
          };
-    }; 
+    };
     class CBA_8mmMauserClips
     {
          fdelta_magwells_mastiff_magazines[] = {
@@ -365,7 +365,7 @@ class CfgMagazineWells {
          fdelta_magwells_mastiff_magazines[] = {
             MAGAZINES_GENERAL_Rifle2
          };
-    }; 
+    };
     class CBA_RugerMini14OSS
     {
          fdelta_magwells_mastiff_magazines[] = {
@@ -383,25 +383,25 @@ class CfgMagazineWells {
          fdelta_magwells_mastiff_magazines[] = {
             MAGAZINES_GENERAL_Rifle2
          };
-    }; 
+    };
     class CBA_AHA_M1Garand
     {
          fdelta_magwells_mastiff_magazines[] = {
             MAGAZINES_GENERAL_Rifle2
          };
-    };    
+    };
     class CBA_OSS_Hellriegel
     {
          fdelta_magwells_mastiff_magazines[] = {
             MAGAZINES_GENERAL_SMG
          };
-    }; 
+    };
     class STANAG_556x45_R91_Jansen
     {
          fdelta_magwells_mastiff_magazines[] = {
             MAGAZINES_GENERAL_SMG
          };
-    }; 
+    };
     class CBA_AHA_STG44
     {
         fdelta_magwells_magazines[] = {
@@ -447,7 +447,7 @@ class CfgMagazineWells {
             "75rnd_762x39_AK12_Arid_Mag_F",
             "75rnd_762x39_AK12_Arid_Mag_Tracer_F",
         };
-    }; 
+    };
     class CBA_45rndTKBWell_OSS
     {
         fdelta_magwells_magazines[] = {
@@ -482,7 +482,7 @@ class CfgMagazineWells {
          fdelta_magwells_mastiff_magazines[] = {
             MAGAZINES_GENERAL_Rifle1
          };
-    }; 
+    };
     class CBA_Ultimax100_AHA
     {
          fdelta_magwells_mastiff_magazines[] = {
@@ -506,54 +506,54 @@ class CfgMagazineWells {
         fdelta_magwells_mastiff_magazines[] = {
             MAGAZINES_GENERAL_Rifle1
         };
-    };     
+    };
     class 10rnd_44_40
     {
         fdelta_magwells_mastiff_magazines[] = {
             MAGAZINES_GENERAL_Rifle1
         };
-    }; 
+    };
     class 15rnd_44_40
     {
         fdelta_magwells_mastiff_magazines[] = {
             MAGAZINES_GENERAL_Rifle1
         };
-    }; 
+    };
     class 8rnd_30_30
     {
         fdelta_magwells_mastiff_magazines[] = {
             MAGAZINES_GENERAL_Rifle1
         };
-    }; 
+    };
     class AHA_762x54R_5Rnd_MagWell
     {
         fdelta_magwells_mastiff_magazines[] = {
             MAGAZINES_GENERAL_Rifle1
         };
-    };  
+    };
     class CBA_AHA_G30M
     {
         fdelta_magwells_mastiff_magazines[] = {
             MAGAZINES_GENERAL_Rifle1
         };
-    };  
+    };
     class CBA_AHA_LMR
     {
         fdelta_magwells_mastiff_magazines[] = {
             MAGAZINES_GENERAL_Rifle2
         };
-    };                                                                                         
+    };
     class CBA_351WSL_10RND
     {
         fdelta_magwells_mastiff_magazines[] = {
             MAGAZINES_GENERAL_Rifle2
         };
-    }; 
+    };
     class CBA_OSS_WZ28
     {
         fdelta_magwells_mastiff_magazines[] = {
             MAGAZINES_762x51
         };
-    }; 
+    };
 
 };
