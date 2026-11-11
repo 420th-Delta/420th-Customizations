@@ -5,3 +5,5 @@ hemtt.exe
 *.biprivatekey
 *.hemttprivatekey
 releases/
+
+__pycache__/
