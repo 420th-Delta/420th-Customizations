@@ -1,21 +1,21 @@
 default_language_version:
-    python: python3.14
+  python: python3.14
 repos:
--   repo: https://github.com/pre-commit/pre-commit-hooks
+  - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v6.0.0
     hooks:
-    -   id: check-added-large-files
-    -   id: check-ast
-    -   id: check-case-conflict
-    -   id: check-illegal-windows-names
-    -   id: check-toml
-    -   id: check-yaml
-    -   id: end-of-file-fixer
-    -   id: fix-byte-order-marker
-    -   id: trailing-whitespace
--   repo: local
+      - id: check-added-large-files
+      - id: check-ast
+      - id: check-case-conflict
+      - id: check-illegal-windows-names
+      - id: check-toml
+      - id: check-yaml
+      - id: end-of-file-fixer
+      - id: fix-byte-order-marker
+      - id: trailing-whitespace
+  - repo: local
     hooks:
-    -   id: lints
+      - id: lints
         name: addon lints
         entry: python -m lints
         language: python
