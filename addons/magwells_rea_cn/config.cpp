@@ -22,7 +22,7 @@ class CfgPatches {
 class CfgWeapons {
     class arifle_ARX_base_F;
     class QBW201_base : arifle_ARX_base_F {
-        magazineWell[]+= {
+        magazineWell[] += {
             "CTAR_580x42",
             "CTAR_580x42_Large",
             "CBA_580x42_TYPE95",
@@ -31,19 +31,19 @@ class CfgWeapons {
     };
     class sgun_HunterShotgun_01_base_F;
     class qbs09 : sgun_HunterShotgun_01_base_F {
-        magazineWell[]+= {
+        magazineWell[] += {
             "UBS_12GA",
         };
     };
     class SMG_02_base_F;
     class QCQ171_F : SMG_02_base_F {
-        magazineWell[]+= {
+        magazineWell[] += {
             "CBA_9x19_ScorpionEvo3",
         };
     };
     class DMR_02_base_F;
     class QBU202 : DMR_02_base_F {
-        magazineWell[]+= {
+        magazineWell[] += {
             "MAR10_338",
         };
     };
