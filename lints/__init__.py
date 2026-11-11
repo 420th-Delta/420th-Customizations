@@ -30,28 +30,23 @@ def main() -> str | None:
         help="Automatically fix lints if possible",
     )
 
-    # args = parser.parse_args()
-    # fix: bool = args.fix
+    args = parser.parse_args()
+    fix: bool = args.fix
 
     logging.basicConfig(format="{message}", style="{", level=logging.INFO)
     ctx = Context.load(REPO_ROOT, ignore_invalid_addons=True)
 
-    total_findings = 0
-    for addon in ctx.addons:
-        for rule_cls in ADDON_RULES:
-            rule = rule_cls(ctx=ctx, addon=addon)
-            for finding in rule.lint():
-                log.warning("%s", finding)
-                total_findings += 1
+    results = _run_lints(ctx, fix=fix)
+    for rule, findings in results.rule_findings:
+        for finding in findings:
+            log.warning("%5s %s", rule.id, finding)
 
-    for rule_cls in PROJECT_RULES:
-        rule = rule_cls(ctx=ctx)
-        for finding in rule.lint():
-            log.warning("%s", finding)
-            total_findings += 1
-
-    if total_findings:
-        return f"Found {total_findings} errors."
+    if results.fixed:
+        return f"Found {results.total} errors ({results.fixed} fixed)."
+    elif results.fixable:
+        return f"Found {results.total} errors ({results.fixable} fixable with --fix)."
+    elif results.total:
+        return f"Found {results.total} errors."
 
 
 @dataclass(frozen=True, kw_only=True)
@@ -136,6 +131,11 @@ class Finding:
 
 
 class Rule(ABC):
+    @property
+    @abstractmethod
+    def id(self) -> str:
+        raise NotImplementedError
+
     @abstractmethod
     def can_fix(self) -> bool:
         raise NotImplementedError
@@ -161,6 +161,10 @@ class ProjectRule(Rule, ABC):
 
 
 class PboPrefixRule(AddonRule):
+    @property
+    def id(self) -> str:
+        return "F001"
+
     def can_fix(self) -> bool:
         return True
 
@@ -188,6 +192,10 @@ class PboPrefixRule(AddonRule):
 
 
 class CfgPatchesNameRule(AddonRule):
+    @property
+    def id(self) -> str:
+        return "F002"
+
     def can_fix(self) -> bool:
         return False
 
@@ -226,6 +234,10 @@ def _lineno_from_content_match(content: str, m: re.Match) -> int:
 
 
 class DecadeLoadorderRule(AddonRule):
+    @property
+    def id(self) -> str:
+        return "F003"
+
     def can_fix(self) -> bool:
         return False
 
@@ -266,6 +278,10 @@ def _parse_required_addons(config: str) -> tuple[Collection[str], int]:
 
 
 class SkipWhenMissingRule(AddonRule):
+    @property
+    def id(self) -> str:
+        return "F004"
+
     def can_fix(self) -> bool:
         return False
 
@@ -309,6 +325,10 @@ class SkipWhenMissingRule(AddonRule):
 
 
 class MagazineWellPrefixRule(AddonRule):
+    @property
+    def id(self) -> str:
+        return "F005"
+
     def can_fix(self) -> bool:
         return False
 
@@ -339,88 +359,11 @@ class MagazineWellPrefixRule(AddonRule):
             yield Finding(path=addon.config_path, lineno=lineno, message=message)
 
 
-class NoTabsRule(AddonRule):
-    def can_fix(self) -> bool:
-        return False
-
-    def fix(self) -> None:
-        raise NotImplementedError
-
-    def lint(self) -> Iterator[Finding]:
-        addon = self.addon
-        i = addon.config.find("\t")
-        if i >= 0:
-            lineno = addon.config.count("\n", 0, i) + 1
-            yield Finding(path=addon.config_path, lineno=lineno, message="No tabs allowed")
-
-
-class IndentationRule(AddonRule):
-    def can_fix(self) -> bool:
-        return False
-
-    def fix(self) -> None:
-        raise NotImplementedError
-
-    def lint(self) -> Iterator[Finding]:
-        addon = self.addon
-        for m in re.finditer(r"^( +)", addon.config, re.MULTILINE):
-            length = len(m[1])
-            if length % 4 == 0:
-                continue
-
-            lineno = _lineno_from_content_match(addon.config, m)
-            message = f"Expected indentation in multiples of 4, got {length}"
-            yield Finding(path=addon.config_path, lineno=lineno, message=message)
-
-
-class BracePlacementRule(AddonRule):
-    def can_fix(self) -> bool:
-        return False
-
-    def fix(self) -> None:
-        raise NotImplementedError
-
-    def lint(self) -> Iterator[Finding]:
-        addon = self.addon
-        for m in re.finditer(r"^\s*\{", addon.config, re.MULTILINE):
-            lineno = _lineno_from_content_match(addon.config, m)
-            message = "Open brace not inline with construct"
-            yield Finding(path=addon.config_path, lineno=lineno, message=message)
-
-
-class SingleLineCommentSpaceRule(AddonRule):
-    def can_fix(self) -> bool:
-        return False
-
-    def fix(self) -> None:
-        raise NotImplementedError
-
-    def lint(self) -> Iterator[Finding]:
-        addon = self.addon
-        for m in re.finditer(r"(?<!:)//(\S+)", addon.config, re.MULTILINE):
-            lineno = _lineno_from_content_match(addon.config, m)
-            message = f"Expected space at start of comment, got '{m[1]}'"
-            yield Finding(path=addon.config_path, lineno=lineno, message=message)
-
-
-class MaxLineLengthRule(AddonRule):
-    def can_fix(self) -> bool:
-        return False
-
-    def fix(self) -> None:
-        raise NotImplementedError
-
-    def lint(self) -> Iterator[Finding]:
-        addon = self.addon
-        line_length = 100
-        for m in re.finditer(rf"^(.{{{line_length + 1},}})", addon.config, re.MULTILINE):
-            length = len(m[1])
-            lineno = _lineno_from_content_match(addon.config, m)
-            message = f"Expected line length <= 100, got {length}"
-            yield Finding(path=addon.config_path, lineno=lineno, message=message)
-
-
 class RequiredVersionRule(ProjectRule):
+    @property
+    def id(self) -> str:
+        return "F006"
+
     def can_fix(self) -> bool:
         return False
 
@@ -430,7 +373,7 @@ class RequiredVersionRule(ProjectRule):
     def lint(self) -> Iterator[Finding]:
         version_lines: list[tuple[Addon, str, int]] = []
         for addon in self.ctx.addons:
-            version, lineno = _extract_required_version(addon)
+            version, lineno = self._extract_required_version(addon)
             if version is None:
                 message = "Expected requiredVersion, declaration not found"
                 yield Finding(path=addon.config_path, lineno=None, message=message)
@@ -450,14 +393,119 @@ class RequiredVersionRule(ProjectRule):
             message = f"Expected requiredVersion = {expected}, got '{version}'"
             yield Finding(path=addon.config_path, lineno=lineno, message=message)
 
+    @staticmethod
+    def _extract_required_version(addon: Addon) -> tuple[str, int] | tuple[None, None]:
+        m = re.search(
+            r"^\s*requiredVersion = ([\d.]+);",
+            addon.config,
+            re.MULTILINE | re.IGNORECASE,
+        )
+        if m is None:
+            return None, None
 
-def _extract_required_version(addon: Addon) -> tuple[str, int] | tuple[None, None]:
-    m = re.search(r"^\s*requiredVersion = ([\d.]+);", addon.config, re.MULTILINE | re.IGNORECASE)
-    if m is None:
-        return None, None
+        lineno = _lineno_from_content_match(addon.config, m)
+        return m[1], lineno
 
-    lineno = _lineno_from_content_match(addon.config, m)
-    return m[1], lineno
+
+class NoTabsRule(AddonRule):
+    @property
+    def id(self) -> str:
+        return "S001"
+
+    def can_fix(self) -> bool:
+        return False
+
+    def fix(self) -> None:
+        raise NotImplementedError
+
+    def lint(self) -> Iterator[Finding]:
+        addon = self.addon
+        i = addon.config.find("\t")
+        if i >= 0:
+            lineno = addon.config.count("\n", 0, i) + 1
+            yield Finding(path=addon.config_path, lineno=lineno, message="No tabs allowed")
+
+
+class IndentationRule(AddonRule):
+    @property
+    def id(self) -> str:
+        return "S002"
+
+    def can_fix(self) -> bool:
+        return False
+
+    def fix(self) -> None:
+        raise NotImplementedError
+
+    def lint(self) -> Iterator[Finding]:
+        addon = self.addon
+        for m in re.finditer(r"^( +)", addon.config, re.MULTILINE):
+            length = len(m[1])
+            if length % 4 == 0:
+                continue
+
+            lineno = _lineno_from_content_match(addon.config, m)
+            message = f"Expected indentation in multiples of 4, got {length}"
+            yield Finding(path=addon.config_path, lineno=lineno, message=message)
+
+
+class BracePlacementRule(AddonRule):
+    @property
+    def id(self) -> str:
+        return "S003"
+
+    def can_fix(self) -> bool:
+        return False
+
+    def fix(self) -> None:
+        raise NotImplementedError
+
+    def lint(self) -> Iterator[Finding]:
+        addon = self.addon
+        for m in re.finditer(r"^\s*\{", addon.config, re.MULTILINE):
+            lineno = _lineno_from_content_match(addon.config, m)
+            message = "Open brace not inline with construct"
+            yield Finding(path=addon.config_path, lineno=lineno, message=message)
+
+
+class SingleLineCommentSpaceRule(AddonRule):
+    @property
+    def id(self) -> str:
+        return "S004"
+
+    def can_fix(self) -> bool:
+        return False
+
+    def fix(self) -> None:
+        raise NotImplementedError
+
+    def lint(self) -> Iterator[Finding]:
+        addon = self.addon
+        for m in re.finditer(r"(?<!:)//(\S+)", addon.config, re.MULTILINE):
+            lineno = _lineno_from_content_match(addon.config, m)
+            message = f"Expected space at start of comment, got '{m[1]}'"
+            yield Finding(path=addon.config_path, lineno=lineno, message=message)
+
+
+class MaxLineLengthRule(AddonRule):
+    @property
+    def id(self) -> str:
+        return "S005"
+
+    def can_fix(self) -> bool:
+        return False
+
+    def fix(self) -> None:
+        raise NotImplementedError
+
+    def lint(self) -> Iterator[Finding]:
+        addon = self.addon
+        line_length = 100
+        for m in re.finditer(rf"^(.{{{line_length + 1},}})", addon.config, re.MULTILINE):
+            length = len(m[1])
+            lineno = _lineno_from_content_match(addon.config, m)
+            message = f"Expected line length <= 100, got {length}"
+            yield Finding(path=addon.config_path, lineno=lineno, message=message)
 
 
 ADDON_RULES: list[type[AddonRule]] = [
@@ -475,3 +523,50 @@ ADDON_RULES: list[type[AddonRule]] = [
 PROJECT_RULES: list[type[ProjectRule]] = [
     RequiredVersionRule,
 ]
+
+
+@dataclass(frozen=True, kw_only=True)
+class LintResults:
+    rule_findings: tuple[tuple[Rule, list[Finding]], ...]
+    fixed: int
+
+    @cached_property
+    def total(self) -> int:
+        return sum(len(findings) for _, findings in self.rule_findings)
+
+    @cached_property
+    def fixable(self) -> int:
+        return sum(rule.can_fix() for rule, findings in self.rule_findings for _ in findings)
+
+
+def _run_lints(ctx: Context, *, fix: bool) -> LintResults:
+    rule_findings = _run_lint_lap(ctx)
+    results = LintResults(fixed=0, rule_findings=rule_findings)
+    if not fix:
+        return results
+
+    last_total = results.total
+    fixed = 0
+    for _ in range(3):
+        fixable_rules = [rule for rule, findings in rule_findings if findings and rule.can_fix()]
+        if not fixable_rules:
+            break
+
+        for rule in fixable_rules:
+            rule.fix()
+
+        rule_findings = _run_lint_lap(ctx)
+
+        total = LintResults(fixed=-1, rule_findings=rule_findings).total
+        fixed += last_total - total
+        last_total = total
+
+    return LintResults(fixed=fixed, rule_findings=rule_findings)
+
+
+def _run_lint_lap(ctx: Context) -> tuple[tuple[Rule, list[Finding]], ...]:
+    rules: list[Rule] = [
+        rule_cls(ctx=ctx, addon=addon) for addon in ctx.addons for rule_cls in ADDON_RULES
+    ]
+    rules.extend(rule_cls(ctx=ctx) for rule_cls in PROJECT_RULES)
+    return tuple((rule, list(rule.lint())) for rule in rules)
