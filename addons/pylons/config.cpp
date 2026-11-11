@@ -119,7 +119,7 @@ class CfgVehicles {
         };
     };
     class Heli_Transport_01_DAP_base_F : Heli_Transport_01_pylons_base_F {
-         class Components : Components {
+        class Components : Components {
             class TransportPylonsComponent {
                 class pylons {
                     class pylon1 {
@@ -196,7 +196,7 @@ class CfgVehicles {
                     };
                 };
             };
-         };
+        };
     };
     class Heli_Light_01_base_F;
     class Heli_Light_01_armed_base_F : Heli_Light_01_base_F {
@@ -1152,8 +1152,8 @@ class CfgVehicles {
     class Plane_Fighter_02_Base_F : Plane_base_F {
         class Components : Components {
             class TransportPylonsComponent {
-              class pylons
-              {
+            class pylons
+            {
                     class pylonBayCenter1 {
                         hardpoints[] = {
                             "O_R77_INT",
@@ -1176,8 +1176,8 @@ class CfgVehicles {
                     };
                     class pylonBayRight1 {
                         hardpoints[] = {
-                           "O_R73",
-                           "RHS_HP_R74M2_int",
+                        "O_R73",
+                        "RHS_HP_R74M2_int",
 
                         };
                     };
@@ -1197,14 +1197,14 @@ class CfgVehicles {
                     };
                     class pylons1 {
                         hardpoints[] = {
-                         "O_R73",
-                         "O_R77",
-                         "O_MISSILE_PYLON",
-                         "RHS_HP_R77M",
-                         "RHS_HP_R77",
-                         "RHS_HP_R60",
-                         "RHS_HP_R73",
-                         "RHS_HP_R74",
+                        "O_R73",
+                        "O_R77",
+                        "O_MISSILE_PYLON",
+                        "RHS_HP_R77M",
+                        "RHS_HP_R77",
+                        "RHS_HP_R60",
+                        "RHS_HP_R73",
+                        "RHS_HP_R74",
                         };
                     };
                     class pylons2 : pylons1 {
@@ -1277,7 +1277,7 @@ class CfgVehicles {
                     class pylons6 : pylons5 {
 
                     };
-              };
+            };
             };
         };
     };
@@ -1307,8 +1307,8 @@ class CfgVehicles {
                     };
                     class pylonBayRight1 {
                         hardpoints[] = {
-                           "O_R73",
-                           "RHS_HP_R74M2_int",
+                        "O_R73",
+                        "RHS_HP_R74M2_int",
 
                         };
                     };
@@ -1524,7 +1524,7 @@ class CfgVehicles {
     class Plane_Fighter_04_Base_F : Plane_base_F {
         class Components : Components {
             class TransportPylonsComponent {
-               class pylons {
+            class pylons {
                     class pylon1 {
                         hardpoints[] = {
                             "B_AIM9",
@@ -1621,10 +1621,10 @@ class CfgVehicles {
     };
     class VTOL_02_base_F;
     class VTOL_02_infantry_base_F : VTOL_02_base_F {
-           class Components;
+        class Components;
     };
     class VTOL_02_vehicle_base_F : VTOL_02_base_F {
-           class Components;
+        class Components;
     };
     class VTOL_02_infantry_dynamicLoadout_base_F : VTOL_02_infantry_base_F {
         class Components : Components {

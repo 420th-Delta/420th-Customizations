@@ -302,7 +302,7 @@ class CfgMagazineWells {
             "30Rnd_45ACP_Mag_SMG_01_Tracer_Yellow",
         };
     };
-     class CBA_45ACP_UMP {
+    class CBA_45ACP_UMP {
         fdelta_magwells_magazines[] = {
             "30Rnd_45ACP_Mag_SMG_01",
             "30Rnd_45ACP_Mag_SMG_01_tracer_green",

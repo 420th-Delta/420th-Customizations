@@ -5,12 +5,12 @@ import re
 import tomllib
 from abc import ABC, abstractmethod
 from collections import Counter
-from collections.abc import Collection, Iterator
+from collections.abc import Callable, Collection, Iterator
 from contextlib import suppress
 from dataclasses import dataclass, field
 from functools import cached_property
 from pathlib import Path
-from typing import Self, Callable, ClassVar
+from typing import ClassVar, Self
 
 REPO_ROOT = Path(__file__).parent.parent
 with suppress(ValueError):
@@ -34,9 +34,9 @@ def main() -> str | None:
     fix: bool = args.fix
 
     logging.basicConfig(format="{message}", style="{", level=logging.INFO)
-    ctx = Context.load(REPO_ROOT, ignore_invalid_addons=True)
+    ctx_factory = lambda: Context.load(REPO_ROOT, ignore_invalid_addons=True)
 
-    results = _run_lints(ctx, fix=fix)
+    results = _run_lints(ctx_factory, fix=fix)
     for rule, findings in results.rule_findings:
         for finding in findings:
             log.warning("%5s %s", rule.id, finding)
@@ -250,16 +250,22 @@ def _lineno_from_content_match(content: str, m: re.Match) -> int:
     return content.count("\n", 0, m.start()) + 1
 
 
+@dataclass(kw_only=True)
 class DecadeLoadorderRule(AddonRule):
+    _can_fix: bool = field(default=False, init=False, repr=False)
+
     @property
     def id(self) -> str:
         return "F003"
 
     def can_fix(self) -> bool:
-        return False
+        return self._can_fix
 
     def fix(self) -> None:
-        raise NotImplementedError
+        if self._can_fix:
+            self._add_decade_patch()
+        else:
+            raise RuntimeError("Fix not identified by lint")
 
     def lint(self) -> Iterator[Finding]:
         addon = self.addon
@@ -273,15 +279,27 @@ class DecadeLoadorderRule(AddonRule):
         decade = "A3_Data_F_Decade_Loadorder"
         if decade not in required:
             message = f"Expected '{decade}' in requiredAddons[]"
+            self._can_fix = True
             yield Finding(path=addon.config_path, lineno=lineno, message=message)
+
+    def _add_decade_patch(self) -> None:
+        # Super easy to break this with requiredAddons[] = { };
+        config = self.addon.config
+        m = REQUIRED_ADDONS_PATTERN.search(config)
+        assert m is not None
+        i = config.index("\n", m.start(1))
+        content = config[:i] + '\n            "A3_Data_F_Decade_Loadorder",' + config[i:]
+        self.addon.config_path.write_text(content, "utf-8")
+
+
+REQUIRED_ADDONS_PATTERN = re.compile(
+    r"^\s*requiredAddons\[\]\s*=\s*(\{[^}]+\})",
+    re.MULTILINE | re.IGNORECASE,
+)
 
 
 def _parse_required_addons(config: str) -> tuple[Collection[str], int]:
-    m = re.search(
-        r"^\s*requiredAddons\[\]\s*=\s*(\{[^}]+\})",
-        config,
-        re.MULTILINE | re.IGNORECASE,
-    )
+    m = REQUIRED_ADDONS_PATTERN.search(config)
     if m is None:
         raise KeyError("requiredAddons[]")
 
@@ -430,10 +448,10 @@ class NoTabsRule(AddonRule):
         return "S001"
 
     def can_fix(self) -> bool:
-        return False
+        return True
 
     def fix(self) -> None:
-        raise NotImplementedError
+        self.addon.config_path.write_text(self.addon.config.expandtabs(4), "utf-8")
 
     def lint(self) -> Iterator[Finding]:
         addon = self.addon
@@ -449,10 +467,18 @@ class IndentationRule(AddonRule):
         return "S002"
 
     def can_fix(self) -> bool:
-        return False
+        return True
 
     def fix(self) -> None:
-        raise NotImplementedError
+        # Holy moly this is jank
+        content = re.sub(
+            r"^(?: {4})*( {1,3})(?=\S)",
+            lambda m: m[0].removesuffix(m[1]),
+            self.addon.config,
+            0,
+            re.MULTILINE,
+        )
+        self.addon.config_path.write_text(content, "utf-8")
 
     def lint(self) -> Iterator[Finding]:
         addon = self.addon
@@ -556,8 +582,8 @@ class LintResults:
         return sum(rule.can_fix() for rule, findings in self.rule_findings for _ in findings)
 
 
-def _run_lints(ctx: Context, *, fix: bool) -> LintResults:
-    rule_findings = _run_lint_lap(ctx)
+def _run_lints(ctx_factory: Callable[[], Context], *, fix: bool) -> LintResults:
+    rule_findings = _run_lint_lap(ctx_factory())
     results = LintResults(fixed=0, rule_findings=rule_findings)
     if not fix:
         return results
@@ -572,7 +598,7 @@ def _run_lints(ctx: Context, *, fix: bool) -> LintResults:
         for rule in fixable_rules:
             rule.fix()
 
-        rule_findings = _run_lint_lap(ctx)
+        rule_findings = _run_lint_lap(ctx_factory())
 
         total = LintResults(fixed=-1, rule_findings=rule_findings).total
         fixed += last_total - total
