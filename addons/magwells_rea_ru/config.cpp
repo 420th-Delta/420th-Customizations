@@ -1,13 +1,14 @@
 #include "\z\fdelta\addons\magwells\magazines.hpp"
 
 class CfgPatches {
-    class magwells_rea_ru {
+    class fdelta_magwells_rea_ru {
         name = "420th Customizations - Magazine Compatibility - ReArma RU weapons";
         author = "ol1034, thegamecracks";
         url = "https://github.com/thegamecracks/420th-Customizations";
 
         requiredVersion = 2.22;
         requiredAddons[] = {
+            "A3_Data_F_Decade_Loadorder",
             "cba_jam",
             "fdelta_magwells",
             "rus_weapon_rifles",

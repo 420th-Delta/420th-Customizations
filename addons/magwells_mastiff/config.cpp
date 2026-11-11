@@ -8,6 +8,7 @@ class CfgPatches {
 
         requiredVersion = 2.22;
         requiredAddons[] = {
+            "A3_Data_F_Decade_Loadorder",
             "cba_jam",
             "fdelta_magwells",
             "AHA_AnimationCore",
@@ -404,7 +405,7 @@ class CfgMagazineWells {
     };
     class CBA_AHA_STG44
     {
-        fdelta_magwells_magazines[] = {
+        fdelta_magwells_mastiff_magazines[] = {
             "30Rnd_762x39_Mag_F",
             "30Rnd_762x39_Mag_Green_F",
             "30Rnd_762x39_Mag_Tracer_F",
@@ -427,7 +428,7 @@ class CfgMagazineWells {
     };
     class CBA_AS44
     {
-        fdelta_magwells_magazines[] = {
+        fdelta_magwells_mastiff_magazines[] = {
             "30Rnd_762x39_Mag_F",
             "30Rnd_762x39_Mag_Green_F",
             "30Rnd_762x39_Mag_Tracer_F",
@@ -450,7 +451,7 @@ class CfgMagazineWells {
     };
     class CBA_45rndTKBWell_OSS
     {
-        fdelta_magwells_magazines[] = {
+        fdelta_magwells_mastiff_magazines[] = {
             "30Rnd_762x39_Mag_F",
             "30Rnd_762x39_Mag_Green_F",
             "30Rnd_762x39_Mag_Tracer_F",
