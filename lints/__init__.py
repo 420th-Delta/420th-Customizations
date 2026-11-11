@@ -253,6 +253,40 @@ def lint_no_tabs(ctx: Context, addon: Addon) -> Iterator[Finding]:
         yield Finding(path=addon.config_path, lineno=lineno, message="No tabs allowed")
 
 
+def lint_indentation(ctx: Context, addon: Addon) -> Iterator[Finding]:
+    for m in re.finditer(r"^( +)", addon.config, re.MULTILINE):
+        length = len(m[1])
+        if length % 4 == 0:
+            continue
+
+        lineno = _lineno_from_content_match(addon.config, m)
+        message = f"Expected indentation in multiples of 4, got {length}"
+        yield Finding(path=addon.config_path, lineno=lineno, message=message)
+
+
+def lint_brace_placement(ctx: Context, addon: Addon) -> Iterator[Finding]:
+    for m in re.finditer(r"^\s*\{", addon.config, re.MULTILINE):
+        lineno = _lineno_from_content_match(addon.config, m)
+        message = "Open brace not inline with construct"
+        yield Finding(path=addon.config_path, lineno=lineno, message=message)
+
+
+def lint_single_line_comment_space(ctx: Context, addon: Addon) -> Iterator[Finding]:
+    for m in re.finditer(r"(?<!:)//(\S+)", addon.config, re.MULTILINE):
+        lineno = _lineno_from_content_match(addon.config, m)
+        message = f"Expected space at start of comment, got '{m[1]}'"
+        yield Finding(path=addon.config_path, lineno=lineno, message=message)
+
+
+def lint_max_line_length(ctx: Context, addon: Addon) -> Iterator[Finding]:
+    line_length = 100
+    for m in re.finditer(rf"^(.{{{line_length + 1},}})", addon.config, re.MULTILINE):
+        length = len(m[1])
+        lineno = _lineno_from_content_match(addon.config, m)
+        message = f"Expected line length <= 100, got {length}"
+        yield Finding(path=addon.config_path, lineno=lineno, message=message)
+
+
 def lint_required_version(ctx: Context) -> Iterator[Finding]:
     version_lines: list[tuple[Addon, str, int]] = []
     for addon in ctx.addons:
@@ -288,15 +322,6 @@ def _extract_required_version(addon: Addon) -> tuple[str, int] | tuple[None, Non
     return m[1], lineno
 
 
-# Potential lints based on CONTRIBUTING.md style rules:
-# - lint_brace_placement: the opening brace belongs on the same line as the
-#   defining construct. 8 violations at the time of writing, mostly in
-#   addons/pylons/config.cpp.
-# - lint_indentation: indentation is 4 spaces per level. 4 lines use 9 spaces
-#   (addons/pylons/config.cpp, addons/magwells_ws/config.cpp); every other
-#   width in the tree is a multiple of 4.
-# - lint_max_line_length: lines stay under 100 characters unless breaking
-#   them hurts readability. 7 violations, mostly addons/magwells_jca/config.cpp.
 ADDON_LINTS: list[Callable[[Context, Addon], Iterator[Finding]]] = [
     lint_pbo_prefix,
     lint_cfgpatches_name,
@@ -304,6 +329,10 @@ ADDON_LINTS: list[Callable[[Context, Addon], Iterator[Finding]]] = [
     lint_skip_when_missing,
     lint_magazine_well_prefix,
     lint_no_tabs,
+    lint_indentation,
+    lint_brace_placement,
+    lint_single_line_comment_space,
+    lint_max_line_length,
 ]
 PROJECT_LINTS: list[Callable[[Context], Iterator[Finding]]] = [
     lint_required_version,
