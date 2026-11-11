@@ -7,10 +7,10 @@ from abc import ABC, abstractmethod
 from collections import Counter
 from collections.abc import Collection, Iterator
 from contextlib import suppress
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from functools import cached_property
 from pathlib import Path
-from typing import Self
+from typing import Self, Callable, ClassVar
 
 REPO_ROOT = Path(__file__).parent.parent
 with suppress(ValueError):
@@ -149,13 +149,13 @@ class Rule(ABC):
         raise NotImplementedError
 
 
-@dataclass(frozen=True, kw_only=True)
+@dataclass(kw_only=True)
 class AddonRule(Rule, ABC):
     ctx: Context
     addon: Addon
 
 
-@dataclass(frozen=True, kw_only=True)
+@dataclass(kw_only=True)
 class ProjectRule(Rule, ABC):
     ctx: Context
 
@@ -169,7 +169,7 @@ class PboPrefixRule(AddonRule):
         return True
 
     def fix(self) -> None:
-        self.addon.pboprefix_path.write_text(self._expected_pboprefix() + "\n")
+        self.addon.pboprefix_path.write_text(self._expected_pboprefix() + "\n", "utf-8")
 
     def lint(self) -> Iterator[Finding]:
         project = self.ctx.project
@@ -191,25 +191,30 @@ class PboPrefixRule(AddonRule):
         return f"{project.mainprefix}\\{project.prefix}\\addons\\{addon.name}"
 
 
+@dataclass(kw_only=True)
 class CfgPatchesNameRule(AddonRule):
+    _can_fix: bool = field(default=False, init=False, repr=False)
+    _pattern: ClassVar[re.Pattern] = re.compile(
+        r"^class\s+CfgPatches\s*{(?:\n *class\s+(\S+))?",
+        re.MULTILINE | re.IGNORECASE,
+    )
+
     @property
     def id(self) -> str:
         return "F002"
 
     def can_fix(self) -> bool:
-        return False
+        return self._can_fix
 
     def fix(self) -> None:
-        raise NotImplementedError
+        if self._can_fix:
+            self._replace_patch()
+        else:
+            raise RuntimeError("Fix not identified by lint")
 
     def lint(self) -> Iterator[Finding]:
-        project = self.ctx.project
         addon = self.addon
-        m = re.search(
-            r"^class\s+CfgPatches\s*{(?:\n *class\s+(\S+))?",
-            addon.config,
-            re.MULTILINE | re.IGNORECASE,
-        )
+        m = self._pattern.search(addon.config)
         if m is None:
             message = "Expected CfgPatches class (maybe mis-formatted?)"
             yield Finding(path=addon.config_path, lineno=None, message=message)
@@ -223,10 +228,22 @@ class CfgPatchesNameRule(AddonRule):
             return
 
         patch_name = m[1]
-        expected = f"{project.prefix}_{addon.name}"
+        expected = self._expected_patch_name()
         if patch_name != expected:
             message = f"Expected {expected}, got {patch_name}"
+            self._can_fix = True
             yield Finding(path=addon.config_path, lineno=patch_lineno, message=message)
+
+    def _expected_patch_name(self) -> str:
+        return f"{self.ctx.project.prefix}_{self.addon.name}"
+
+    def _replace_patch(self) -> None:
+        expected = self._expected_patch_name()
+        repl = f"class CfgPatches {{\n    class {expected}"
+        content, n = self._pattern.subn(repl, self.addon.config, 1)
+        if n < 1:
+            raise ValueError("Failed to replace CfgPatches patch name")
+        self.addon.config_path.write_text(content, "utf-8")
 
 
 def _lineno_from_content_match(content: str, m: re.Match) -> int:
