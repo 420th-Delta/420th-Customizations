@@ -45,16 +45,16 @@ class CfgWeapons
             "UBS_12GA",
         };
     };
-    class DMR_01_base_F;
-    class SV98M_F : DMR_01_base_F
+    class DMR_02_base_F;
+    class SV98M_F : DMR_02_base_F
     {
         magazineWell[]+=
         {
             "CBA_762x54R_SVD",
         };
     };
-    class DMR_02_base_F;
-    class SVCh_F : DMR_02_base_F
+    class DMR_01_base_F;
+    class SVCh_F : DMR_01_base_F
     {
         magazineWell[]+=
         {
