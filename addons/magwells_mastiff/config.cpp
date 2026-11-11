@@ -400,7 +400,7 @@ class CfgMagazineWells {
     class STANAG_556x45_R91_Jansen
     {
          fdelta_magwells_mastiff_magazines[] = {
-            MAGAZINES_GENERAL_SMG
+            MAGAZINES_556x45
          };
     };
     class CBA_AHA_STG44
