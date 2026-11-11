@@ -19,33 +19,26 @@ class CfgPatches {
     };
 };
 
-class CfgWeapons
-{
+class CfgWeapons {
     class DMR_03_base_F;
-    class M7_base_F : DMR_03_base_F
-    {
-        magazineWell[]+=
-        {
+    class M7_base_F : DMR_03_base_F {
+        magazineWell[]+= {
             "MX_65x39",
             "MX_65x39_Large",
             "CBA_65x39_MX",
             "CBA_65x39_MX_XL",
         };
     };
-    class RM277_base_F : DMR_03_base_F
-    {
-        magazineWell[]+=
-        {
+    class RM277_base_F : DMR_03_base_F {
+        magazineWell[]+= {
             "MX_65x39",
             "MX_65x39_Large",
             "CBA_65x39_MX",
             "CBA_65x39_MX_XL",
         };
     };
-    class RM277UW_F : RM277_base_F
-    {
-        magazineWell[]=
-        {
+    class RM277UW_F : RM277_base_F {
+        magazineWell[]= {
             "MX_65x39",
             "MX_65x39_Large",
             "CBA_65x39_MX",
@@ -53,10 +46,8 @@ class CfgWeapons
         };
     };
     class arifle_SPAR_01_base_F;
-    class NX_base_F : arifle_SPAR_01_base_F
-    {
-        magazineWell[]+=
-        {
+    class NX_base_F : arifle_SPAR_01_base_F {
+        magazineWell[]+= {
             "STANAG_556x45",
             "STANAG_556x45_Large",
             "CBA_556x45_STANAG",
@@ -67,18 +58,14 @@ class CfgWeapons
         };
     };
     class SMG_02_base_F;
-    class MP7A2_base_f : SMG_02_base_F
-    {
-        magazineWell[]+=
-        {
+    class MP7A2_base_f : SMG_02_base_F {
+        magazineWell[]+= {
             "CBA_46x30_MP7",
         };
     };
     class MMG_02_base_F;
-    class M250_F : MMG_02_base_F
-    {
-        magazineWell[]+=
-        {
+    class M250_F : MMG_02_base_F {
+        magazineWell[]+= {
             "Mk200_65x39",
             "CBA_65x39_Mk200",
         };

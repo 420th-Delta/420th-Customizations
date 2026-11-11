@@ -19,45 +19,34 @@ class CfgPatches {
     };
 };
 
-class CfgWeapons
-{
+class CfgWeapons {
     class arifle_AK12_base_F;
-    class RPL35_F : arifle_AK12_base_F
-    {
-        magazineWell[]+=
-        {
+    class RPL35_F : arifle_AK12_base_F {
+        magazineWell[]+= {
             "CBA_762x54R_LINKS",
         };
     };
     class MMG_01_base_F;
-    class PKP_F : MMG_01_base_F
-    {
-        magazineWell[]+=
-        {
+    class PKP_F : MMG_01_base_F {
+        magazineWell[]+= {
             "CBA_762x54R_LINKS",
         };
     };
     class sgun_HunterShotgun_01_base_F;
-    class ks23_F : sgun_HunterShotgun_01_base_F
-    {
-        magazineWell[]+=
-        {
+    class ks23_F : sgun_HunterShotgun_01_base_F {
+        magazineWell[]+= {
             "UBS_12GA",
         };
     };
     class DMR_02_base_F;
-    class SV98M_F : DMR_02_base_F
-    {
-        magazineWell[]+=
-        {
+    class SV98M_F : DMR_02_base_F {
+        magazineWell[]+= {
             "CBA_762x54R_SVD",
         };
     };
     class DMR_01_base_F;
-    class SVCh_F : DMR_01_base_F
-    {
-        magazineWell[]+=
-        {
+    class SVCh_F : DMR_01_base_F {
+        magazineWell[]+= {
             "CBA_762x54R_SVD",
         };
     };
