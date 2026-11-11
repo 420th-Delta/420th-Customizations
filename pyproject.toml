@@ -1,3 +1,8 @@
+[project]
+name = "420th-customizations"
+version = "1.0.0"
+requires-python = ">=3.14"
+
 [tool.ruff]
 line-length = 100
 
