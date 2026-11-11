@@ -31,7 +31,7 @@ class CfgVehicles {
     class VTOL_01_unarmed_base_F;
     class Wheeled_APC_F;
 
-    class VTOL_01_vehicle_base_F: VTOL_01_unarmed_base_F {
+    class VTOL_01_vehicle_base_F : VTOL_01_unarmed_base_F {
         class VehicleTransport {
             class Carrier {
                 maxLoadMass = 80000;
@@ -39,13 +39,13 @@ class CfgVehicles {
         };
     };
 
-    class MRAP_01_base_F: Car_F {
+    class MRAP_01_base_F : Car_F {
         VIV_ENABLED
     };
-    class MRAP_02_base_F: Car_F {
+    class MRAP_02_base_F : Car_F {
         VIV_ENABLED
     };
-    class APC_Wheeled_02_base_F: Wheeled_APC_F {
+    class APC_Wheeled_02_base_F : Wheeled_APC_F {
         class VehicleTransport {
             class Cargo {
                 parachuteClass       = "B_Parachute_02_F";
@@ -56,28 +56,28 @@ class CfgVehicles {
             };
         };
     };
-    class APC_Wheeled_03_base_F: Wheeled_APC_F {
+    class APC_Wheeled_03_base_F : Wheeled_APC_F {
         VIV_ENABLED
     };
-    class APC_Tracked_01_base_F: Tank_F {
+    class APC_Tracked_01_base_F : Tank_F {
         VIV_ENABLED
     };
-    class APC_Tracked_02_base_F: Tank_F {
+    class APC_Tracked_02_base_F : Tank_F {
         VIV_ENABLED
     };
-    class APC_Tracked_03_base_F: Tank_F {
+    class APC_Tracked_03_base_F : Tank_F {
         VIV_ENABLED
     };
-    class MBT_01_base_F: Tank_F {
+    class MBT_01_base_F : Tank_F {
         VIV_ENABLED
     };
-    class MBT_02_base_F: Tank_F {
+    class MBT_02_base_F : Tank_F {
         VIV_ENABLED
     };
-    class MBT_03_base_F: Tank_F {
+    class MBT_03_base_F : Tank_F {
         VIV_ENABLED
     };
-    class MBT_04_base_F: Tank_F {
+    class MBT_04_base_F : Tank_F {
         VIV_ENABLED
     };
 };

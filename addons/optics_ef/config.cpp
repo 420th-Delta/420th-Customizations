@@ -18,8 +18,8 @@ class CfgPatches {
 class CfgWeapons {
     class InventoryOpticsItem_Base_F;
     class ItemCore;
-    class ef_optic_mbs: ItemCore {
-        class ItemInfo: InventoryOpticsItem_Base_F {
+    class ef_optic_mbs : ItemCore {
+        class ItemInfo : InventoryOpticsItem_Base_F {
             class OpticsModes {
                 class MBSScope {
                     visionMode[] = {};
