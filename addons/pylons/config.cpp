@@ -1152,8 +1152,7 @@ class CfgVehicles {
     class Plane_Fighter_02_Base_F : Plane_base_F {
         class Components : Components {
             class TransportPylonsComponent {
-            class pylons
-            {
+            class pylons {
                     class pylonBayCenter1 {
                         hardpoints[] = {
                             "O_R77_INT",
@@ -1338,8 +1337,7 @@ class CfgVehicles {
             class TransportPylonsComponent {
                 class pylons {
                     class pylons1 {
-                        hardpoints[] =
-                            {
+                        hardpoints[] = {
                                 "B_ZEPHYR",
                                 "B_MISSILE_PYLON",
                                 "I_BIM9X_RAIL",
@@ -1349,8 +1347,7 @@ class CfgVehicles {
                     };
                     class pylons2 : pylons1 {
                         maxweight = 1600;
-                        hardpoints[] =
-                            {
+                        hardpoints[] = {
                                 "B_MISSILE_PYLON",
                                 "B_ZEPHYR",
                                 "B_BOMB_PYLON",
@@ -1379,8 +1376,7 @@ class CfgVehicles {
                     };
                     class pylons3 : pylons1 {
                         maxweight = 1600;
-                        hardpoints[] =
-                            {
+                        hardpoints[] = {
                                 "B_MISSILE_PYLON",
                                 "B_ZEPHYR",
                                 "B_BOMB_PYLON",
@@ -1432,8 +1428,7 @@ class CfgVehicles {
             class TransportPylonsComponent : TransportPylonsComponent {
                 class pylons : pylons {
                     class pylons1 : pylons1 {
-                        hardpoints[] =
-                            {
+                        hardpoints[] = {
                                 "B_ZEPHYR",
                                 "B_MISSILE_PYLON",
                                 "I_BIM9X_RAIL",
@@ -1443,8 +1438,7 @@ class CfgVehicles {
                     };
                     class pylons2 : pylons2 {
                         maxweight = 1600;
-                        hardpoints[] =
-                            {
+                        hardpoints[] = {
                                 "B_MISSILE_PYLON",
                                 "B_ZEPHYR",
                                 "B_BOMB_PYLON",
@@ -1473,8 +1467,7 @@ class CfgVehicles {
                     };
                     class pylons3 : pylons3 {
                         maxweight = 1600;
-                        hardpoints[] =
-                            {
+                        hardpoints[] = {
                                 "B_MISSILE_PYLON",
                                 "B_ZEPHYR",
                                 "B_BOMB_PYLON",

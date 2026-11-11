@@ -84,6 +84,9 @@ class Addon:
 
     @cached_property
     def config(self) -> str:
+        return self.read_fresh_config()
+
+    def read_fresh_config(self) -> str:
         return self.config_path.read_text("utf-8")
 
     @classmethod
@@ -238,9 +241,10 @@ class CfgPatchesNameRule(AddonRule):
         return f"{self.ctx.project.prefix}_{self.addon.name}"
 
     def _replace_patch(self) -> None:
+        config = self.addon.read_fresh_config()
         expected = self._expected_patch_name()
         repl = f"class CfgPatches {{\n    class {expected}"
-        content, n = self._pattern.subn(repl, self.addon.config, 1)
+        content, n = self._pattern.subn(repl, config, 1)
         if n < 1:
             raise ValueError("Failed to replace CfgPatches patch name")
         self.addon.config_path.write_text(content, "utf-8")
@@ -284,12 +288,12 @@ class DecadeLoadorderRule(AddonRule):
 
     def _add_decade_patch(self) -> None:
         # Super easy to break this with requiredAddons[] = { };
-        config = self.addon.config
+        config = self.addon.read_fresh_config()
         m = REQUIRED_ADDONS_PATTERN.search(config)
         assert m is not None
         i = config.index("\n", m.start(1))
-        content = config[:i] + '\n            "A3_Data_F_Decade_Loadorder",' + config[i:]
-        self.addon.config_path.write_text(content, "utf-8")
+        config = config[:i] + '\n            "A3_Data_F_Decade_Loadorder",' + config[i:]
+        self.addon.config_path.write_text(config, "utf-8")
 
 
 REQUIRED_ADDONS_PATTERN = re.compile(
@@ -451,7 +455,8 @@ class NoTabsRule(AddonRule):
         return True
 
     def fix(self) -> None:
-        self.addon.config_path.write_text(self.addon.config.expandtabs(4), "utf-8")
+        config = self.addon.read_fresh_config()
+        self.addon.config_path.write_text(config.expandtabs(4), "utf-8")
 
     def lint(self) -> Iterator[Finding]:
         addon = self.addon
@@ -471,14 +476,15 @@ class IndentationRule(AddonRule):
 
     def fix(self) -> None:
         # Holy moly this is jank
-        content = re.sub(
+        config = self.addon.read_fresh_config()
+        config = re.sub(
             r"^(?: {4})*( {1,3})(?=\S)",
             lambda m: m[0].removesuffix(m[1]),
-            self.addon.config,
-            0,
-            re.MULTILINE,
+            config,
+            count=0,
+            flags=re.MULTILINE,
         )
-        self.addon.config_path.write_text(content, "utf-8")
+        self.addon.config_path.write_text(config, "utf-8")
 
     def lint(self) -> Iterator[Finding]:
         addon = self.addon
@@ -498,10 +504,12 @@ class BracePlacementRule(AddonRule):
         return "S003"
 
     def can_fix(self) -> bool:
-        return False
+        return True
 
     def fix(self) -> None:
-        raise NotImplementedError
+        config = self.addon.read_fresh_config()
+        config = re.sub(r"(\S)\n\s*\{", lambda m: f"{m[1]} {{", config)
+        self.addon.config_path.write_text(config, "utf-8")
 
     def lint(self) -> Iterator[Finding]:
         addon = self.addon
