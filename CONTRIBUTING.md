@@ -15,6 +15,9 @@
 
 ## SQF/CPP Style Guide
 
+Some guidelines can be automatically tested with
+[pre-commit](https://pre-commit.com/).
+
 - All indentation should use 4 spaces
 - Lines should not contain any trailing whitespace except a newline
 - All files should end with a single trailing newline
