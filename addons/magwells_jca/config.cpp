@@ -1,5 +1,12 @@
 #include "\z\fdelta\addons\magwells\magazines.hpp"
 
+#define CBA_STANAG_MAGAZINE_WELLS \
+    "CBA_556x45_STANAG", \
+    "CBA_556x45_STANAG_L", \
+    "CBA_556x45_STANAG_XL", \
+    "CBA_556x45_STANAG_2D", \
+    "CBA_556x45_STANAG_2D_XL"
+
 class CfgPatches {
     class fdelta_magwells_jca {
         name = "420th Customizations - Magazine Compatibility - JCA Infantry Arsenal";
@@ -53,22 +60,22 @@ class CfgWeapons {
         magazineWell[] += {"CBA_45ACP_UMP"};
     };
     class JCA_arifle_HK433_base_F : Rifle_Base_F {
-        magazineWell[] += {"CBA_556x45_STANAG","CBA_556x45_STANAG_L","CBA_556x45_STANAG_XL","CBA_556x45_STANAG_2D","CBA_556x45_STANAG_2D_XL"};
+        magazineWell[] += {CBA_STANAG_MAGAZINE_WELLS};
     };
     class JCA_arifle_HK437_base_F : Rifle_Base_F {
         magazineWell[] += {"CBA_300BLK_STANAG"};
     };
     class JCA_arifle_M16A4_base_F : Rifle_Base_F {
-        magazineWell[] += {"CBA_556x45_STANAG","CBA_556x45_STANAG_L","CBA_556x45_STANAG_XL","CBA_556x45_STANAG_2D","CBA_556x45_STANAG_2D_XL"};
+        magazineWell[] += {CBA_STANAG_MAGAZINE_WELLS};
     };
     class JCA_arifle_M4A1_base_F : Rifle_Base_F {
-        magazineWell[] += {"CBA_556x45_STANAG","CBA_556x45_STANAG_L","CBA_556x45_STANAG_XL","CBA_556x45_STANAG_2D","CBA_556x45_STANAG_2D_XL"};
+        magazineWell[] += {CBA_STANAG_MAGAZINE_WELLS};
     };
     class JCA_arifle_M4A4_base_F : Rifle_Base_F {
-        magazineWell[] += {"CBA_556x45_STANAG","CBA_556x45_STANAG_L","CBA_556x45_STANAG_XL","CBA_556x45_STANAG_2D","CBA_556x45_STANAG_2D_XL"};
+        magazineWell[] += {CBA_STANAG_MAGAZINE_WELLS};
     };
     class JCA_arifle_SCAR_L_base_F : Rifle_Base_F {
-        magazineWell[] += {"CBA_556x45_STANAG","CBA_556x45_STANAG_L","CBA_556x45_STANAG_XL","CBA_556x45_STANAG_2D","CBA_556x45_STANAG_2D_XL"};
+        magazineWell[] += {CBA_STANAG_MAGAZINE_WELLS};
     };
     class JCA_arifle_SCAR_H_base_F : Rifle_Base_F {
         magazineWell[] += {"CBA_762x51_SCAR"};
