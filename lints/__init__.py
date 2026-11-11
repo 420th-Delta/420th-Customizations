@@ -17,18 +17,24 @@ with suppress(ValueError):
 log = logging.getLogger(__name__)
 
 
-def main() -> None:
+def main() -> str | None:
     logging.basicConfig(format="{message}", style="{", level=logging.INFO)
     ctx = Context.load(REPO_ROOT, ignore_invalid_addons=True)
 
+    total_findings = 0
     for addon in ctx.addons:
         for lint in ADDON_LINTS:
             for finding in lint(ctx, addon):
                 log.warning("%s", finding)
+                total_findings += 1
 
     for lint in PROJECT_LINTS:
         for finding in lint(ctx):
             log.warning("%s", finding)
+            total_findings += 1
+
+    if total_findings:
+        return f"Found {total_findings} errors."
 
 
 @dataclass(frozen=True, kw_only=True)
