@@ -288,6 +288,15 @@ def _extract_required_version(addon: Addon) -> tuple[str, int] | tuple[None, Non
     return m[1], lineno
 
 
+# Potential lints based on CONTRIBUTING.md style rules:
+# - lint_brace_placement: the opening brace belongs on the same line as the
+#   defining construct. 8 violations at the time of writing, mostly in
+#   addons/pylons/config.cpp.
+# - lint_indentation: indentation is 4 spaces per level. 4 lines use 9 spaces
+#   (addons/pylons/config.cpp, addons/magwells_ws/config.cpp); every other
+#   width in the tree is a multiple of 4.
+# - lint_max_line_length: lines stay under 100 characters unless breaking
+#   them hurts readability. 7 violations, mostly addons/magwells_jca/config.cpp.
 ADDON_LINTS: list[Callable[[Context, Addon], Iterator[Finding]]] = [
     lint_pbo_prefix,
     lint_cfgpatches_name,
