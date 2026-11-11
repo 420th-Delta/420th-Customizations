@@ -15,7 +15,7 @@ unless loaded as a required mod with [verifySignatures = 2](https://community.bi
 ## Features
 
 - Increase capacity of various clothing (see [Capacity Changes](#capacity-changes))
-- Allow loading vanilla magazines into modded weapons (CUP, JCA, NIArms, RHS, SOG, GM)
+- Allow loading vanilla magazines into modded weapons (CUP, JCA, NIArms, RHS, SOG, GM, Mastiff Armoury, ReArma Weapons)
 - Allow loading modded pylons onto vanilla aircraft (CUP, RHS)
 - Allow attaching RHS grips on NIArms weaponry
 - Allow aimed usage of NVGs with vanilla optics and modded optics (RHSUSAF)

@@ -55,3 +55,39 @@
     "3Rnd_UGL_FlareRed_F", \
     "3Rnd_UGL_FlareYellow_F", \
     "3Rnd_UGL_FlareCIR_F",
+
+#define MAGAZINES_GENERAL_SMG \
+    "30Rnd_9x21_Mag_SMG_02", \
+    "30Rnd_9x21_Mag_SMG_02_Tracer_Red", \
+    "30Rnd_9x21_Mag_SMG_02_Tracer_Yellow", \
+    "30Rnd_9x21_Mag_SMG_02_Tracer_Green",
+
+#define MAGAZINES_GENERAL_SMG_45ACP \
+    "30Rnd_45ACP_Mag_SMG_01", \
+    "30Rnd_45ACP_Mag_SMG_01_Tracer_Red", \
+    "30Rnd_45ACP_Mag_SMG_01_Tracer_Yellow", \
+    "30Rnd_45ACP_Mag_SMG_01_Tracer_Green",
+
+#define MAGAZINES_GENERAL_MG \
+    "150Rnd_762x54_Box", \
+    "150Rnd_762x54_Box_Tracer",
+
+#define MAGAZINES_GENERAL_MG_556 \
+    "200Rnd_556x45_Box_F", \
+    "200Rnd_556x45_Box_Red_F", \
+    "200Rnd_556x45_Box_Tracer_F", \
+    "200Rnd_556x45_Box_Tracer_Red_F",
+
+#define MAGAZINES_GENERAL_Rifle1 \
+    "10Rnd_762x54_Mag",
+
+#define MAGAZINES_GENERAL_Rifle2 \
+    "20Rnd_650x39_Cased_Mag_F",
+
+#define MAGAZINES_GENERAL_Shotgun1 \
+    "6Rnd_12Gauge_Pellets", \
+    "6Rnd_12Gauge_Slug",
+
+#define MAGAZINES_GENERAL_Shotgun2 \
+    "2Rnd_12Gauge_Pellets",  \
+    "2Rnd_12Gauge_Slug",
