@@ -13,3 +13,11 @@ repos:
     -   id: end-of-file-fixer
     -   id: fix-byte-order-marker
     -   id: trailing-whitespace
+-   repo: local
+    hooks:
+    -   id: lints
+        name: addon lints
+        entry: python -m lints
+        language: python
+        files: ^(addons/|lints/|\.hemtt/project\.toml)
+        pass_filenames: false
