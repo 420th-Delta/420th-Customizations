@@ -525,10 +525,12 @@ class SingleLineCommentSpaceRule(AddonRule):
         return "S004"
 
     def can_fix(self) -> bool:
-        return False
+        return True
 
     def fix(self) -> None:
-        raise NotImplementedError
+        config = self.addon.read_fresh_config()
+        config = re.sub(r"(?<!:)//(\S)", lambda m: f"// {m[1]}", config)
+        self.addon.config_path.write_text(config, "utf-8")
 
     def lint(self) -> Iterator[Finding]:
         addon = self.addon

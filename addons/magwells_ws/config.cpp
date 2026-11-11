@@ -28,7 +28,7 @@ class CfgPatches {
 // class MuzzleSlot;
 // class PointerSlot;
 class CfgMagazineWells {
-    //add this since JCA guns cannot use these magazines
+    // add this since JCA guns cannot use these magazines
     class STANAG_556x45 {
         fdelta_magwells_ws_magazines[] = {
             "75Rnd_556x45_Stanag_lxWS",
