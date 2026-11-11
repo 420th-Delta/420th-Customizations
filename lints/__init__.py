@@ -551,7 +551,7 @@ class MaxLineLengthRule(AddonRule):
 
     def lint(self) -> Iterator[Finding]:
         addon = self.addon
-        line_length = 100
+        line_length = 125
         for m in re.finditer(rf"^(.{{{line_length + 1},}})", addon.config, re.MULTILINE):
             length = len(m[1])
             lineno = _lineno_from_content_match(addon.config, m)
