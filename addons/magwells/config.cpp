@@ -12,7 +12,9 @@ class CfgPatches {
             "cba_jam",
         };
         skipWhenMissingDependencies = 1;
-        skipWhenAnyAddonPresent[] = {"vmagcompatibility"};
+        skipWhenAnyAddonPresent[] = {
+            "vmagcompatibility", // Conflicts with Vanilla Magazine Compatibility
+        };
 
         units[] = {};
     };

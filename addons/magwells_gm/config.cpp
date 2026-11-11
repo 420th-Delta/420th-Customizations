@@ -17,7 +17,9 @@ class CfgPatches {
             "gm_weapons_sniperrifles_psg1",
         };
         skipWhenMissingDependencies = 1;
-        skipWhenAnyAddonPresent[] = {"vmagcompatibility"};
+        skipWhenAnyAddonPresent[] = {
+            "vmagcompatibility", // Conflicts with Vanilla Magazine Compatibility
+        };
 
         units[] = {};
     };
