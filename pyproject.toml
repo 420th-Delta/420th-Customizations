@@ -6,5 +6,51 @@ requires-python = ">=3.14"
 [tool.ruff]
 line-length = 100
 
+[tool.ruff.lint]
+select = ["ALL"]
+extend-select = [
+    "A",      # builtin shadowing
+    "ANN",    # annotations
+    "ASYNC",  # async/await
+    "COM",    # trailing commas
+    "DTZ",    # date timezones
+    "E501",   # lines too long
+    "E711",   # None equality
+    "PGH",    # blanket type ignores / noqa
+    "PLC",    # top-level imports
+    "PT",     # pytest
+    "PTH",    # pathlib
+    "RET",    # return values
+    "RUF043", # pytest raises ambiguous pattern
+    "S105",   # hardcoded password strings
+    "S106",   # hardcoded password calls
+    "SIM108", # ternary operators
+    "SLF",    # private member access
+    "TD001",  # todo tags
+    "TD005",  # todo descriptions
+    "TRY400", # log exceptions
+]
+ignore = [
+    "ANN401",  # Any types
+    "ARG",     # unused arguments
+    "CPY",     # copyright
+    "D",       # docstrings
+    "EM101",   # raw strings in exceptions
+    "EM102",   # f-strings in exceptions
+    "ERA001",  # commented code
+    "F403",    # star imports
+    "FIX",     # fixme / todo comments
+    "N818",    # Error suffix
+    "PLR0913", # too many arguments
+    "PLR0917", # too many positional arguments
+    "PLR2004", # magic value comparisons
+    "S101",    # assert statements
+    "T201",    # prints
+    "TC",      # type-checking
+    "TD002",   # todo authors
+    "TD003",   # todo links
+    "TRY003",  # long messages outside of exception class
+]
+
 [tool.ruff.lint.isort]
 combine-as-imports = true

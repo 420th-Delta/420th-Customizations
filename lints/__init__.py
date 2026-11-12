@@ -5,12 +5,14 @@ import re
 import tomllib
 from abc import ABC, abstractmethod
 from collections import Counter
-from collections.abc import Callable, Collection, Iterator
 from contextlib import suppress
 from dataclasses import dataclass, field
 from functools import cached_property
 from pathlib import Path
-from typing import ClassVar, Self
+from typing import TYPE_CHECKING, ClassVar, Self
+
+if TYPE_CHECKING:
+    from collections.abc import Callable, Collection, Iterator
 
 REPO_ROOT = Path(__file__).parent.parent
 with suppress(ValueError):
@@ -34,7 +36,9 @@ def main() -> str | None:
     fix: bool = args.fix
 
     logging.basicConfig(format="{message}", style="{", level=logging.INFO)
-    ctx_factory = lambda: Context.load(REPO_ROOT, ignore_invalid_addons=True)
+
+    def ctx_factory() -> Context:
+        return Context.load(REPO_ROOT, ignore_invalid_addons=True)
 
     results = _run_lints(ctx_factory, fix=fix)
     for rule, findings in results.rule_findings:
@@ -43,10 +47,11 @@ def main() -> str | None:
 
     if results.fixed:
         return f"Found {results.total} errors ({results.fixed} fixed)."
-    elif results.fixable:
+    if results.fixable:
         return f"Found {results.total} errors ({results.fixable} fixable with --fix)."
-    elif results.total:
+    if results.total:
         return f"Found {results.total} errors."
+    return None
 
 
 @dataclass(frozen=True, kw_only=True)
@@ -126,10 +131,7 @@ class Finding:
     message: str
 
     def __str__(self) -> str:
-        if self.lineno is None:
-            path = str(self.path)
-        else:
-            path = f"{self.path}:{self.lineno}"
+        path = str(self.path) if self.lineno is None else f"{self.path}:{self.lineno}"
         return f"{path:50} {self.message}"
 
 
@@ -418,7 +420,8 @@ class RequiredVersionRule(ProjectRule):
                 yield Finding(path=addon.config_path, lineno=None, message=message)
                 continue
 
-            assert version is not None and lineno is not None
+            assert version is not None
+            assert lineno is not None
             version_lines.append((addon, version, lineno))
 
         if not version_lines:
